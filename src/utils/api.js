@@ -8,6 +8,7 @@ export const fetchRecipes = async (page,category,subcategory,nation) => {
     const categoryQuery = category ? `&category=${category}` : "",
         subcategoryQuery = subcategory ? `&subcategory=${subcategory}` : "",
         nationQuery = nation ? `&nation=${nation}` : "";
+        
     const response = await fetch(`${base}/recipes?page=${page}&limit=${limit}${categoryQuery}${subcategoryQuery}${nationQuery}`);
     const data = await response.json();
     return data;
