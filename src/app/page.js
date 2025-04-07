@@ -30,6 +30,7 @@ export default function Home() {
 
       // Try to get data from localStorage
       const storedData = localStorage.getItem("sectionData");
+      console.log(storedData);
       //localStorage.clear();
 
       if (storedData) {
@@ -69,11 +70,22 @@ export default function Home() {
 
           setSectionRecipes(sections);
 
-          const images = {};
-          [...nationData.results, ...categoryData.results, ...subcategoryData.results].forEach(async (recipe) => {
+          // Create an array of promises for fetching recipe images
+          const imagePromises = [...nationData.results, ...categoryData.results, ...subcategoryData.results].map(async (recipe) => {
             const recipeImageData = await fetchRecipeImages(recipe.id);
-            images[recipe.id] = recipeImageData.results.length > 0 ? recipeImageData.results[0].url : "/images/empty.jpg";
+            return {
+              [recipe.id]: recipeImageData.results.length > 0 ? recipeImageData.results[0].url : "/images/empty.jpg"
+            };
           });
+
+          // Wait for all image fetches to complete
+          const imagesArray = await Promise.all(imagePromises);
+          
+          // Convert array of objects into a single object
+          const images = imagesArray.reduce((acc, imgObj) => {
+            return { ...acc, ...imgObj };
+          }, {});
+          console.log(images);
 
           setRecipeImages(images);
           setHasMore(nationData.results.length === 10);
@@ -154,24 +166,31 @@ export default function Home() {
           <h2 className="text-2xl font-bold text-teal-600 mb-4">Discover Recipes by Section</h2>
 
           {/* Sections */}
-          <SectionCard
+          <SectionCard 
             title={`Nation: ${selectedNation?.name}`}
             sectionRecipes={sectionRecipes.nation}
             recipeImages={recipeImages}
             path="/results/nation"
+            bgColor="bg-teal-50" // Custom background color for this section
+            titleColor="text-teal-700" // Custom title color
           />
-          <SectionCard
+          <SectionCard 
             title={`Category: ${selectedCategory?.name}`}
             sectionRecipes={sectionRecipes.category}
             recipeImages={recipeImages}
             path="/results/category"
+            bgColor="bg-teal-100" // Custom background color for this section
+            titleColor="text-teal-800" // Custom title color
           />
-          <SectionCard
+          <SectionCard 
             title={`Subcategory: ${selectedSubcategory?.name}`}
             sectionRecipes={sectionRecipes.subcategory}
             recipeImages={recipeImages}
             path="/results/subcategory"
+            bgColor="bg-teal-200" // Custom background color for this section
+            titleColor="text-teal-900" // Custom title color
           />
+
         </div>
 
         {/* Loading State */}
