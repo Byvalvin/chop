@@ -1,0 +1,22 @@
+ Flow of Work:
+    Start with Core Pages:
+        Begin by working on the Home Page, including displaying some sample recipes and integrating pagination.
+        Create the About Page next, as it’s simple and gives you a good starting point.
+
+    Search Functionality:
+        Once you’ve got the basic pages, implement the search bar that will allow users to search recipes. Start with basic keyword search first, then move to filters (ingredients, categories).
+
+    Recipe Detail Page:
+        After basic navigation is working, work on the Recipe Details Page with a focus on rendering detailed information and implementing the Download PDF feature.
+        
+    Category & Nation Pages:
+        Implement Category and Nation pages, using the API to filter recipes by category/nation.
+
+    Ingredient Selector:
+        Build the Ingredient Selector Page to allow users to select ingredients and see matching recipes.
+
+    Pagination:
+        Implement pagination for search results, categories, and other lists where data could be long.
+
+    Sitemap:
+        The Sitemap Page can be a simple map or list of links.

@@ -1,0 +1,11 @@
+Overview:
+You want to build a simple, but functional and engaging frontend for displaying African cuisine recipes. This will include:
+    Displaying recipes from an API.
+
+    Providing features like filtering, searching, and viewing detailed recipes.
+
+    Allowing users to download a recipe in PDF format.
+
+    Adding pagination to optimize performance.
+
+    A sitemap for better navigation.

@@ -1,0 +1,120 @@
+[
+    {
+        "name": "Jollof Rice",
+        "description": "A popular West African dish made with rice, tomatoes, and spices.",
+        "nation": "Nigeria",
+        "region": "West Africa",
+        "instructions": [
+            "Rinse the rice and set aside.",
+            "Blend tomatoes, onions, and peppers.",
+            "Cook the blended mixture in a pot with oil and spices.",
+            "Add the rice to the pot and cook until soft and fully cooked."
+        ],
+        "categories": ["Main Dish", "Vegetarian"],
+        "subcategories": ["Rice", "Stew"],
+        "aliases": [
+            "Nigerian Jollof Rice",
+            "West African Jollof Rice"
+        ],
+        "images": [
+            {
+                "url": "https://grandbaby-cakes.com/wp-content/uploads/2023/04/jollof-rice-recipe-23-500x500.jpg",
+                "type": "thumbnail",
+                "caption": "Jollof Rice"
+            },
+            {
+                "url": "https://travelandmunchies.com/wp-content/uploads/2022/11/IMG_8133-scaled.jpg",
+                "type": "full-size",
+                "caption": "Jollof Rice with chicken"
+            }
+        ],
+        "time": 60,
+        "cost": 12,
+        "ingredients": [
+            { "name": "Rice", "quantity": 2, "unit": "cups" },
+            { "name": "Tomatoes", "quantity": 3, "unit": "medium" },
+            { "name": "Onion", "quantity": 1, "unit": "large" },
+            { "name": "Bell pepper", "quantity": 1, "unit": "medium" },
+            { "name": "Vegetable oil", "quantity": 3, "unit": "tbsp" }
+        ]
+    },
+
+    {
+        "name": "Ackee and Saltfish",
+        "description": "Jamaica's national dish, made with salted cod and ackee fruit.",
+        "nation": "Jamaica",
+        "region": "Caribbean",
+        "instructions": [
+            "Soak the salted cod overnight to remove excess salt.",
+            "Boil the ackee fruit until tender.",
+            "Fry onions, bell peppers, tomatoes, and garlic.",
+            "Add the boiled ackee and salted cod, and cook for another 5 minutes."
+        ],
+        "categories": ["Main Dish", "Seafood"],
+        "subcategories": ["Stew", "Breakfast"],
+        "aliases": [
+            "Saltfish and Ackee",
+            "Jamaican Saltfish Ackee"
+        ],
+        "images": [
+        {
+            "url": "https://example.com/ackee_saltfish_1.jpg",
+            "type": "thumbnail",
+            "caption": "Ackee and Saltfish"
+        },
+        {
+            "url": "https://example.com/ackee_saltfish_2.jpg",
+            "type": "full-size",
+            "caption": "Ackee and Saltfish served with fried dumplings"
+        }
+        ],
+        "time": 45,
+        "cost": 15,
+        "ingredients": [
+            { "name": "Salted cod", "quantity": 200, "unit": "grams" },
+            { "name": "Ackee", "quantity": 1, "unit": "can" },
+            { "name": "Onion", "quantity": 1, "unit": "medium" },
+            { "name": "Bell pepper", "quantity": 1, "unit": "medium" },
+            { "name": "Tomato", "quantity": 1, "unit": "medium" }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Ugandan Rolex",
+        "description": "A popular street food in Uganda made of eggs, vegetables, and chapati.",
+        "nation": "Uganda",
+        "region": "East Africa",
+        "instructions": [
+          "Prepare the chapati dough and roll it out.",
+          "Fry eggs with onions, tomatoes, and bell peppers.",
+          "Place the fried egg mixture on top of the chapati and roll it up."
+        ],
+        "categories": ["Snack", "Street Food"],
+        "subcategories": ["Wrap", "Egg-based"],
+        "aliases": [
+          "Ugandan Egg Roll",
+          "Rolex Ugandan Wrap"
+        ],
+        "images": [
+          {
+            "url": "https://example.com/rolex_1.jpg",
+            "type": "thumbnail",
+            "caption": "Ugandan Rolex"
+          },
+          {
+            "url": "https://example.com/rolex_2.jpg",
+            "type": "full-size",
+            "caption": "Rolex served with a side of vegetables"
+          }
+        ],
+        "time": 30,
+        "cost": 7,
+        "ingredients": [
+          { "name": "Eggs", "quantity": 3, "unit": "large" },
+          { "name": "Chapati", "quantity": 2, "unit": "pieces" },
+          { "name": "Tomato", "quantity": 1, "unit": "medium" },
+          { "name": "Bell pepper", "quantity": 1, "unit": "medium" },
+          { "name": "Onion", "quantity": 1, "unit": "medium" }
+        ]
+      }      
+]
