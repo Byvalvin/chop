@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { fetchRecipes, fetchRecipeImages, fetchNations, fetchCategories, fetchSubcategories } from "../utils/api"; // Utility function to handle API calls
 import SectionCard from "../components/Section";
+import Navbar from "../components/Navbar"; // Import the Navbar component
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -125,72 +126,43 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-teal-500 via-teal-400 to-teal-300">
-      <header className="flex items-center justify-between p-6 bg-white shadow-md">
-        <div className="flex items-center space-x-2">
-          <img src="/images/leaf-icon.png" alt="Chop Logo" className="w-12 h-12" />
-          <h1 className="text-3xl font-bold text-teal-600">Chop</h1>
-        </div>
-        <nav className="flex space-x-6 text-gray-700">
-          <a href="/" className="hover:text-teal-600">Home</a>
-          <a href="/explore" className="hover:text-teal-600">Explore</a>
-          <a href="/about" className="hover:text-teal-600">About</a>
-        </nav>
-        <div className="flex items-center space-x-4">
-          <button className="bg-teal-600 text-white px-4 py-2 rounded-full hover:bg-teal-500 transition">Sign Up</button>
-        </div>
-      </header>
-
+      {/* <Navbar /> Include Navbar here */}
+      
       <main className="max-w-screen-xl mx-auto flex flex-col items-center gap-12 p-8">
-        <div className="w-full flex justify-center space-x-4 mb-8">
-          {/* Search Bar */}
-          <div className="flex items-center border border-teal-500 rounded-full px-4 py-2 space-x-2 w-1/2 sm:w-1/3">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 rounded-full focus:outline-none"
-              placeholder="Search for recipes..."
-            />
-            <button
-              className="bg-teal-600 text-white p-2 rounded-full hover:bg-teal-500"
-              onClick={handleSearch}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 18l6-6-6-6" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
         <div className="w-full">
-          <h2 className="text-2xl font-bold text-teal-600 mb-4">Discover Recipes by Section</h2>
-
           {/* Sections */}
           <SectionCard 
-            title={`Nation: ${selectedNation?.name}`}
+            title={`Nation `}
             sectionRecipes={sectionRecipes.nation}
             recipeImages={recipeImages}
             path="/results/nation"
-            bgColor="bg-teal-50" // Custom background color for this section
-            titleColor="text-teal-700" // Custom title color
+            sectionType="nation"
+            bgColor="bg-teal-100"
+            titleColor="text-teal-800"
+            selectedValue={selectedNation?.name}
           />
+
           <SectionCard 
-            title={`Category: ${selectedCategory?.name}`}
+            title={`Category `}
             sectionRecipes={sectionRecipes.category}
             recipeImages={recipeImages}
             path="/results/category"
-            bgColor="bg-teal-100" // Custom background color for this section
-            titleColor="text-teal-800" // Custom title color
+            sectionType="category"
+            bgColor="bg-teal-200"
+            titleColor="text-teal-900"
+            selectedValue={selectedCategory?.name}
           />
+
           <SectionCard 
-            title={`Subcategory: ${selectedSubcategory?.name}`}
+            title={`Subcategory `}
             sectionRecipes={sectionRecipes.subcategory}
             recipeImages={recipeImages}
             path="/results/subcategory"
-            bgColor="bg-teal-200" // Custom background color for this section
-            titleColor="text-teal-900" // Custom title color
+            sectionType="subcategory"
+            bgColor="bg-teal-300"
+            titleColor="text-teal-900"
+            selectedValue={selectedSubcategory?.name}
           />
-
         </div>
 
         {/* Loading State */}
