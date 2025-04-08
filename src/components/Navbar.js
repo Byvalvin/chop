@@ -1,18 +1,31 @@
 "use client";
 
-import Link from 'next/link'; // Use Next.js's Link component for client-side navigation
-import { usePathname } from 'next/navigation'; // Import usePathname from next/navigation
-import SearchBar from './SearchBar'; // Import the SearchBar component
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation"; // useRouter for navigation
+import { usePathname } from "next/navigation";
+import SearchBar from "./SearchBar"; // Import the SearchBar component
 
 const Navbar = () => {
   const pathname = usePathname(); // Get the current path
+  const [searchTerm, setSearchTerm] = useState(""); // State for the search term
+  const router = useRouter(); // useRouter hook for navigation
 
   // Define the navigation links
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/explore', label: 'Explore' },
-    { href: '/about', label: 'About' },
+    { href: "/", label: "Home" },
+    { href: "/explore", label: "Explore" },
+    { href: "/about", label: "About" },
   ];
+
+  // Handle search button click or Enter key press
+  const handleSearch = (e) => {
+    e.preventDefault(); // Prevent the page from reloading
+    if (searchTerm.trim()) {
+      // Redirect to /results with the searchTerm query parameter
+      router.push(`/results?searchTerm=${searchTerm}`);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
@@ -42,7 +55,13 @@ const Navbar = () => {
               </Link>
             ))}
           </nav>
-          <SearchBar />
+          {/* Pass smaller height to the search bar for Navbar */}
+          <SearchBar
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            handleSearch={handleSearch}
+            height="py-2" // Adjust search bar size for Navbar
+          />
         </div>
 
         {/* Right: Sign Up Button */}
