@@ -23,7 +23,7 @@ const Navbar = () => {
     e.preventDefault(); // Prevent the page from reloading
     if (searchTerm.trim()) {
       // Redirect to /results with the searchTerm query parameter
-      router.push(`/results?searchTerm=${searchTerm}`);
+      router.push(`/explore?searchTerm=${searchTerm}`);
     }
   };
 

@@ -2,17 +2,37 @@
 
 const base = 'https://chop-api-nine.vercel.app/chop/api';
 
-export const fetchRecipes = async (page,category,subcategory,nation) => {
-    const limit = 10;  // Number of recipes per page
-    
-    const categoryQuery = category ? `&category=${category}` : "",
-        subcategoryQuery = subcategory ? `&subcategory=${subcategory}` : "",
-        nationQuery = nation ? `&nation=${nation}` : "";
-        
-    const response = await fetch(`${base}/recipes?page=${page}&limit=${limit}${categoryQuery}${subcategoryQuery}${nationQuery}`);
-    const data = await response.json();
-    return data;
+
+export const fetchRecipes = async (
+  page,
+  categories,
+  subcategories,
+  nations,
+  ingredients,
+  time,
+  cost,
+  ratings,
+  difficulty
+) => {
+  const limit = 10; // Number of recipes per page
+
+  const categoryQuery = categories.length ? `&category=${categories.join(',')}` : "";
+  const subcategoryQuery = subcategories.length ? `&subcategory=${subcategories.join(',')}` : "";
+  const nationQuery = nations ? `&nation=${nations}` : "";
+  const ingredientQuery = ingredients.length ? `&ingredient=${ingredients.join(',')}` : "";
+  const ratingQuery = ratings.length ? `&rating=${ratings.join(',')}` : "";
+  const difficultyQuery = difficulty.length ? `&difficulty=${difficulty.join(',')}` : "";
+  const timeQuery = time ? `&time=${time[1]}` : "";
+  const costQuery = cost ? `&cost=${cost[1]}` : "";
+
+  const response = await fetch(
+    `${base}/recipes?page=${page}&limit=${limit}${categoryQuery}${subcategoryQuery}${nationQuery}${ingredientQuery}${ratingQuery}${difficultyQuery}${timeQuery}${costQuery}`
+  );
+  
+  const data = await response.json();
+  return data;
 };
+
 
 export const fetchRecipeImages = async (recipeId) => {
     const limit = 10;  // Number of recipes per page

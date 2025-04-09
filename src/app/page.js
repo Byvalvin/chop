@@ -124,6 +124,12 @@ export default function Home() {
     }
   };
 
+  const paths = {
+    nation:`/explore?nation=${selectedNation?.name}`,
+    category:`/explore?category=${selectedCategory?.name}`,
+    subcategory:`/explore?subcategory=${selectedSubcategory?.name}`,
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-teal-500 via-teal-400 to-teal-300">
       {/* <Navbar /> Include Navbar here */}
@@ -135,7 +141,7 @@ export default function Home() {
             title={`Nation `}
             sectionRecipes={sectionRecipes.nation}
             recipeImages={recipeImages}
-            path="/results/nation"
+            path={paths.nation}
             sectionType="nation"
             bgColor="bg-teal-100"
             titleColor="text-teal-800"
@@ -146,7 +152,7 @@ export default function Home() {
             title={`Category `}
             sectionRecipes={sectionRecipes.category}
             recipeImages={recipeImages}
-            path="/results/category"
+            path={paths.category}
             sectionType="category"
             bgColor="bg-teal-200"
             titleColor="text-teal-900"
@@ -157,7 +163,7 @@ export default function Home() {
             title={`Subcategory `}
             sectionRecipes={sectionRecipes.subcategory}
             recipeImages={recipeImages}
-            path="/results/subcategory"
+            path={paths.subcategory}
             sectionType="subcategory"
             bgColor="bg-teal-300"
             titleColor="text-teal-900"

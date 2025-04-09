@@ -1,0 +1,10 @@
+Categories(critical info about the recipe; dietary restrictions/preferences, warnings, allergy or other health risks. ALso usually few, and usually mutually exclusive from other categories. eg: gluten-free, halal, vegetarian, vegan, spicy, gelatin) - select one from list or checkboxes
+Subcategories(non-critical or additional information. Usually simply descriptive eg: main, snack, side, stew, soup) - select one from list or checkboxes
+Nations(The natrion of origin) - select one from list or checkboxes
+Regions(the region in which the nation of origin is in) - select one from list or checkboxes
+Ingredients - checkboxes
+Rating - checkboxes for 1 to 5 stars or slider
+Difficulty - checkboxes for 1 to 10 or slider 
+Cost - slider for 1 - 1000 (CAD)
+Time - slider for 1 - 720 (mins)
+
