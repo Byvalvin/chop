@@ -1,22 +1,11 @@
 import Link from "next/link";
 import RecipeCard from "../components/RecipeCard"; // Component to display each recipe
-import { FaGlobe, FaTags, FaFolder } from 'react-icons/fa'; // Import icons for section types
+import { FaTags, } from 'react-icons/fa'; // Import icons for section types
 
 // SectionCard Component (Reusable)
-const SectionCard = ({ title, sectionRecipes, recipeImages, path, bgColor = "bg-white", titleColor = "text-teal-600", sectionType, selectedValue }) => {
+const SectionCard = ({ title, sectionRecipes, recipeImages, path, bgColor = "bg-white", titleColor = "text-teal-600", IconType=FaTags, sectionType, selectedValue }) => {
   // Function to return the correct icon based on section type
-  const getIcon = (type) => {
-    switch (type) {
-      case "nation":
-        return <FaGlobe className="text-teal-600 text-2xl" />; // Slightly larger icon size
-      case "category":
-        return <FaTags className="text-teal-600 text-2xl" />; // Slightly larger icon size
-      case "subcategory":
-        return <FaFolder className="text-teal-600 text-2xl" />; // Slightly larger icon size
-      default:
-        return null;
-    }
-  };
+  const getIcon = () => <IconType className="text-teal-600 text-2xl" />; // Slightly larger icon size
 
   // Capitalize the first letter of selectedValue
   const capitalizeFirstLetter = (value) => value? value.charAt(0).toUpperCase()+value.slice(1) : value;
@@ -29,7 +18,7 @@ const SectionCard = ({ title, sectionRecipes, recipeImages, path, bgColor = "bg-
         <span className="text-teal-800">{title}</span>
         
         {/* Icon between section name and selected value */}
-        <span className="mx-4 flex-grow text-center">{getIcon(sectionType)}</span> {/* Icon now centered */}
+        <span className="mx-4 flex-grow text-center">{getIcon()}</span> {/* Icon now centered */}
 
         {/* Selected value */}
         <span className="text-teal-600">{capitalizeFirstLetter(selectedValue)}</span>

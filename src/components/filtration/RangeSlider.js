@@ -9,6 +9,11 @@ const RangeSlider = ({ label, min, max, value, onChange, unit }) => {
     [Math.floor((max + min) / 2)]: `${Math.floor((max + min) / 2)} ${unit}`,
   };
 
+  const formatters = [
+    (value) => `${value}`,
+    (value) => `${value} ${unit}`
+  ]
+
   return (
     <div className="mt-4">
       <label className="block text-lg font-semibold text-gray-700">
@@ -23,18 +28,30 @@ const RangeSlider = ({ label, min, max, value, onChange, unit }) => {
         marks={marks}  // Display the marks
         className="w-full mt-2" // Tailwind's width utility to make it full width
         tooltip={{
-          formatter: (value) => `${value} ${unit}`, // Updated to tooltip.formatter
+          formatter: formatters[0] // Updated to tooltip.formatter
         }}
-        handleStyle={{
-          borderColor: "#4caf50", // Customize the slider handle color
-          backgroundColor: "#4caf50", // Customize the slider handle background color
+        styles={{
+          handle:{
+            borderColor: "#4caf50", // Customize the slider handle color
+            backgroundColor: "#4caf50", // Customize the slider handle background color
+          },
+          track:{
+            backgroundColor: "#4caf50", // Customize the slider track color
+          },
+          rail:{
+            backgroundColor: "#e5e5e5", // Customize the rail color
+          }
         }}
-        trackStyle={{
-          backgroundColor: "#4caf50", // Customize the slider track color
-        }}
-        railStyle={{
-          backgroundColor: "#e5e5e5", // Customize the rail color
-        }}
+        // handleStyle={{
+        //   borderColor: "#4caf50", // Customize the slider handle color
+        //   backgroundColor: "#4caf50", // Customize the slider handle background color
+        // }}
+        // trackStyle={{
+        //   backgroundColor: "#4caf50", // Customize the slider track color
+        // }}
+        // railStyle={{
+        //   backgroundColor: "#e5e5e5", // Customize the rail color
+        // }}
       />
       <div className="text-sm text-gray-600">
         {/* Display the current value with unit */}

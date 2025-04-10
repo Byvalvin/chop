@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { fetchRecipes, fetchRecipeImages, fetchNations, fetchCategories, fetchSubcategories } from "../utils/api"; // Utility function to handle API calls
 import SectionCard from "../components/Section";
-import Navbar from "../components/Navbar"; // Import the Navbar component
+import { FaFolder, FaGlobe, FaTags } from "react-icons/fa";
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -145,6 +145,7 @@ export default function Home() {
             sectionType="nation"
             bgColor="bg-teal-100"
             titleColor="text-teal-800"
+            IconType={FaGlobe}
             selectedValue={selectedNation?.name}
           />
 
@@ -156,6 +157,7 @@ export default function Home() {
             sectionType="category"
             bgColor="bg-teal-200"
             titleColor="text-teal-900"
+            IconType={FaTags}
             selectedValue={selectedCategory?.name}
           />
 
@@ -167,6 +169,7 @@ export default function Home() {
             sectionType="subcategory"
             bgColor="bg-teal-300"
             titleColor="text-teal-900"
+            IconType={FaFolder}
             selectedValue={selectedSubcategory?.name}
           />
         </div>
@@ -182,3 +185,11 @@ export default function Home() {
     </div>
   );
 }
+
+/*
+https://nextjs.org/docs/pages/api-reference/components/image#priority
+https://www.vecteezy.com/free-png/leaf-icon
+https://www.google.com/search?q=leaf+icon&client=ubuntu&hs=GA1&sca_esv=c09d48c2a0d898e8&channel=fs&ei=hzHzZ-m5Go3-p84P5_-6gQg&ved=0ahUKEwipmYO06cSMAxUN_8kDHee_LoAQ4dUDCBA&uact=5&oq=leaf+icon&gs_lp=Egxnd3Mtd2l6LXNlcnAiCWxlYWYgaWNvbjILEAAYgAQYkQIYigUyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgARIxQtQjwVYiwpwAXgBkAEAmAG9AaABsAWqAQMwLjW4AQPIAQD4AQGYAgagAusFwgIKEAAYsAMY1gQYR8ICDRAAGIAEGLADGEMYigXCAg4QABiwAxjkAhjWBNgBAcICExAuGIAEGLADGEMYyAMYigXYAQHCAhYQLhiABBiwAxhDGOUEGMgDGIoF2AEBwgIKEAAYgAQYQxiKBcICCBAuGIAEGLEDwgILEAAYgAQYsQMYgwHCAggQABiABBixA8ICBRAuGIAEmAMAiAYBkAYTugYGCAEQARgJkgcFMS40LjGgB4cssgcFMC40LjG4B94F&sclient=gws-wiz-serp#vhid=uVTuOpn59Dg7rM&vssid=_ASv3Z_XyN6Tfp84PhbyLGA_78
+https://nextjs.org/docs/messages/next-router-not-mounted
+https://www.bestbuy.ca/en-ca/search?path=category%253AComputers%2B%2526%2BTablets%253Bcategory%253ALaptops%2B%2526%2BMacBooks&search=laptops
+*/
