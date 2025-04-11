@@ -35,7 +35,11 @@ export const fetchRecipes = async ({
   return data;
 };
 
-
+export const fetchRecipe = async (recipeId) => {
+    const response = await fetch(`${base}/recipes/${recipeId}`);
+    const data = await response.json();
+    return data;
+};
 export const fetchRecipeImages = async (recipeId) => {
     const limit = 10;  // Number of recipes per page
     const page = 1;
@@ -43,6 +47,31 @@ export const fetchRecipeImages = async (recipeId) => {
     const data = await response.json();
     return data;
 };
+export const fetchRecipeInstructions = async(recipeId) => {
+    const response = await fetch(`${base}/recipes/${recipeId}/instructions`);
+    const data = await response.json();
+    return data.instructions;
+}
+export const fetchRecipeIngredients = async(recipeId) => {
+    const response = await fetch(`${base}/recipes/${recipeId}/ingredients`);
+    const data = await response.json();
+    return data.ingredients;
+}
+export const fetchRecipeCategories = async(recipeId) => {
+    const response = await fetch(`${base}/recipes/${recipeId}/categories`);
+    const data = await response.json();
+    return data.categories;
+}
+export const fetchRecipeSubcategories = async(recipeId) => {
+    const response = await fetch(`${base}/recipes/${recipeId}/subcategories`);
+    const data = await response.json();
+    return data.subcategories;
+}
+export const fetchRecipeNames = async(recipeId) => {
+    const response = await fetch(`${base}/recipes/${recipeId}/names`);
+    const data = await response.json();
+    return data.names;
+}
 
 
 export const fetchNations = async () => {
@@ -52,6 +81,16 @@ export const fetchNations = async () => {
     const data = await response.json();
     return data;
 };
+export const fetchNation = async(nationId) => {
+  const response = await fetch(`${base}/nations/${nationId}`);
+  const data = await response.json();
+  return data.name;
+}
+export const fetchRegion = async(regionId) => {
+  const response = await fetch(`${base}/regions/${regionId}`);
+  const data = await response.json();
+  return data.name;
+}
 export const fetchCategories = async () => {
     const limit = 10;  // Number of categories per page
     const page = 1;
@@ -66,3 +105,6 @@ export const fetchSubcategories = async () => {
     const data = await response.json();
     return data;
 };
+
+
+
