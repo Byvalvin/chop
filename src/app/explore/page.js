@@ -33,7 +33,7 @@ export default function Results() {
   const [subcategories, setSubcategories] = useState(subcategoryFromParams ? [subcategoryFromParams] : []);
   const [ratings, setRatings] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const [nation, setNation] = useState(nationFromParams || "");
+  const [nations, setNations] = useState(nationFromParams ? [nationFromParams] : []);
   const [time, setTime] = useState([0, 720]);
   const [cost, setCost] = useState([0, 1000]);
   const [difficulty, setDifficulty] = useState([1, 10]);
@@ -45,7 +45,7 @@ export default function Results() {
     subcategories,
     ratings,
     ingredients,
-    nation,
+    nations,
     time,
     cost,
     difficulty,
@@ -65,7 +65,7 @@ export default function Results() {
     setSubcategories([]);
     setRatings([]);
     setIngredients([]);
-    setNation("");
+    setNations([]);
     setTime([0, 720]);
     setCost([0, 1000]);
     setDifficulty([1, 10]);
@@ -80,7 +80,7 @@ export default function Results() {
       subcategories,
       ratings,
       ingredients,
-      nation,
+      nations,
       time,
       cost,
       difficulty,
@@ -95,7 +95,7 @@ export default function Results() {
       subcategories,
       ratings,
       ingredients,
-      nation,
+      nations,
       time,
       cost,
       difficulty,
@@ -141,7 +141,7 @@ export default function Results() {
             searchTerm,
             categories,
             subcategories,
-            nation,
+            nations,
             ingredients,
             time,
             cost,
@@ -160,7 +160,7 @@ export default function Results() {
 
       fetchData();
     }
-  }, [shouldSearch, page, categories, subcategories, nation, ingredients, time, cost, ratings, difficulty]);
+  }, [shouldSearch, page, categories, subcategories, nations, ingredients, time, cost, ratings, difficulty]);
 
   // Create filter display string
   const appliedFilters = [
@@ -169,7 +169,7 @@ export default function Results() {
     subcategories.length > 0 && `Subcategories: ${subcategories.join(", ")}`,
     ratings.length > 0 && `Ratings: ${ratings.join(", ")}`,
     ingredients.length > 0 && `Ingredients: ${ingredients.join(", ")}`,
-    nation && `Nation: ${nation}`,
+    nations.length > 0  && `Nations: ${nations.join(", ")}`,
     time && `Time: ${time[0]} - ${time[1]} min`,
     cost && `Cost: $${cost[0]} - $${cost[1]}`,
     difficulty && `Difficulty: ${difficulty[0]} - ${difficulty[1]}`
@@ -195,9 +195,9 @@ export default function Results() {
         {/* Filters */}
         <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} hasUnsavedChanges={haveUnsavedChanges("categories")} />
         <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} hasUnsavedChanges={haveUnsavedChanges("subcategories")}/>
-        <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")}/>
+        <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")} />
         <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} hasUnsavedChanges={haveUnsavedChanges("ingredients")}/>
-        <GeneralFilter title="Nation" options={nationOptions} selectedValues={nation ? [nation] : []} onChange={setNation} isMultiSelect={false} allowCustomInput={true} onClear={() => setNation("")} hasUnsavedChanges={haveUnsavedChanges("nation")}/>
+        <GeneralFilter title="Nations" options={nationOptions} selectedValues={nations} onChange={setNations} isMultiSelect={false} allowCustomInput={true} onClear={() => setNations([])} hasUnsavedChanges={haveUnsavedChanges("nations")} />
         <RangeSlider label="Time" min={0} max={720} value={time} onChange={setTime} unit="min" hasUnsavedChanges={haveUnsavedChanges("time")} />
         <RangeSlider label="Cost" min={0} max={1000} value={cost} onChange={setCost} unit="$" hasUnsavedChanges={haveUnsavedChanges("cost")} />
         <RangeSlider label="Difficulty" min={1} max={10} value={difficulty} onChange={setDifficulty} unit="" hasUnsavedChanges={haveUnsavedChanges("difficulty")} />
@@ -235,7 +235,7 @@ export default function Results() {
                   appliedFiltersState.subcategories.length > 0 && `Subcategories: ${appliedFiltersState.subcategories.join(", ")}`,
                   appliedFiltersState.ratings.length > 0 && `Ratings: ${appliedFiltersState.ratings.join(", ")}`,
                   appliedFiltersState.ingredients.length > 0 && `Ingredients: ${appliedFiltersState.ingredients.join(", ")}`,
-                  appliedFiltersState.nation && `Nation: ${appliedFiltersState.nation}`,
+                  appliedFiltersState.nations.length > 0 && `Nations: ${appliedFiltersState.nations.join(", ")}`,
                   appliedFiltersState.time && `Time: ${appliedFiltersState.time[0]} - ${appliedFiltersState.time[1]} min`,
                   appliedFiltersState.cost && `Cost: $${appliedFiltersState.cost[0]} - $${appliedFiltersState.cost[1]}`,
                   appliedFiltersState.difficulty && `Difficulty: ${appliedFiltersState.difficulty[0]} - ${appliedFiltersState.difficulty[1]}`

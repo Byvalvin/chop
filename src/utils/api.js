@@ -15,7 +15,7 @@ export const fetchRecipes = async ({
   ratings = [],
   difficulty = []
 }) => {
-  const limit = 10; // Number of recipes per page
+  const limit = 8; // Number of recipes per page
 
   const searchQuery = search ? `&search=${search}` : "";
   const categoryQuery = categories.length ? `&category=${categories.join(',')}` : "";
@@ -24,8 +24,8 @@ export const fetchRecipes = async ({
   const ingredientQuery = ingredients.length ? `&ingredient=${ingredients.join(',')}` : "";
   const ratingQuery = ratings.length ? `&rating=${ratings.join(',')}` : "";
   const difficultyQuery = difficulty.length ? `&difficulty=${difficulty.join(',')}` : "";
-  const timeQuery = time ? `&time=${time[1]}` : "";
-  const costQuery = cost ? `&cost=${cost[1]}` : "";
+  const timeQuery = time && time[0] && time[1] ? `&time=${time[1]}` : "";
+  const costQuery = cost && cost[0] && cost[1] ? `&cost=${cost[1]}` : "";
 
   const response = await fetch(
     `${base}/recipes?page=${page}&limit=${limit}${searchQuery}${categoryQuery}${subcategoryQuery}${nationQuery}${ingredientQuery}${ratingQuery}${difficultyQuery}${timeQuery}${costQuery}`

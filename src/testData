@@ -58,12 +58,12 @@
         ],
         "images": [
         {
-            "url": "https://example.com/ackee_saltfish_1.jpg",
+            "url": "https://bestofvegancom.b-cdn.net/wp-content/uploads/2025/01/Vegan-Ackee-Salt-Fish-scaled.webp",
             "type": "thumbnail",
             "caption": "Ackee and Saltfish"
         },
         {
-            "url": "https://example.com/ackee_saltfish_2.jpg",
+            "url": "https://thatgirlcookshealthy.com/wp-content/uploads/2019/02/jamaican-ackee-and-saltfish-image.jpg",
             "type": "full-size",
             "caption": "Ackee and Saltfish served with fried dumplings"
         }
@@ -97,12 +97,12 @@
         ],
         "images": [
           {
-            "url": "https://example.com/rolex_1.jpg",
+            "url": "https://images.squarespace-cdn.com/content/v1/5ba85f7c9b8fe84261a1e41c/1603649462932-V2SXRHHSXMS6G1XW9LOP/Screenshot_20201025-123603__01.jpg?format=1000w",
             "type": "thumbnail",
             "caption": "Ugandan Rolex"
           },
           {
-            "url": "https://example.com/rolex_2.jpg",
+            "url": "https://data.thefeedfeed.com/recommended/post_3870278.jpeg",
             "type": "full-size",
             "caption": "Rolex served with a side of vegetables"
           }
