@@ -3,22 +3,24 @@
 const base = 'https://chop-api-nine.vercel.app/chop/api';
 
 
-export const fetchRecipes = async (
+export const fetchRecipes = async ({
   page,
-  categories,
-  subcategories,
-  nations,
-  ingredients,
-  time,
-  cost,
-  ratings,
-  difficulty
-) => {
+  search = "",
+  categories = [],
+  subcategories = [],
+  nations = [],
+  ingredients = [],
+  time = [],
+  cost = [],
+  ratings = [],
+  difficulty = []
+}) => {
   const limit = 10; // Number of recipes per page
 
+  const searchQuery = search ? `&search=${search}` : "";
   const categoryQuery = categories.length ? `&category=${categories.join(',')}` : "";
   const subcategoryQuery = subcategories.length ? `&subcategory=${subcategories.join(',')}` : "";
-  const nationQuery = nations ? `&nation=${nations}` : "";
+  const nationQuery = nations ? `&nation=${nations.join(',')}` : "";
   const ingredientQuery = ingredients.length ? `&ingredient=${ingredients.join(',')}` : "";
   const ratingQuery = ratings.length ? `&rating=${ratings.join(',')}` : "";
   const difficultyQuery = difficulty.length ? `&difficulty=${difficulty.join(',')}` : "";
@@ -26,7 +28,7 @@ export const fetchRecipes = async (
   const costQuery = cost ? `&cost=${cost[1]}` : "";
 
   const response = await fetch(
-    `${base}/recipes?page=${page}&limit=${limit}${categoryQuery}${subcategoryQuery}${nationQuery}${ingredientQuery}${ratingQuery}${difficultyQuery}${timeQuery}${costQuery}`
+    `${base}/recipes?page=${page}&limit=${limit}${searchQuery}${categoryQuery}${subcategoryQuery}${nationQuery}${ingredientQuery}${ratingQuery}${difficultyQuery}${timeQuery}${costQuery}`
   );
   
   const data = await response.json();

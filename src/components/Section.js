@@ -3,7 +3,7 @@ import RecipeCard from "../components/RecipeCard"; // Component to display each 
 import { FaTags, } from 'react-icons/fa'; // Import icons for section types
 
 // SectionCard Component (Reusable)
-const SectionCard = ({ title, sectionRecipes, recipeImages, path, bgColor = "bg-white", titleColor = "text-teal-600", IconType=FaTags, sectionType, selectedValue }) => {
+const SectionCard = ({ title, sectionRecipes, path, bgColor = "bg-white", titleColor = "text-teal-600", IconType=FaTags, sectionType, selectedValue }) => {
   // Function to return the correct icon based on section type
   const getIcon = () => <IconType className="text-teal-600 text-2xl" />; // Slightly larger icon size
 
@@ -29,7 +29,7 @@ const SectionCard = ({ title, sectionRecipes, recipeImages, path, bgColor = "bg-
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {sectionRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} recipeImage={recipeImages[recipe.id]} />
+          <RecipeCard key={recipe.id} recipe={recipe} />
         ))}
       </div>
 

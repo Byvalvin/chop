@@ -11,7 +11,7 @@ const RangeSlider = ({ label, min, max, value, onChange, unit }) => {
 
   const formatters = [
     (value) => `${value}`,
-    (value) => `${value} ${unit}`
+    (value) => `${value}${unit}`
   ]
 
   return (
@@ -55,7 +55,7 @@ const RangeSlider = ({ label, min, max, value, onChange, unit }) => {
       />
       <div className="text-sm text-gray-600">
         {/* Display the current value with unit */}
-        {value[0]} {unit} - {value[1]} {unit}
+        {value[0]}{unit} - {value[1]}{unit}
       </div>
     </div>
   );

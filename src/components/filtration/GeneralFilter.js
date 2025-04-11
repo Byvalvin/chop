@@ -8,7 +8,8 @@ const GeneralFilter = ({
   isMultiSelect = true,
   allowCustomInput = false,
   maxSelected = 10,
-  onClear // Individual clear button for each filter
+  onClear, // Individual clear button for each filter
+  hasUnsavedChanges = false, // 👈 Add this
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [customInput, setCustomInput] = useState("");
@@ -70,12 +71,20 @@ const GeneralFilter = ({
   return (
     <div className="mt-4">
       <div
-        className="cursor-pointer flex items-center justify-between p-2 bg-gray-200 rounded-md"
+        className={`cursor-pointer flex items-center justify-between p-2 rounded-md ${
+          hasUnsavedChanges ? "bg-yellow-100 border-2 border-yellow-400" : "bg-gray-200"
+        }`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="text-sm font-semibold">{`${title}: ${selectedTitle}`}</span>
+        <span className="text-sm font-semibold flex items-center gap-2">
+          {title}: {selectedTitle}
+          {hasUnsavedChanges && (
+            <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
+          )}
+        </span>
         <span className="text-sm text-gray-500">{isOpen ? "▲" : "▼"}</span>
       </div>
+
 
       {isOpen && (
         <div className="mt-2 p-2 bg-gray-100 rounded-md space-y-2">

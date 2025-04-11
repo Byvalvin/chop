@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchRecipes, fetchRecipeImages, fetchNations, fetchCategories, fetchSubcategories } from "../utils/api"; // Utility function to handle API calls
+import { fetchRecipes, fetchNations, fetchCategories, fetchSubcategories } from "../utils/api"; // Utility function to handle API calls
 import SectionCard from "../components/Section";
 import { FaFolder, FaGlobe, FaTags } from "react-icons/fa";
 
@@ -11,7 +11,6 @@ export default function Home() {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1); // For pagination
   const [hasMore, setHasMore] = useState(true); // Track if there are more pages
-  const [recipeImages, setRecipeImages] = useState({}); // Store images for each recipe
   const [selectedNation, setSelectedNation] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
@@ -31,20 +30,21 @@ export default function Home() {
 
       // Try to get data from localStorage
       const storedData = localStorage.getItem("sectionData");
-      console.log(storedData);
+      console.log(storedData,"there");
       //localStorage.clear();
 
       if (storedData) {
+        console.log("in here")
         // If data exists, use it from localStorage
         const parsedData = JSON.parse(storedData);
         setSectionRecipes(parsedData.sectionRecipes);
         setSelectedNation(parsedData.selectedNation);
         setSelectedCategory(parsedData.selectedCategory);
         setSelectedSubcategory(parsedData.selectedSubcategory);
-        setRecipeImages(parsedData.recipeImages);
         setHasMore(parsedData.hasMore);
         setLoading(false);
       } else {
+        console.log("in there")
         // If no data in localStorage, fetch data from the API
         try {
           const nationsData = await fetchNations();
@@ -59,36 +59,19 @@ export default function Home() {
           setSelectedCategory(randomCategory);
           setSelectedSubcategory(randomSubcategory);
 
-          const nationData = await fetchRecipes(page, "", "", randomNation.name);
-          const categoryData = await fetchRecipes(page, randomCategory.name, "", "");
-          const subcategoryData = await fetchRecipes(page, "", randomSubcategory.name, "");
+          const nationData = await fetchRecipes({page, nations:[randomNation.name]});
+          const categoryData = await fetchRecipes({page, categories:[randomCategory.name]});
+          const subcategoryData = await fetchRecipes({page, subcategories:[randomSubcategory.name]});
 
+          console.log(nationData,categoryData,subcategoryData,"hereRR")
           const nation = nationData.results.slice(0, 3),
-          category = categoryData.results.slice(0, 3),
-          subcategory = subcategoryData.results.slice(0, 3);
-
+                category = categoryData.results.slice(0, 3),
+                subcategory = subcategoryData.results.slice(0, 3);
           const sections = { nation, category, subcategory };
 
           setSectionRecipes(sections);
+          console.log(sections,"here");
 
-          // Create an array of promises for fetching recipe images
-          const imagePromises = [...nationData.results, ...categoryData.results, ...subcategoryData.results].map(async (recipe) => {
-            const recipeImageData = await fetchRecipeImages(recipe.id);
-            return {
-              [recipe.id]: recipeImageData.results.length > 0 ? recipeImageData.results[0].url : "/images/empty.jpg"
-            };
-          });
-
-          // Wait for all image fetches to complete
-          const imagesArray = await Promise.all(imagePromises);
-          
-          // Convert array of objects into a single object
-          const images = imagesArray.reduce((acc, imgObj) => {
-            return { ...acc, ...imgObj };
-          }, {});
-          console.log(images);
-
-          setRecipeImages(images);
           setHasMore(nationData.results.length === 10);
 
           // Save fetched data to localStorage
@@ -97,7 +80,6 @@ export default function Home() {
             selectedNation: randomNation,
             selectedCategory: randomCategory,
             selectedSubcategory: randomSubcategory,
-            recipeImages: images,
             hasMore
           }));
 
@@ -115,7 +97,7 @@ export default function Home() {
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const searchData = await fetchRecipes(page, "", "", searchTerm);
+      const searchData = await fetchRecipes({page,search:searchTerm});
       setRecipes(searchData.results);
     } catch (err) {
       setError(err.message);
@@ -132,7 +114,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-teal-500 via-teal-400 to-teal-300">
-      {/* <Navbar /> Include Navbar here */}
       
       <main className="max-w-screen-xl mx-auto flex flex-col items-center gap-12 p-8">
         <div className="w-full">
@@ -140,7 +121,6 @@ export default function Home() {
           <SectionCard 
             title={`Nation `}
             sectionRecipes={sectionRecipes.nation}
-            recipeImages={recipeImages}
             path={paths.nation}
             sectionType="nation"
             bgColor="bg-teal-100"
@@ -152,7 +132,6 @@ export default function Home() {
           <SectionCard 
             title={`Category `}
             sectionRecipes={sectionRecipes.category}
-            recipeImages={recipeImages}
             path={paths.category}
             sectionType="category"
             bgColor="bg-teal-200"
@@ -164,7 +143,6 @@ export default function Home() {
           <SectionCard 
             title={`Subcategory `}
             sectionRecipes={sectionRecipes.subcategory}
-            recipeImages={recipeImages}
             path={paths.subcategory}
             sectionType="subcategory"
             bgColor="bg-teal-300"

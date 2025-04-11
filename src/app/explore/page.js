@@ -27,6 +27,7 @@ export default function Results() {
   const [hasMore, setHasMore] = useState(true);
   const [shouldSearch, setShouldSearch] = useState(false);
 
+
   // Filter states
   const [categories, setCategories] = useState(categoryFromParams ? [categoryFromParams] : []);
   const [subcategories, setSubcategories] = useState(subcategoryFromParams ? [subcategoryFromParams] : []);
@@ -36,6 +37,20 @@ export default function Results() {
   const [time, setTime] = useState([0, 720]);
   const [cost, setCost] = useState([0, 1000]);
   const [difficulty, setDifficulty] = useState([1, 10]);
+
+  // Applied filters (used to compare for changes)
+  const [appliedFiltersState, setAppliedFiltersState] = useState({
+    searchTerm,
+    categories,
+    subcategories,
+    ratings,
+    ingredients,
+    nation,
+    time,
+    cost,
+    difficulty,
+  });
+  
 
   // Options for dropdowns/sliders
   const categoryOptions = ["Vegetarian", "Vegan", "Dessert"];
@@ -59,8 +74,40 @@ export default function Results() {
 
   // Handle search button click or Enter key press
   const handleSearch = () => {
-    setShouldSearch(true); // Trigger the search
+    setAppliedFiltersState({
+      searchTerm,
+      categories,
+      subcategories,
+      ratings,
+      ingredients,
+      nation,
+      time,
+      cost,
+      difficulty,
+    });
+    setShouldSearch(true);
   };
+
+  const haveUnsavedChanges = (key) => {
+    const current = {
+      searchTerm,
+      categories,
+      subcategories,
+      ratings,
+      ingredients,
+      nation,
+      time,
+      cost,
+      difficulty,
+    }[key];
+  
+    const applied = appliedFiltersState[key];
+  
+    return JSON.stringify(current) !== JSON.stringify(applied);
+  };
+  const hasAnyUnsavedChanges = Object.keys(appliedFiltersState).some(haveUnsavedChanges);
+  
+  
 
   // Trigger automatic search if params exist
   useEffect(() => {
@@ -69,14 +116,29 @@ export default function Results() {
     }
   }, [nationFromParams, categoryFromParams, subcategoryFromParams, searchTermFromParams]);
 
+  // Add this useEffect: for updating and apply search
+  useEffect(() => {
+    if (searchTermFromParams !== searchTerm) {
+      const updatedSearch = searchTermFromParams || "";
+      setSearchTerm(updatedSearch);
+      setAppliedFiltersState((prev) => ({
+        ...prev,
+        searchTerm: updatedSearch,
+      }));
+      setShouldSearch(true);
+    }
+  }, [searchTermFromParams]);
+  
+
   // Fetch recipes
   useEffect(() => {
     if (shouldSearch) {
       const fetchData = async () => {
         setLoading(true);
         try {
-          const data = await fetchRecipes(
+          const data = await fetchRecipes({
             page,
+            searchTerm,
             categories,
             subcategories,
             nation,
@@ -85,7 +147,7 @@ export default function Results() {
             cost,
             ratings,
             difficulty
-          );
+        });
           setRecipes(data.results);
           setHasMore(data.results.length === 10);
         } catch (err) {
@@ -131,20 +193,25 @@ export default function Results() {
 
 
         {/* Filters */}
-        <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} />
-        <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} />
-        <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} />
-        <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} />
-        <GeneralFilter title="Nation" options={nationOptions} selectedValues={nation ? [nation] : []} onChange={setNation} isMultiSelect={false} allowCustomInput={true} onClear={() => setNation("")} />
-        <RangeSlider label="Time" min={0} max={720} value={time} onChange={setTime} unit="min" />
-        <RangeSlider label="Cost" min={0} max={1000} value={cost} onChange={setCost} unit="$" />
-        <RangeSlider label="Difficulty" min={1} max={10} value={difficulty} onChange={setDifficulty} unit="" />
+        <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} hasUnsavedChanges={haveUnsavedChanges("categories")} />
+        <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} hasUnsavedChanges={haveUnsavedChanges("subcategories")}/>
+        <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")}/>
+        <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} hasUnsavedChanges={haveUnsavedChanges("ingredients")}/>
+        <GeneralFilter title="Nation" options={nationOptions} selectedValues={nation ? [nation] : []} onChange={setNation} isMultiSelect={false} allowCustomInput={true} onClear={() => setNation("")} hasUnsavedChanges={haveUnsavedChanges("nation")}/>
+        <RangeSlider label="Time" min={0} max={720} value={time} onChange={setTime} unit="min" hasUnsavedChanges={haveUnsavedChanges("time")} />
+        <RangeSlider label="Cost" min={0} max={1000} value={cost} onChange={setCost} unit="$" hasUnsavedChanges={haveUnsavedChanges("cost")} />
+        <RangeSlider label="Difficulty" min={1} max={10} value={difficulty} onChange={setDifficulty} unit="" hasUnsavedChanges={haveUnsavedChanges("difficulty")} />
 
         {/* Apply Filters Button - at the bottom */}
         <div className="flex justify-end mt-6">
           <button
             onClick={handleSearch}
-            className="flex items-center justify-center py-2 px-4 bg-teal-600 text-white rounded-full w-full hover:bg-teal-700 transition-all"
+            disabled={!hasAnyUnsavedChanges}
+            className={`flex items-center justify-center py-2 px-4 rounded-full w-full transition-all
+              ${hasAnyUnsavedChanges
+                ? "bg-teal-600 text-white hover:bg-teal-700"
+                : "bg-gray-400 text-gray-200 cursor-not-allowed"}
+            `}
           >
             <FaCheckCircle className="mr-2" /> Apply Filters
           </button>
@@ -161,14 +228,22 @@ export default function Results() {
           <div className="w-full p-4 bg-gray-100 rounded-md shadow-sm">
             <h3 className="text-xl font-semibold">Search Results</h3>
             <p className="text-sm text-gray-600">
-              {searchTerm && `Showing results for: "${searchTerm}"`}
-              {appliedFilters && (
-                <span className="block mt-2 text-sm text-gray-500">
-                  Filters applied: {appliedFilters}
-                </span>
-              )}
+              {appliedFiltersState.searchTerm && `Showing results for: "${appliedFiltersState.searchTerm}"`}
+              <span className="block mt-2 text-sm text-gray-500">
+                Filters applied: {[
+                  appliedFiltersState.categories.length > 0 && `Categories: ${appliedFiltersState.categories.join(", ")}`,
+                  appliedFiltersState.subcategories.length > 0 && `Subcategories: ${appliedFiltersState.subcategories.join(", ")}`,
+                  appliedFiltersState.ratings.length > 0 && `Ratings: ${appliedFiltersState.ratings.join(", ")}`,
+                  appliedFiltersState.ingredients.length > 0 && `Ingredients: ${appliedFiltersState.ingredients.join(", ")}`,
+                  appliedFiltersState.nation && `Nation: ${appliedFiltersState.nation}`,
+                  appliedFiltersState.time && `Time: ${appliedFiltersState.time[0]} - ${appliedFiltersState.time[1]} min`,
+                  appliedFiltersState.cost && `Cost: $${appliedFiltersState.cost[0]} - $${appliedFiltersState.cost[1]}`,
+                  appliedFiltersState.difficulty && `Difficulty: ${appliedFiltersState.difficulty[0]} - ${appliedFiltersState.difficulty[1]}`
+                ].filter(Boolean).join(" | ")}
+              </span>
             </p>
           </div>
+
 
           {/* Recipe Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
