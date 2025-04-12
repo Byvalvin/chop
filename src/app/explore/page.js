@@ -107,8 +107,6 @@ export default function Results() {
   };
   const hasAnyUnsavedChanges = Object.keys(appliedFiltersState).some(haveUnsavedChanges);
   
-  
-
   // Trigger automatic search if params exist
   useEffect(() => {
     if (nationFromParams || categoryFromParams || subcategoryFromParams || searchTermFromParams) {
@@ -138,7 +136,7 @@ export default function Results() {
         try {
           const data = await fetchRecipes({
             page,
-            searchTerm,
+            search:searchTerm,
             categories,
             subcategories,
             nations,
@@ -160,7 +158,7 @@ export default function Results() {
 
       fetchData();
     }
-  }, [shouldSearch, page, categories, subcategories, nations, ingredients, time, cost, ratings, difficulty]);
+  }, [shouldSearch, page, searchTerm, categories, subcategories, nations, ingredients, time, cost, ratings, difficulty]);
 
   // Create filter display string
   const appliedFilters = [
