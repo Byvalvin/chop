@@ -223,32 +223,15 @@ export default function Results() {
             {/* Search Summary */}
             <div className="w-full p-4 bg-gray-100 rounded-md shadow-sm">
               <h3 className="text-xl font-semibold">Search Results</h3>
-              <p className="text-sm text-gray-600">
-                {appliedFiltersState.searchTerm && `Showing results for: "${appliedFiltersState.searchTerm}"`}
-                <span className="block mt-2 text-sm text-gray-500">
-                  Filters applied: {[
-                    appliedFiltersState.categories.length > 0 && `Categories: ${appliedFiltersState.categories.join(", ")}`,
-                    appliedFiltersState.subcategories.length > 0 && `Subcategories: ${appliedFiltersState.subcategories.join(", ")}`,
-                    appliedFiltersState.ratings.length > 0 && `Ratings: ${appliedFiltersState.ratings.join(", ")}`,
-                    appliedFiltersState.ingredients.length > 0 && `Ingredients: ${appliedFiltersState.ingredients.join(", ")}`,
-                    appliedFiltersState.nations.length > 0 && `Nations: ${appliedFiltersState.nations.join(", ")}`,
-                    appliedFiltersState.time && `Time: ${appliedFiltersState.time[0]} - ${appliedFiltersState.time[1]} min`,
-                    appliedFiltersState.cost && `Cost: $${appliedFiltersState.cost[0]} - $${appliedFiltersState.cost[1]}`,
-                    appliedFiltersState.difficulty && `Difficulty: ${appliedFiltersState.difficulty[0]} - ${appliedFiltersState.difficulty[1]}`
-                  ].filter(Boolean).join(" | ")}
-                </span>
-              </p>
+              <p className="text-sm text-gray-600">{appliedFilters ? `Filters applied: ${appliedFilters}` : "No filters applied."}</p>
             </div>
 
-
-            {/* Recipe Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
+            {/* Results Grid */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {loading ? (
-                <p>Loading...</p>
+                <div className="col-span-full">Loading...</div>
               ) : error ? (
-                <p>{error}</p>
-              ) : recipes.length === 0 ? (
-                <p className="text-center text-xl text-gray-500">No results found. Please try adjusting your filters.</p>
+                <div className="col-span-full">Error: {error}</div>
               ) : (
                 recipes.map((recipe) => (
                   <RecipeCard key={recipe.id} recipe={recipe} />
@@ -257,7 +240,9 @@ export default function Results() {
             </div>
 
             {/* Pagination */}
-            <Pagination currentPage={page} totalPages={Math.ceil(100 / 10)} onPageChange={setPage} hasMore={hasMore} />
+            {hasMore && !loading && (
+              <Pagination currentPage={page} onPageChange={setPage} />
+            )}
           </main>
         </div>
       </div>
