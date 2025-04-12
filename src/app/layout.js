@@ -3,6 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from '../components/Navbar'; // Import Navbar component
 import "./globals.css";
 
+import { Suspense } from "react";
+
+
+
 // Font setup
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +27,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
-      >
+      <body className="min-h-screen">
         <Navbar />
-        <main className="flex-grow">{children}</main>
+        <Suspense fallback={<div>Loading...</div>}>
+          {children}
+        </Suspense>
         <footer className="py-4 text-center text-gray-500">
           <p className="text-sm">Powered by ChopAPI</p>
         </footer>
@@ -35,3 +39,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
