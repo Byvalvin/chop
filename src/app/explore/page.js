@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";  // Import Suspense
 import { useSearchParams } from "next/navigation";
 import { fetchRecipes } from "../../utils/api";
 import RecipeCard from "../../components/RecipeCard";
@@ -9,6 +9,7 @@ import GeneralFilter from "../../components/filtration/GeneralFilter";
 import RangeSlider from "../../components/filtration/RangeSlider";
 import { FaTrashAlt, FaCheckCircle } from 'react-icons/fa'; // Import icons for the buttons
 
+// The Results Component wrapped in Suspense
 export default function Results() {
   const searchParams = useSearchParams();
 
@@ -26,7 +27,6 @@ export default function Results() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [shouldSearch, setShouldSearch] = useState(false);
-
 
   // Filter states
   const [categories, setCategories] = useState(categoryFromParams ? [categoryFromParams] : []);
@@ -50,7 +50,6 @@ export default function Results() {
     cost,
     difficulty,
   });
-  
 
   // Options for dropdowns/sliders
   const categoryOptions = ["Vegetarian", "Vegan", "Dessert"];
@@ -100,13 +99,13 @@ export default function Results() {
       cost,
       difficulty,
     }[key];
-  
+
     const applied = appliedFiltersState[key];
-  
+
     return JSON.stringify(current) !== JSON.stringify(applied);
   };
   const hasAnyUnsavedChanges = Object.keys(appliedFiltersState).some(haveUnsavedChanges);
-  
+
   // Trigger automatic search if params exist
   useEffect(() => {
     if (nationFromParams || categoryFromParams || subcategoryFromParams || searchTermFromParams) {
@@ -125,8 +124,7 @@ export default function Results() {
       }));
       setShouldSearch(true);
     }
-  }, [searchTermFromParams]);
-  
+  }, [searchTermFromParams, searchTerm]);
 
   // Fetch recipes
   useEffect(() => {
@@ -136,7 +134,7 @@ export default function Results() {
         try {
           const data = await fetchRecipes({
             page,
-            search:searchTerm,
+            search: searchTerm,
             categories,
             subcategories,
             nations,
@@ -145,7 +143,7 @@ export default function Results() {
             cost,
             ratings,
             difficulty
-        });
+          });
           setRecipes(data.results);
           setHasMore(data.results.length === 10);
         } catch (err) {
@@ -167,7 +165,7 @@ export default function Results() {
     subcategories.length > 0 && `Subcategories: ${subcategories.join(", ")}`,
     ratings.length > 0 && `Ratings: ${ratings.join(", ")}`,
     ingredients.length > 0 && `Ingredients: ${ingredients.join(", ")}`,
-    nations.length > 0  && `Nations: ${nations.join(", ")}`,
+    nations.length > 0 && `Nations: ${nations.join(", ")}`,
     time && `Time: ${time[0]} - ${time[1]} min`,
     cost && `Cost: $${cost[0]} - $${cost[1]}`,
     difficulty && `Difficulty: ${difficulty[0]} - ${difficulty[1]}`
@@ -176,92 +174,93 @@ export default function Results() {
     .join(" | ");
 
   return (
-    <div className="flex max-w-screen-xl mx-auto p-8 gap-8">
-      {/* Left side: Filters */}
-      <div className="w-1/4 space-y-6">
-        {/* Clear Filters Button - at the top */}
-        <div className="flex justify-end mt-6">
-          <button
-            onClick={handleClearAll}
-            className="flex items-center justify-center py-2 px-4 bg-red-600 text-white rounded-full w-full hover:bg-red-700 transition-all"
-          >
-            <FaTrashAlt className="mr-2" /> Clear All
-          </button>
-        </div>
-
-
-        {/* Filters */}
-        <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} hasUnsavedChanges={haveUnsavedChanges("categories")} />
-        <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} hasUnsavedChanges={haveUnsavedChanges("subcategories")}/>
-        <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")} />
-        <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} hasUnsavedChanges={haveUnsavedChanges("ingredients")}/>
-        <GeneralFilter title="Nations" options={nationOptions} selectedValues={nations} onChange={setNations} isMultiSelect={false} allowCustomInput={true} onClear={() => setNations([])} hasUnsavedChanges={haveUnsavedChanges("nations")} />
-        <RangeSlider label="Time" min={0} max={720} value={time} onChange={setTime} unit="min" hasUnsavedChanges={haveUnsavedChanges("time")} />
-        <RangeSlider label="Cost" min={0} max={1000} value={cost} onChange={setCost} unit="$" hasUnsavedChanges={haveUnsavedChanges("cost")} />
-        <RangeSlider label="Difficulty" min={1} max={10} value={difficulty} onChange={setDifficulty} unit="" hasUnsavedChanges={haveUnsavedChanges("difficulty")} />
-
-        {/* Apply Filters Button - at the bottom */}
-        <div className="flex justify-end mt-6">
-          <button
-            onClick={handleSearch}
-            disabled={!hasAnyUnsavedChanges}
-            className={`flex items-center justify-center py-2 px-4 rounded-full w-full transition-all
-              ${hasAnyUnsavedChanges
-                ? "bg-teal-600 text-white hover:bg-teal-700"
-                : "bg-gray-400 text-gray-200 cursor-not-allowed"}
-            `}
-          >
-            <FaCheckCircle className="mr-2" /> Apply Filters
-          </button>
-        </div>
-      </div>
-
-      {/* Separator */}
-      <div className="w-px bg-gray-300 mx-8"></div>
-
-      {/* Right side: Results */}
-      <div className="w-3/4 space-y-8">
-        <main className="flex flex-col items-center gap-12">
-          {/* Search Summary */}
-          <div className="w-full p-4 bg-gray-100 rounded-md shadow-sm">
-            <h3 className="text-xl font-semibold">Search Results</h3>
-            <p className="text-sm text-gray-600">
-              {appliedFiltersState.searchTerm && `Showing results for: "${appliedFiltersState.searchTerm}"`}
-              <span className="block mt-2 text-sm text-gray-500">
-                Filters applied: {[
-                  appliedFiltersState.categories.length > 0 && `Categories: ${appliedFiltersState.categories.join(", ")}`,
-                  appliedFiltersState.subcategories.length > 0 && `Subcategories: ${appliedFiltersState.subcategories.join(", ")}`,
-                  appliedFiltersState.ratings.length > 0 && `Ratings: ${appliedFiltersState.ratings.join(", ")}`,
-                  appliedFiltersState.ingredients.length > 0 && `Ingredients: ${appliedFiltersState.ingredients.join(", ")}`,
-                  appliedFiltersState.nations.length > 0 && `Nations: ${appliedFiltersState.nations.join(", ")}`,
-                  appliedFiltersState.time && `Time: ${appliedFiltersState.time[0]} - ${appliedFiltersState.time[1]} min`,
-                  appliedFiltersState.cost && `Cost: $${appliedFiltersState.cost[0]} - $${appliedFiltersState.cost[1]}`,
-                  appliedFiltersState.difficulty && `Difficulty: ${appliedFiltersState.difficulty[0]} - ${appliedFiltersState.difficulty[1]}`
-                ].filter(Boolean).join(" | ")}
-              </span>
-            </p>
+    <Suspense fallback={<div>Loading...</div>}> {/* Suspense Boundary */}
+      <div className="flex max-w-screen-xl mx-auto p-8 gap-8">
+        {/* Left side: Filters */}
+        <div className="w-1/4 space-y-6">
+          {/* Clear Filters Button - at the top */}
+          <div className="flex justify-end mt-6">
+            <button
+              onClick={handleClearAll}
+              className="flex items-center justify-center py-2 px-4 bg-red-600 text-white rounded-full w-full hover:bg-red-700 transition-all"
+            >
+              <FaTrashAlt className="mr-2" /> Clear All
+            </button>
           </div>
 
+          {/* Filters */}
+          <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} hasUnsavedChanges={haveUnsavedChanges("categories")} />
+          <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} hasUnsavedChanges={haveUnsavedChanges("subcategories")}/>
+          <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")} />
+          <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} hasUnsavedChanges={haveUnsavedChanges("ingredients")}/>
+          <GeneralFilter title="Nations" options={nationOptions} selectedValues={nations} onChange={setNations} isMultiSelect={false} allowCustomInput={true} onClear={() => setNations([])} hasUnsavedChanges={haveUnsavedChanges("nations")} />
+          <RangeSlider label="Time" min={0} max={720} value={time} onChange={setTime} unit="min" hasUnsavedChanges={haveUnsavedChanges("time")} />
+          <RangeSlider label="Cost" min={0} max={1000} value={cost} onChange={setCost} unit="$" hasUnsavedChanges={haveUnsavedChanges("cost")} />
+          <RangeSlider label="Difficulty" min={1} max={10} value={difficulty} onChange={setDifficulty} unit="" hasUnsavedChanges={haveUnsavedChanges("difficulty")} />
 
-          {/* Recipe Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
-            {loading ? (
-              <p>Loading...</p>
-            ) : error ? (
-              <p>{error}</p>
-            ) : recipes.length === 0 ? (
-              <p className="text-center text-xl text-gray-500">No results found. Please try adjusting your filters.</p>
-            ) : (
-              recipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))
-            )}
+          {/* Apply Filters Button - at the bottom */}
+          <div className="flex justify-end mt-6">
+            <button
+              onClick={handleSearch}
+              disabled={!hasAnyUnsavedChanges}
+              className={`flex items-center justify-center py-2 px-4 rounded-full w-full transition-all
+                ${hasAnyUnsavedChanges
+                  ? "bg-teal-600 text-white hover:bg-teal-700"
+                  : "bg-gray-400 text-gray-200 cursor-not-allowed"}
+              `}
+            >
+              <FaCheckCircle className="mr-2" /> Apply Filters
+            </button>
           </div>
+        </div>
 
-          {/* Pagination */}
-          <Pagination currentPage={page} totalPages={Math.ceil(100 / 10)} onPageChange={setPage} hasMore={hasMore} />
-        </main>
+        {/* Separator */}
+        <div className="w-px bg-gray-300 mx-8"></div>
+
+        {/* Right side: Results */}
+        <div className="w-3/4 space-y-8">
+          <main className="flex flex-col items-center gap-12">
+            {/* Search Summary */}
+            <div className="w-full p-4 bg-gray-100 rounded-md shadow-sm">
+              <h3 className="text-xl font-semibold">Search Results</h3>
+              <p className="text-sm text-gray-600">
+                {appliedFiltersState.searchTerm && `Showing results for: "${appliedFiltersState.searchTerm}"`}
+                <span className="block mt-2 text-sm text-gray-500">
+                  Filters applied: {[
+                    appliedFiltersState.categories.length > 0 && `Categories: ${appliedFiltersState.categories.join(", ")}`,
+                    appliedFiltersState.subcategories.length > 0 && `Subcategories: ${appliedFiltersState.subcategories.join(", ")}`,
+                    appliedFiltersState.ratings.length > 0 && `Ratings: ${appliedFiltersState.ratings.join(", ")}`,
+                    appliedFiltersState.ingredients.length > 0 && `Ingredients: ${appliedFiltersState.ingredients.join(", ")}`,
+                    appliedFiltersState.nations.length > 0 && `Nations: ${appliedFiltersState.nations.join(", ")}`,
+                    appliedFiltersState.time && `Time: ${appliedFiltersState.time[0]} - ${appliedFiltersState.time[1]} min`,
+                    appliedFiltersState.cost && `Cost: $${appliedFiltersState.cost[0]} - $${appliedFiltersState.cost[1]}`,
+                    appliedFiltersState.difficulty && `Difficulty: ${appliedFiltersState.difficulty[0]} - ${appliedFiltersState.difficulty[1]}`
+                  ].filter(Boolean).join(" | ")}
+                </span>
+              </p>
+            </div>
+
+
+            {/* Recipe Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
+              {loading ? (
+                <p>Loading...</p>
+              ) : error ? (
+                <p>{error}</p>
+              ) : recipes.length === 0 ? (
+                <p className="text-center text-xl text-gray-500">No results found. Please try adjusting your filters.</p>
+              ) : (
+                recipes.map((recipe) => (
+                  <RecipeCard key={recipe.id} recipe={recipe} />
+                ))
+              )}
+            </div>
+
+            {/* Pagination */}
+            <Pagination currentPage={page} totalPages={Math.ceil(100 / 10)} onPageChange={setPage} hasMore={hasMore} />
+          </main>
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 }

@@ -24,11 +24,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        {/* Include the Navbar and main content */}
         <Navbar />
-        <main>{children}</main>
+        <main className="flex-grow">{children}</main>
+        <footer className="py-4 text-center text-gray-500">
+          <p className="text-sm">Powered by ChopAPI</p>
+        </footer>
       </body>
     </html>
   );

@@ -157,9 +157,6 @@ export default function Home() {
         {error && <p className="text-red-400 text-lg">{error}</p>}
       </main>
 
-      <footer className="py-4 text-center text-gray-500">
-        <p className="text-sm">Powered by ChopAPI</p>
-      </footer>
     </div>
   );
 }
