@@ -1,6 +1,7 @@
 // src/app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from '../components/Navbar'; // Import Navbar component
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 import { Suspense } from "react";
@@ -32,9 +33,7 @@ export default function RootLayout({ children }) {
         <Suspense fallback={<div>Loading...</div>}>
           {children}
         </Suspense>
-        <footer className="py-4 text-center text-gray-500">
-          <p className="text-sm">Powered by ChopAPI</p>
-        </footer>
+        <Footer />
       </body>
     </html>
   );

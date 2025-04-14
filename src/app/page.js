@@ -1,16 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchRecipes, fetchNations, fetchCategories, fetchSubcategories } from "../utils/api"; // Utility function to handle API calls
+import { fetchRecipes, fetchNations, fetchCategories, fetchSubcategories } from "../utils/api";
 import SectionCard from "../components/Section";
 import { FaFolder, FaGlobe, FaTags } from "react-icons/fa";
+import PageContainer from "../components/PageContainer"; // Import the PageContainer component
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(1); // For pagination
-  const [hasMore, setHasMore] = useState(true); // Track if there are more pages
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const [selectedNation, setSelectedNation] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
@@ -18,24 +19,16 @@ export default function Home() {
     nation: [],
     category: [],
     subcategory: [],
-  }); // Store section-wise recipes
+  });
 
-  // Search term state
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch Nations, Categories, and Subcategories for initial section data
   useEffect(() => {
     const getSectionData = async () => {
       setLoading(true);
-
-      // Try to get data from localStorage
       const storedData = localStorage.getItem("sectionData");
-      console.log(storedData,"there");
-      //localStorage.clear();
 
       if (storedData) {
-        console.log("in here")
-        // If data exists, use it from localStorage
         const parsedData = JSON.parse(storedData);
         setSectionRecipes(parsedData.sectionRecipes);
         setSelectedNation(parsedData.selectedNation);
@@ -44,8 +37,6 @@ export default function Home() {
         setHasMore(parsedData.hasMore);
         setLoading(false);
       } else {
-        console.log("in there")
-        // If no data in localStorage, fetch data from the API
         try {
           const nationsData = await fetchNations();
           const categoriesData = await fetchCategories();
@@ -59,22 +50,19 @@ export default function Home() {
           setSelectedCategory(randomCategory);
           setSelectedSubcategory(randomSubcategory);
 
-          const nationData = await fetchRecipes({page, nations:[randomNation.name]});
-          const categoryData = await fetchRecipes({page, categories:[randomCategory.name]});
-          const subcategoryData = await fetchRecipes({page, subcategories:[randomSubcategory.name]});
+          const nationData = await fetchRecipes({ page, nations: [randomNation.name] });
+          const categoryData = await fetchRecipes({ page, categories: [randomCategory.name] });
+          const subcategoryData = await fetchRecipes({ page, subcategories: [randomSubcategory.name] });
 
-          console.log(nationData,categoryData,subcategoryData,"hereRR")
           const nation = nationData.results.slice(0, 3),
                 category = categoryData.results.slice(0, 3),
                 subcategory = subcategoryData.results.slice(0, 3);
+
           const sections = { nation, category, subcategory };
 
           setSectionRecipes(sections);
-          console.log(sections,"here");
-
           setHasMore(nationData.results.length === 10);
 
-          // Save fetched data to localStorage
           localStorage.setItem("sectionData", JSON.stringify({
             sectionRecipes: sections,
             selectedNation: randomNation,
@@ -82,7 +70,6 @@ export default function Home() {
             selectedSubcategory: randomSubcategory,
             hasMore
           }));
-
         } catch (err) {
           setError(err.message);
         } finally {
@@ -97,7 +84,7 @@ export default function Home() {
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const searchData = await fetchRecipes({page,search:searchTerm});
+      const searchData = await fetchRecipes({ page, search: searchTerm });
       setRecipes(searchData.results);
     } catch (err) {
       setError(err.message);
@@ -107,59 +94,64 @@ export default function Home() {
   };
 
   const paths = {
-    nation:`/explore?nation=${selectedNation?.name}`,
-    category:`/explore?category=${selectedCategory?.name}`,
-    subcategory:`/explore?subcategory=${selectedSubcategory?.name}`,
+    nation: `/explore?nation=${selectedNation?.name}`,
+    category: `/explore?category=${selectedCategory?.name}`,
+    subcategory: `/explore?subcategory=${selectedSubcategory?.name}`,
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-teal-500 via-teal-400 to-teal-300">
-      
-      <main className="max-w-screen-xl mx-auto flex flex-col items-center gap-12 p-8">
-        <div className="w-full">
-          {/* Sections */}
-          <SectionCard 
-            title={`Nation `}
-            sectionRecipes={sectionRecipes.nation}
-            path={paths.nation}
-            sectionType="nation"
-            bgColor="bg-teal-100"
-            titleColor="text-teal-800"
-            IconType={FaGlobe}
-            selectedValue={selectedNation?.name}
-          />
+    <div className="min-h-screen bg-[url('/images/bg/light1.png')] bg-cover bg-center bg-no-repeat">
+      {/* Content wrapper with PageContainer */}
+      <PageContainer>
+        <div className="relative z-10">
+          <div className="w-full">
+            <SectionCard 
+              title="Nation"
+              sectionRecipes={sectionRecipes.nation}
+              path={paths.nation}
+              sectionType="nation"
+              bgColor="bg-white" // Optional, still used for fallback color
+              titleColor="text-teal-800"
+              IconType={FaGlobe}
+              selectedValue={selectedNation?.name}
+              backgroundImage="/images/bg/light4.png" // <-- NEW
+            />
 
-          <SectionCard 
-            title={`Category `}
-            sectionRecipes={sectionRecipes.category}
-            path={paths.category}
-            sectionType="category"
-            bgColor="bg-teal-200"
-            titleColor="text-teal-900"
-            IconType={FaTags}
-            selectedValue={selectedCategory?.name}
-          />
+            <SectionCard 
+              title="Category"
+              sectionRecipes={sectionRecipes.category}
+              path={paths.category}
+              sectionType="category"
+              bgColor="bg-white"
+              titleColor="text-green-800"
+              IconType={FaTags}
+              selectedValue={selectedCategory?.name}
+              backgroundImage="/images/bg/light5.png"
+            />
 
-          <SectionCard 
-            title={`Subcategory `}
-            sectionRecipes={sectionRecipes.subcategory}
-            path={paths.subcategory}
-            sectionType="subcategory"
-            bgColor="bg-teal-300"
-            titleColor="text-teal-900"
-            IconType={FaFolder}
-            selectedValue={selectedSubcategory?.name}
-          />
+            <SectionCard 
+              title="Subcategory"
+              sectionRecipes={sectionRecipes.subcategory}
+              path={paths.subcategory}
+              sectionType="subcategory"
+              bgColor="bg-white"
+              titleColor="text-yellow-800"
+              IconType={FaFolder}
+              selectedValue={selectedSubcategory?.name}
+              backgroundImage="/images/bg/light7.png"
+            />
+          </div>
+
+          {loading && <p className="text-lg text-gray-700">Loading recipes...</p>}
+          {error && <p className="text-red-500 text-lg">{error}</p>}
         </div>
-
-        {/* Loading State */}
-        {loading && <p className="text-lg text-white">Loading recipes...</p>}
-        {error && <p className="text-red-400 text-lg">{error}</p>}
-      </main>
-
+      </PageContainer>
     </div>
   );
 }
+
+
+
 
 /*
 https://nextjs.org/docs/pages/api-reference/components/image#priority

@@ -15,7 +15,7 @@ const RangeSlider = ({ label, min, max, value, onChange, unit }) => {
   ]
 
   return (
-    <div className="mt-4">
+    <div className="m-4">
       <label className="block text-lg font-semibold text-gray-700">
         {label} ({unit})
       </label>
