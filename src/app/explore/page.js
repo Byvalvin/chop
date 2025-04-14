@@ -222,7 +222,7 @@ export default function Results() {
           </div>
 
           {/* Separator */}
-          <div className="w-px bg-gray-300 rounded-md"></div>
+          <div className="w-[2px] bg-gray-300 rounded-md"></div>
 
           {/* Right side: Results */}
 

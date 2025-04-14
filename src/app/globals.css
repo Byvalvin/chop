@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --cream: #F5F3F0; 
+  --coral: #FF6F61; 
 }
 
 @theme inline {
@@ -30,3 +32,4 @@ body {
   font-size: 14px;
   white-space: nowrap;
 } */
+

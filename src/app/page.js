@@ -110,8 +110,8 @@ export default function Home() {
               sectionRecipes={sectionRecipes.nation}
               path={paths.nation}
               sectionType="nation"
-              bgColor="bg-white" // Optional, still used for fallback color
-              titleColor="text-teal-800"
+              bgColor="bg-cream" // Updated cream background color
+              titleColor="text-teal-800" // Keep teal for contrast
               IconType={FaGlobe}
               selectedValue={selectedNation?.name}
               backgroundImage="/images/bg/light4.png" // <-- NEW
@@ -122,8 +122,8 @@ export default function Home() {
               sectionRecipes={sectionRecipes.category}
               path={paths.category}
               sectionType="category"
-              bgColor="bg-white"
-              titleColor="text-green-800"
+              bgColor="bg-cream" // Updated cream background color
+              titleColor="text-coral-800" // Updated to coral
               IconType={FaTags}
               selectedValue={selectedCategory?.name}
               backgroundImage="/images/bg/light5.png"
@@ -134,8 +134,8 @@ export default function Home() {
               sectionRecipes={sectionRecipes.subcategory}
               path={paths.subcategory}
               sectionType="subcategory"
-              bgColor="bg-white"
-              titleColor="text-yellow-800"
+              bgColor="bg-cream" // Updated cream background color
+              titleColor="text-coral-800" // Updated to coral
               IconType={FaFolder}
               selectedValue={selectedSubcategory?.name}
               backgroundImage="/images/bg/light7.png"
@@ -149,6 +149,7 @@ export default function Home() {
     </div>
   );
 }
+
 
 
 
