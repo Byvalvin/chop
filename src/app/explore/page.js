@@ -182,9 +182,8 @@ export default function Results() {
       <div className="flex max-w-screen-xl mx-auto p-8 gap-8 min-h-screen bg-white/60 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl shadow-xl backdrop-blur-sm">
 
           {/* Left side: Filters */}
-          
           <div className="w-1/4 space-y-6 bg-gray-50 border-l-4 border-teal-300 rounded-lg shadow-md p-6">
-
+          <div className="">
             {/* Clear Filters Button - at the top */}
             <div className="flex justify-end mt-6">
               <button
@@ -196,14 +195,14 @@ export default function Results() {
             </div>
 
             {/* Filters */}
-            <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} hasUnsavedChanges={haveUnsavedChanges("categories")} />
-            <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} hasUnsavedChanges={haveUnsavedChanges("subcategories")}/>
-            <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")} />
-            <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} hasUnsavedChanges={haveUnsavedChanges("ingredients")}/>
-            <GeneralFilter title="Nations" options={nationOptions} selectedValues={nations} onChange={setNations} isMultiSelect={false} allowCustomInput={true} onClear={() => setNations([])} hasUnsavedChanges={haveUnsavedChanges("nations")} />
-            <RangeSlider label="Time" min={0} max={720} value={time} onChange={setTime} unit="min" hasUnsavedChanges={haveUnsavedChanges("time")} />
-            <RangeSlider label="Cost" min={0} max={1000} value={cost} onChange={setCost} unit="$" hasUnsavedChanges={haveUnsavedChanges("cost")} />
-            <RangeSlider label="Difficulty" min={1} max={10} value={difficulty} onChange={setDifficulty} unit="" hasUnsavedChanges={haveUnsavedChanges("difficulty")} />
+            <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} hasUnsavedChanges={haveUnsavedChanges("categories")} variant = "dark"/>
+            <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} hasUnsavedChanges={haveUnsavedChanges("subcategories")} variant = "dark"/>
+            <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")} variant = "dark"/>
+            <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} hasUnsavedChanges={haveUnsavedChanges("ingredients")} variant = "dark"/>
+            <GeneralFilter title="Nations" options={nationOptions} selectedValues={nations} onChange={setNations} isMultiSelect={false} allowCustomInput={true} onClear={() => setNations([])} hasUnsavedChanges={haveUnsavedChanges("nations")} variant = "dark"/>
+            <RangeSlider label="Time" min={0} max={720} value={time} onChange={setTime} unit="min" hasUnsavedChanges={haveUnsavedChanges("time")} ticks={3} variant = "dark"/>
+            <RangeSlider label="Cost" min={0} max={1000} value={cost} onChange={setCost} unit="$" hasUnsavedChanges={haveUnsavedChanges("cost")} ticks={3} variant = "dark"/>
+            <RangeSlider label="Difficulty" min={1} max={10} value={difficulty} onChange={setDifficulty} unit="" hasUnsavedChanges={haveUnsavedChanges("difficulty")} ticks={2} variant = "dark"/>
 
             {/* Apply Filters Button - at the bottom */}
             <div className="flex justify-end mt-6">
@@ -219,6 +218,7 @@ export default function Results() {
                 <FaCheckCircle className="mr-2" /> Apply Filters
               </button>
             </div>
+            </div>
           </div>
 
           {/* Separator */}
@@ -227,7 +227,7 @@ export default function Results() {
           {/* Right side: Results */}
 
           <div className="w-3/4 space-y-8 p-4 bg-gray-50 border-l-4 border-teal-300 rounded-md shadow-sm">
-            <main className="flex flex-col items-center gap-12">
+            <main className="flex flex-col items-center gap-12 m-2">
               {/* Search Summary */}
               <div className="w-full p-4 bg-gray-100 rounded-md shadow-sm">
                 <h3 className="text-xl font-semibold">Search Results</h3>

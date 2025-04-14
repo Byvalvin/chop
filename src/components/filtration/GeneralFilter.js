@@ -10,6 +10,7 @@ const GeneralFilter = ({
   maxSelected = 10,
   onClear, // Individual clear button for each filter
   hasUnsavedChanges = false, // 👈 Add this
+  variant = "light", // Add variant prop for theme
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [customInput, setCustomInput] = useState("");
@@ -68,11 +69,18 @@ const GeneralFilter = ({
     }
   };
 
+  // Define color scheme based on `variant`
+  const isDark = variant === "dark";
+
   return (
-    <div className="mt-4">
+    <div className="mt-4 relative"> {/* Add relative positioning to the parent */}
       <div
-        className={`cursor-pointer flex items-center justify-between p-2 rounded-md ${
-          hasUnsavedChanges ? "bg-yellow-100 border-2 border-yellow-400" : "bg-gray-200"
+        className={`cursor-pointer flex items-center justify-between p-2 rounded-md transition-all duration-300 ${
+          hasUnsavedChanges
+            ? "bg-yellow-100 border-2 border-yellow-400"
+            : isDark
+            ? "bg-teal-900 text-white border-teal-700"
+            : "bg-gray-200 text-gray-800 border-gray-300"
         }`}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -82,12 +90,22 @@ const GeneralFilter = ({
             <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
           )}
         </span>
-        <span className="text-sm text-gray-500">{isOpen ? "▲" : "▼"}</span>
+        <span className={`text-sm ${isDark ? "text-white" : "text-gray-500"}`}>
+          {isOpen ? "▲" : "▼"}
+        </span>
       </div>
 
-
       {isOpen && (
-        <div className="mt-2 p-2 bg-gray-100 rounded-md space-y-2">
+          <div
+            className={`mt-2 p-2 rounded-md transition-all duration-300 absolute z-10 w-full bg-gray-100 ${ // Use absolute positioning
+              isDark ? "bg-teal-800 text-white" : "bg-gray-100 text-gray-700"
+            }`}
+            style={{
+              top: "100%", // Position it right below the parent element
+              maxHeight: "300px", // Set a max height to control the dropdown
+              overflowY: "auto", // Add scroll if content exceeds maxHeight
+            }}
+          >
           {isMultiSelect ? (
             localOptions.map((option) => (
               <div key={option} className="flex items-center justify-between">
@@ -103,7 +121,9 @@ const GeneralFilter = ({
                 {customOptions.includes(option) && (
                   <button
                     onClick={() => handleRemoveCustomOption(option)}
-                    className="text-xs text-red-500 bg-red-100 rounded-md px-2 py-1 hover:bg-red-200"
+                    className={`text-xs rounded-md px-2 py-1 hover:bg-red-200 ${
+                      isDark ? "text-red-500 bg-red-100" : "text-red-600 bg-red-200"
+                    }`}
                   >
                     ❌
                   </button>
@@ -113,9 +133,9 @@ const GeneralFilter = ({
           ) : (
             <ul className="space-y-1">
               <li
-                className={`cursor-pointer text-sm text-gray-700 hover:bg-gray-200 p-2 rounded-md ${
+                className={`cursor-pointer text-sm p-2 rounded-md ${
                   selectedValues.length === 0 ? "font-bold" : ""
-                }`}
+                } ${isDark ? "text-gray-200" : "text-gray-700"}`}
                 onClick={() => handleDropdownChange("")}
               >
                 Any
@@ -123,7 +143,9 @@ const GeneralFilter = ({
               {localOptions.map((option) => (
                 <li
                   key={option}
-                  className="flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-gray-200"
+                  className={`flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-gray-200 ${
+                    isDark ? "text-gray-200 hover:bg-teal-700" : "text-gray-800 hover:bg-gray-200"
+                  }`}
                 >
                   <span
                     className="text-sm flex-1"
@@ -134,7 +156,9 @@ const GeneralFilter = ({
                   {customOptions.includes(option) && (
                     <button
                       onClick={() => handleRemoveCustomOption(option)}
-                      className="text-xs text-red-500 bg-red-100 rounded-md px-2 py-1 ml-2 hover:bg-red-200"
+                      className={`text-xs rounded-md px-2 py-1 ml-2 ${
+                        isDark ? "text-red-500 bg-red-100 hover:bg-red-200" : "text-red-600 bg-red-200 hover:bg-red-300"
+                      }`}
                     >
                       ❌
                     </button>
@@ -153,11 +177,15 @@ const GeneralFilter = ({
                 onChange={(e) => setCustomInput(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder={`Add your own ${title.toLowerCase()}...`}
-                className="w-full p-1 border rounded text-sm"
+                className={`w-full p-1 border rounded text-sm focus:outline-none ${
+                  isDark ? "border-gray-500 text-white bg-teal-900" : "border-gray-300 text-gray-800"
+                }`}
               />
               <button
                 onClick={handleCustomAdd}
-                className="mt-1 px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600"
+                className={`mt-1 px-2 py-1 text-xs rounded hover:bg-blue-600 ${
+                  isDark ? "bg-teal-500 text-white" : "bg-blue-500 text-white"
+                }`}
               >
                 + Add
               </button>
@@ -170,7 +198,9 @@ const GeneralFilter = ({
           {/* Individual Clear Button */}
           <button
             onClick={onClear}
-            className="mt-4 w-full py-2 text-sm bg-gray-500 text-white rounded-md hover:bg-gray-600"
+            className={`mt-4 w-full py-2 text-sm rounded-md ${
+              isDark ? "bg-teal-700 text-white hover:bg-teal-600" : "bg-gray-500 text-white hover:bg-gray-600"
+            }`}
           >
             Clear {title}
           </button>

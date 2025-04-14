@@ -245,16 +245,17 @@ export default function RecipeDetailPage() {
         </section>
 
         {/* Aliases */}
-        {aliases.length > 0 && (
+        {aliases.length > 1 && (
           <section
             aria-label="Aliases"
             className="text-sm text-gray-500 pt-4"
           >
             <p>
-              <strong>Also known as:</strong> {aliases.join(', ')}
+              <strong>Also known as:</strong> {aliases.slice(1).join(', ')}
             </p>
           </section>
         )}
+
       </article>
     </PageContainer>
     </div>

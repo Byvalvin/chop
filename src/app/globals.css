@@ -24,3 +24,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* prevent text from "overflowing" to next line */
+/* .ant-slider-mark-text { 
+  font-size: 14px;
+  white-space: nowrap;
+} */
