@@ -5,6 +5,7 @@ import { fetchRecipes, fetchNations, fetchCategories, fetchSubcategories } from 
 import SectionCard from "../components/Section";
 import { FaFolder, FaGlobe, FaTags } from "react-icons/fa";
 import PageContainer from "../components/PageContainer"; // Import the PageContainer component
+import SectionCardSkeleton from "../components/skeletons/SectionSkeleton";
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -26,6 +27,7 @@ export default function Home() {
   useEffect(() => {
     const getSectionData = async () => {
       setLoading(true);
+      localStorage.clear();
       const storedData = localStorage.getItem("sectionData");
 
       if (storedData) {
@@ -101,48 +103,54 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[url('/images/bg/light1.png')] bg-cover bg-center bg-no-repeat">
-      {/* Content wrapper with PageContainer */}
       <PageContainer>
         <div className="relative z-10">
           <div className="w-full">
-            <SectionCard 
-              title="Nation"
-              sectionRecipes={sectionRecipes.nation}
-              path={paths.nation}
-              sectionType="nation"
-              bgColor="bg-cream" // Updated cream background color
-              titleColor="text-teal-800" // Keep teal for contrast
-              IconType={FaGlobe}
-              selectedValue={selectedNation?.name}
-              backgroundImage="/images/bg/light4.png" // <-- NEW
-            />
-
-            <SectionCard 
-              title="Category"
-              sectionRecipes={sectionRecipes.category}
-              path={paths.category}
-              sectionType="category"
-              bgColor="bg-cream" // Updated cream background color
-              titleColor="text-coral-800" // Updated to coral
-              IconType={FaTags}
-              selectedValue={selectedCategory?.name}
-              backgroundImage="/images/bg/light5.png"
-            />
-
-            <SectionCard 
-              title="Subcategory"
-              sectionRecipes={sectionRecipes.subcategory}
-              path={paths.subcategory}
-              sectionType="subcategory"
-              bgColor="bg-cream" // Updated cream background color
-              titleColor="text-coral-800" // Updated to coral
-              IconType={FaFolder}
-              selectedValue={selectedSubcategory?.name}
-              backgroundImage="/images/bg/light7.png"
-            />
+            {loading ? (
+              <>
+                <SectionCardSkeleton />
+                <SectionCardSkeleton />
+                <SectionCardSkeleton />
+              </>
+            ) : (
+              <>
+                <SectionCard 
+                  title="Nation"
+                  sectionRecipes={sectionRecipes.nation}
+                  path={paths.nation}
+                  sectionType="nation"
+                  bgColor="bg-cream"
+                  titleColor="text-teal-800"
+                  IconType={FaGlobe}
+                  selectedValue={selectedNation?.name}
+                  backgroundImage="/images/bg/light4.png"
+                />
+                <SectionCard 
+                  title="Category"
+                  sectionRecipes={sectionRecipes.category}
+                  path={paths.category}
+                  sectionType="category"
+                  bgColor="bg-cream"
+                  titleColor="text-coral-800"
+                  IconType={FaTags}
+                  selectedValue={selectedCategory?.name}
+                  backgroundImage="/images/bg/light5.png"
+                />
+                <SectionCard 
+                  title="Subcategory"
+                  sectionRecipes={sectionRecipes.subcategory}
+                  path={paths.subcategory}
+                  sectionType="subcategory"
+                  bgColor="bg-cream"
+                  titleColor="text-coral-800"
+                  IconType={FaFolder}
+                  selectedValue={selectedSubcategory?.name}
+                  backgroundImage="/images/bg/light7.png"
+                />
+              </>
+            )}
           </div>
-
-          {loading && <p className="text-lg text-gray-700">Loading recipes...</p>}
+  
           {error && <p className="text-red-500 text-lg">{error}</p>}
         </div>
       </PageContainer>

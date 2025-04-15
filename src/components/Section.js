@@ -13,7 +13,7 @@ const SectionCard = ({
   selectedValue,
   backgroundImage, // <-- NEW prop
 }) => {
-  const getIcon = () => <IconType className="text-teal-600 text-2xl" />;
+  const getIcon = () => <IconType className="text-yellow-600 text-2xl" />;
 
   const capitalizeFirstLetter = (value) =>
     value ? value.charAt(0).toUpperCase() + value.slice(1) : value;
@@ -34,8 +34,8 @@ const SectionCard = ({
           className={`text-4xl font-extrabold ${titleColor} mb-12 text-center bg-clip-text bg-gradient-to-r from-teal-500 to-teal-300 relative flex justify-between items-center`}
         >
           <span className="text-teal-800">{title}</span>
-          <span className="mx-4 flex-grow text-center">{getIcon()}</span>
-          <span className="text-teal-600">{capitalizeFirstLetter(selectedValue)}</span>
+          <span className="mx-4 flex-grow text-center" >{getIcon()}</span>
+          <span className="text-teal-500">{capitalizeFirstLetter(selectedValue)}</span>
           <span className="absolute left-0 bottom-[-8px] w-full h-[6px] bg-teal-600 mt-8 rounded-full"></span>
         </h3>
 

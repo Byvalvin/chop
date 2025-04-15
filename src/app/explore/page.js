@@ -7,8 +7,11 @@ import RecipeCard from "../../components/RecipeCard";
 import Pagination from "../../components/Pagination";
 import GeneralFilter from "../../components/filtration/GeneralFilter";
 import RangeSlider from "../../components/filtration/RangeSlider";
-import { FaTrashAlt, FaCheckCircle } from 'react-icons/fa'; // Import icons for the buttons
+import { FaTrashAlt, FaCheckCircle, FaSearch } from 'react-icons/fa'; // Import icons for the buttons
 import PageContainer from "../../components/PageContainer";
+
+import RecipeCardSkeleton from "../../components/skeletons/RecipeCardSkeleton";
+
 
 
 // The Results Component wrapped in Suspense
@@ -71,6 +74,10 @@ export default function Results() {
     setCost([0, 1000]);
     setDifficulty([1, 10]);
     setSearchTerm("");
+
+     // Clear search params in the URL
+    searchParams.set("searchTerm", ""); // Set the searchTerm to empty in the URL
+    window.history.replaceState({}, "", window.location.pathname); // Update the URL without reloading the page
   };
 
   // Handle search button click or Enter key press
@@ -107,6 +114,30 @@ export default function Results() {
     return JSON.stringify(current) !== JSON.stringify(applied);
   };
   const hasAnyUnsavedChanges = Object.keys(appliedFiltersState).some(haveUnsavedChanges);
+
+  const noResults = () => {
+    return (
+      <div className="flex flex-col items-center justify-center p-8 bg-gray-100 rounded-lg shadow-xl text-center space-y-4">
+        {/* Optional Icon */}
+        <div className="text-5xl text-gray-500"> {/* Increased size for better visibility */}
+          <FaSearch className="mx-auto mb-4" />
+        </div>
+        <p className="text-3xl text-gray-700 font-semibold">No results found</p> {/* Increased size */}
+        <p className="text-lg text-gray-500"> {/* Increased size */}
+          We couldn't find any recipes matching your filters. Please try adjusting your search or filters.
+        </p>
+        {/* Optional: Suggestion to clear filters */}
+        <button
+          onClick={handleClearAll}
+          className="mt-4 py-3 px-6 bg-teal-600 text-white rounded-full hover:bg-teal-700 transition-all text-lg"
+        >
+          Clear Filters
+        </button>
+      </div>
+    );
+  }
+  
+  
 
   // Trigger automatic search if params exist
   useEffect(() => {
@@ -222,7 +253,7 @@ export default function Results() {
           </div>
 
           {/* Separator */}
-          <div className="w-[2px] bg-gray-300 rounded-md"></div>
+          <div className="w-[px] bg-gray-300 rounded-md"></div>
 
           {/* Right side: Results */}
 
@@ -248,21 +279,26 @@ export default function Results() {
                 </p>
               </div>
 
-
               {/* Recipe Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
-                {loading ? (
-                  <p>Loading...</p>
-                ) : error ? (
-                  <p>{error}</p>
-                ) : recipes.length === 0 ? (
-                  <p className="text-center text-xl text-gray-500">No results found. Please try adjusting your filters.</p>
-                ) : (
-                  recipes.map((recipe) => (
+              {loading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
+                  {[...Array(8)].map((_, idx) => (
+                    <RecipeCardSkeleton key={idx} variant="dark" />
+                  ))}
+                </div>
+              ) : recipes.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
+                  {recipes.map((recipe) => (
                     <RecipeCard key={recipe.id} recipe={recipe} variant="dark" />
-                  ))
-                )}
-              </div>
+                  ))}
+                </div>
+              ) : error ? (
+                <p>{error}</p>
+              ) : (
+                noResults() // Show the No Results message if no recipes after search
+              )}
+
+
 
               {/* Pagination */}
               <Pagination currentPage={page} totalPages={Math.ceil(100 / 10)} onPageChange={setPage} hasMore={hasMore} />

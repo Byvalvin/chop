@@ -1,6 +1,4 @@
 
-
-
 {/* <footer className="py-4 text-center text-gray-500">
 <p className="text-sm">Powered by ChopAPI</p>
 </footer> */}

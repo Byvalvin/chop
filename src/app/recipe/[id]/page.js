@@ -19,6 +19,41 @@ import { FaClock, FaDollarSign } from 'react-icons/fa';
 import { toTitleCase } from '@/utils/string';
 import PageContainer from '@/components/PageContainer';
 
+import RecipeDetailSkeleton from "@/components/skeletons/RecipeDetailSkeleton";
+
+const recipe404 = () => {
+  return (
+    <div className="min-h-screen bg-[url('/images/bg/light1.png')] bg-cover bg-center bg-no-repeat flex items-center justify-center px-4">
+      <div className="bg-white/60 backdrop-blur-lg border border-white/20 shadow-xl rounded-2xl max-w-xl w-full p-10 text-center space-y-6">
+        <h1 className="text-4xl font-bold text-gray-800">🥄 404 - Recipe Not Found</h1>
+        <p className="text-gray-700 text-lg">
+          Sorry! We couldn't find a recipe with that ID. It might have been removed, renamed, or just doesn’t exist.
+        </p>
+
+        {/*Redirect user buttons*/}
+        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2">
+          <a
+            href="/"
+            className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-6 rounded-md shadow transition"
+          >
+            ← Back to Home
+          </a>
+          <a
+            href="/explore"
+            className="inline-block bg-white/80 hover:bg-white text-teal-700 hover:text-teal-800 font-semibold py-2 px-6 rounded-md border border-teal-600 transition shadow"
+          >
+            🍳 Browse Recipes
+          </a>
+
+        </div>
+
+
+      </div>
+    </div>
+  );
+}
+
+
 
 export default function RecipeDetailPage() {
   const { id } = useParams();
@@ -46,6 +81,13 @@ export default function RecipeDetailPage() {
     const loadRecipeDetails = async () => {
       try {
         const baseData = await fetchRecipe(id);
+    
+        // If no baseData (bad ID or fetch failed), exit early
+        if (!baseData || !baseData.id) {
+          setRecipe(null);
+          return;
+        }
+    
         const [
           ingredients,
           instructions,
@@ -63,27 +105,29 @@ export default function RecipeDetailPage() {
           fetchNation(baseData.nationId),
           fetchRegion(baseData.regionId),
         ]);
-
+    
         setNationName(nationName);
         setRegionName(regionName);
         setRecipe(baseData);
-        setIngredients(ingredients);
-        setInstructions(instructions);
-        setCategories(categories);
-        setSubcategories(subcategories);
-        setAliases(aliases);
+        setIngredients(ingredients ?? []);
+        setInstructions(instructions ?? []);
+        setCategories(categories ?? []);
+        setSubcategories(subcategories ?? []);
+        setAliases(aliases ?? []);
       } catch (err) {
         console.error('Failed to load recipe:', err);
+        setRecipe(null); // Ensures graceful fallback
       } finally {
         setLoading(false);
       }
     };
+    
 
     if (id) loadRecipeDetails();
   }, [id]);
 
-  if (loading) return <p className="p-8 text-center">Loading recipe...</p>;
-  if (!recipe) return <p className="p-8 text-center">Recipe not found.</p>;
+  if (loading) return <RecipeDetailSkeleton />;
+  if (!recipe) return recipe404();
 
   const flagCode = getCountryCode(nationName);
 

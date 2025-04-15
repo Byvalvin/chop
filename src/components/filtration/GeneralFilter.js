@@ -96,16 +96,16 @@ const GeneralFilter = ({
       </div>
 
       {isOpen && (
-          <div
-            className={`mt-2 p-2 rounded-md transition-all duration-300 absolute z-10 w-full bg-gray-100 ${ // Use absolute positioning
-              isDark ? "bg-teal-800 text-white" : "bg-gray-100 text-gray-700"
-            }`}
-            style={{
-              top: "100%", // Position it right below the parent element
-              maxHeight: "300px", // Set a max height to control the dropdown
-              overflowY: "auto", // Add scroll if content exceeds maxHeight
-            }}
-          >
+        <div
+          className={`mt-2 p-2 rounded-md transition-all duration-300 absolute z-10 w-full bg-gray-100 ${ // Use absolute positioning
+            isDark ? "bg-teal-800 text-white" : "bg-gray-100 text-gray-700"
+          }`}
+          style={{
+            top: "100%", // Position it right below the parent element
+            maxHeight: "300px", // Set a max height to control the dropdown
+            overflowY: "auto", // Add scroll if content exceeds maxHeight
+          }}
+        >
           {isMultiSelect ? (
             localOptions.map((option) => (
               <div key={option} className="flex items-center justify-between">

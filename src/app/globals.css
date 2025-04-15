@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -33,3 +34,25 @@ body {
   white-space: nowrap;
 } */
 
+
+/* globals.css */
+
+.theme-light {
+  --color-bg: #fefefe;
+  --color-surface: #ffffff;
+  --color-text: #1f2937;
+  --color-accent: #0d9488;
+  --color-title: #0f766e;
+  --color-button: #facc15;
+  --color-muted: #6b7280;
+}
+
+.theme-dark {
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f8fafc;
+  --color-accent: #14b8a6;
+  --color-title: #5eead4;
+  --color-button: #facc15;
+  --color-muted: #94a3b8;
+}
