@@ -124,7 +124,7 @@ export default function Results() {
         </div>
         <p className="text-3xl text-gray-700 font-semibold">No results found</p> {/* Increased size */}
         <p className="text-lg text-gray-500"> {/* Increased size */}
-          We couldn't find any recipes matching your filters. Please try adjusting your search or filters.
+          We couldn&apos;t find any recipes matching your filters.
         </p>
         {/* Optional: Suggestion to clear filters */}
         <button
