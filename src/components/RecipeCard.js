@@ -11,16 +11,16 @@ const RecipeCard = ({ recipe, variant = "light" }) => {
 
   const baseCardClasses = `rounded-lg shadow-md border-b-4 transition-shadow duration-300 ease-in-out cursor-pointer flex flex-col h-[400px] ${
     isDark
-      ? "bg-teal-900 border-yellow-300 text-white hover:shadow-teal-700/50"
+      ? "bg-[var(--primary)] border-[var(--primary-cmpmt)] text-[var(--main-text)] hover:shadow-teal-700"
       : "bg-white border-yellow-400 text-gray-800 hover:shadow-lg"
   }`;
 
   const titleClasses = `text-2xl font-semibold line-clamp-2 ${
-    isDark ? "text-white" : "text-gray-800"
+    isDark ? "text-[var(--main-text)]" : "text-gray-800"
   }`;
 
   const descClasses = `text-sm mt-2 line-clamp-3 ${
-    isDark ? "text-gray-200" : "text-gray-600"
+    isDark ? "text-[var(--sub-text)]" : "text-gray-600"
   }`;
 
   return (

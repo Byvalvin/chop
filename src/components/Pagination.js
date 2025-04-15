@@ -1,25 +1,34 @@
 // src/components/Pagination.js
 
+const paginationButton = (name, onClick, disabled) =>
+  <button
+    onClick={onClick}
+    disabled={disabled}
+    className="px-4 py-2 bg-[var(--secondary-dark)] border-2 border-[var(--secondary-dark)] text-[var(--main-text)] rounded-lg hover:bg-[var(--secondary)] transition"
+  >
+    {name}
+  </button>
+
 const Pagination = ({ currentPage, totalPages, onPageChange, hasMore }) => {
   return (
     <div className="flex justify-center gap-4 mt-8">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition"
-      >
-        Prev
-      </button>
-      <span className="text-lg text-white">
+      { 
+        paginationButton(
+          "Prev",
+          () => onPageChange(currentPage - 1),
+          currentPage === 1
+        )
+      }
+      <span className="text-lg text-[var(--primary)]">
         {currentPage} of {totalPages}
       </span>
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={!hasMore || currentPage === totalPages}
-        className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition"
-      >
-        Next
-      </button>
+      { 
+        paginationButton(
+          "Next",
+          () => onPageChange(currentPage + 1),
+          !hasMore || currentPage===totalPages
+        )
+      }
     </div>
   );
 };

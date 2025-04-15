@@ -4,6 +4,31 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --Chop-color: #ffffff;
+  --main-text: #ffffff;
+  --sub-text: #d1d5db; /*gray-300*/
+  --primary: #134e4a; /*teal-900*/
+  --primary-cmpmt: #fcd34d; /*yellow-300*/
+  --secondary: #319795; /*teal-500*/
+  --secondary-light: #4fd1c5; /*teal-400*/
+  --secondary-dark: #2d756b; /*teal-600*/
+  --navlink-rest: rgba(255, 255, 255, 0.8);
+  --signup-button-hover: #facc15; /*yellow-400*/
+
+  --section-title-end-gradient: #64d5d0; /*teal-300*/
+  --section-bg-gradient-start: rgba(255, 255, 255, 0.4);
+  --section-bg-gradient-end: rgba(255, 255, 255, 0.7);
+
+  --slider-bg:#e5e5e5;
+  --slider-handle-border: #4caf50;
+  --slider-handle-bg: #4caf50;
+  --slider-track-bg: #4caf50;
+  --slider-rail-bg: #e5e5e5;
+
+}
+
+.colours{
   --cream: #F5F3F0; 
   --coral: #FF6F61; 
 }
@@ -58,4 +83,19 @@ body {
 }
 
 
-/* https://tailwindcss.com/blog/tailwindcss-v4#css-first-configuration */
+/*extending tailwind for shadow variables*/
+@layer base {
+  * {
+    --box-shadow-md: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)),
+      0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    --box-shadow-lg: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)),
+      0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+  }
+}
+
+
+/*
+https://tailwindcss.com/blog/tailwindcss-v4#css-first-configuration 
+https://tailwindcss.com/docs/background-color
+https://tailwindcss.com/docs/box-shadow
+*/

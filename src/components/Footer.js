@@ -5,8 +5,8 @@
 
 const Footer = () => {
     return (
-    <footer className="bg-teal-900 bg-cover bg-center bg-no-repeat">
-        <div className="backdrop-blur-sm py-6 text-center text-white/80">
+    <footer className="bg-[var(--primary)] bg-cover bg-center bg-no-repeat">
+        <div className="backdrop-blur-sm py-6 text-center text-[var(--navlink-rest)]">
             <p className="text-sm">Powered by ChopAPI</p>
         </div>
     </footer>

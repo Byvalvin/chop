@@ -28,12 +28,12 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-teal-900 bg-opacity-90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 bg-[var(--primary)] bg-opacity-90 backdrop-blur-md">
       <div className="flex items-center justify-between px-6 py-4">
         {/* Logo */}
         <div className="flex items-center space-x-3">
           <img src="/images/leaf-icon.png" alt="Chop Logo" className="w-10 h-10" />
-          <h1 className="text-2xl font-bold text-white">Chop</h1>
+          <h1 className="text-2xl font-bold text-[var(--Chop-color)]">Chop</h1>
         </div>
 
         {/* Navigation & Search */}
@@ -44,12 +44,12 @@ const Navbar = () => {
                 key={href}
                 href={href}
                 className={`relative text-lg font-medium transition ${
-                  pathname === href ? 'text-yellow-300' : 'text-white/80'
-                } hover:text-yellow-300`}
+                  pathname === href ? 'text-[var(--primary-cmpmt)]' : 'text-[var(--navlink-rest)]'
+                } hover:text-[var(--primary-cmpmt)]`}
               >
                 {label}
                 {pathname === href && (
-                  <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[120%] h-1 bg-yellow-300 rounded-full mt-3"></span>
+                  <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[120%] h-1 bg-[var(--primary-cmpmt)] rounded-full mt-3"></span>
                 )}
               </Link>
             ))}
@@ -65,7 +65,7 @@ const Navbar = () => {
 
         {/* CTA */}
         <div className="flex-shrink-0">
-          <button className="bg-yellow-400 text-teal-900 px-4 py-2 rounded-full hover:bg-yellow-300 transition">
+          <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition">
             Sign Up
           </button>
         </div>
