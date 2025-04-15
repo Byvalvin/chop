@@ -20,6 +20,7 @@ import { toTitleCase } from '@/utils/string';
 import PageContainer from '@/components/PageContainer';
 
 import RecipeDetailSkeleton from "@/components/skeletons/RecipeDetailSkeleton";
+import Link from 'next/link'; // Import Link component
 
 const recipe404 = () => {
   return (
@@ -27,33 +28,26 @@ const recipe404 = () => {
       <div className="bg-white/60 backdrop-blur-lg border border-white/20 shadow-xl rounded-2xl max-w-xl w-full p-10 text-center space-y-6">
         <h1 className="text-4xl font-bold text-gray-800">🥄 404 - Recipe Not Found</h1>
         <p className="text-gray-700 text-lg">
-          Sorry! We couldn't find a recipe with that ID. It might have been removed, renamed, or just doesn’t exist.
+          Sorry! We couldn&apos;t find a recipe with that ID. It might have been removed, renamed, or just doesn&apos;t exist.
         </p>
 
         {/*Redirect user buttons*/}
         <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2">
-          <a
-            href="/"
-            className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-6 rounded-md shadow transition"
-          >
-            ← Back to Home
-          </a>
-          <a
-            href="/explore"
-            className="inline-block bg-white/80 hover:bg-white text-teal-700 hover:text-teal-800 font-semibold py-2 px-6 rounded-md border border-teal-600 transition shadow"
-          >
-            🍳 Browse Recipes
-          </a>
-
+          <Link href="/" passHref>
+            <a className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-6 rounded-md shadow transition">
+              ← Back to Home
+            </a>
+          </Link>
+          <Link href="/explore" passHref>
+            <a className="inline-block bg-white/80 hover:bg-white text-teal-700 hover:text-teal-800 font-semibold py-2 px-6 rounded-md border border-teal-600 transition shadow">
+              🍳 Browse Recipes
+            </a>
+          </Link>
         </div>
-
-
       </div>
     </div>
   );
 }
-
-
 
 export default function RecipeDetailPage() {
   const { id } = useParams();
@@ -122,7 +116,6 @@ export default function RecipeDetailPage() {
       }
     };
     
-
     if (id) loadRecipeDetails();
   }, [id]);
 
@@ -174,14 +167,12 @@ export default function RecipeDetailPage() {
 
         {/* CTA Button */}
         <div className="sticky top-4 z-10">
-          <a
-            href="#instructions-heading"
-            className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-md shadow transition"
-          >
-            🍽️ Start Cooking
-          </a>
+          <Link href="#instructions-heading">
+            <a className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-md shadow transition">
+              🍽️ Start Cooking
+            </a>
+          </Link>
         </div>
-
 
         {/* Image */}
         <figure className="w-full h-96 relative rounded-lg overflow-hidden shadow-md">

@@ -263,7 +263,7 @@ export default function Results() {
               <div className="w-full p-4 bg-gray-100 rounded-md shadow-sm">
                 <h3 className="text-xl font-semibold">Search Results</h3>
                 <p className="text-sm text-gray-600">
-                  {appliedFiltersState.searchTerm && `Showing results for: "${appliedFiltersState.searchTerm}"`}
+                  {appliedFiltersState.searchTerm && `Showing results for: "${appliedFiltersState.searchTerm.replace(/'/g, "&#39;")}"`}
                   <span className="block mt-2 text-sm text-gray-500">
                     Filters applied: {[
                       appliedFiltersState.categories.length > 0 && `Categories: ${appliedFiltersState.categories.join(", ")}`,
@@ -274,9 +274,10 @@ export default function Results() {
                       appliedFiltersState.time && `Time: ${appliedFiltersState.time[0]} - ${appliedFiltersState.time[1]} min`,
                       appliedFiltersState.cost && `Cost: $${appliedFiltersState.cost[0]} - $${appliedFiltersState.cost[1]}`,
                       appliedFiltersState.difficulty && `Difficulty: ${appliedFiltersState.difficulty[0]} - ${appliedFiltersState.difficulty[1]}`
-                    ].filter(Boolean).join(" | ")}
+                    ].filter(Boolean).join(" | ").replace(/'/g, "&#39;")}
                   </span>
                 </p>
+
               </div>
 
               {/* Recipe Grid */}
