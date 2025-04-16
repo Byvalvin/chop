@@ -77,28 +77,28 @@ const GeneralFilter = ({
       <div
         className={`cursor-pointer flex items-center justify-between p-2 rounded-md transition-all duration-300 ${
           hasUnsavedChanges
-            ? "bg-yellow-100 border-2 border-yellow-400"
+            ? "bg-[var(--filter-unsaved-bg)] border-2 border-[var(--signup-button-hover)]"
             : isDark
-            ? "bg-teal-900 text-white border-teal-700"
-            : "bg-gray-200 text-gray-800 border-gray-300"
+            ? "bg-[var(--primary)] text-[var(--main-text)] border-[var(--secondary-dark)]"
+            : "bg-[var(--sub-text)] text-[var(--other-text)] border-[var(--sub-text)]"
         }`}
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="text-sm font-semibold flex items-center gap-2">
           {title}: {selectedTitle}
           {hasUnsavedChanges && (
-            <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-[var(--signup-button-hover)] animate-pulse" />
           )}
         </span>
-        <span className={`text-sm ${isDark ? "text-white" : "text-gray-500"}`}>
+        <span className={`text-sm ${isDark ? "text-[var(--other-text)]" : "text-gray-500"}`}>
           {isOpen ? "▲" : "▼"}
         </span>
       </div>
 
       {isOpen && (
         <div
-          className={`mt-2 p-2 rounded-md transition-all duration-300 absolute z-10 w-full bg-gray-100 ${ // Use absolute positioning
-            isDark ? "bg-teal-800 text-white" : "bg-gray-100 text-gray-700"
+          className={`mt-2 p-2 rounded-md transition-all duration-300 absolute z-10 w-full ${ // Use absolute positioning
+            isDark ? "bg-[var(--secondary-dark)] text-[var(--main-text)]" : "bg-gray-100 text-gray-700"
           }`}
           style={{
             top: "100%", // Position it right below the parent element
@@ -135,7 +135,7 @@ const GeneralFilter = ({
               <li
                 className={`cursor-pointer text-sm p-2 rounded-md ${
                   selectedValues.length === 0 ? "font-bold" : ""
-                } ${isDark ? "text-gray-200" : "text-gray-700"}`}
+                } ${isDark ? "text-[var(--sub-text)]" : "text-gray-700"}`}
                 onClick={() => handleDropdownChange("")}
               >
                 Any
@@ -143,8 +143,8 @@ const GeneralFilter = ({
               {localOptions.map((option) => (
                 <li
                   key={option}
-                  className={`flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-gray-200 ${
-                    isDark ? "text-gray-200 hover:bg-teal-700" : "text-gray-800 hover:bg-gray-200"
+                  className={`flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-[var(--sub-text)] ${
+                    isDark ? "text-[var(--sub-text)] hover:bg-[var(--secondary-dark)]" : "text-[var(--other-text)] hover:bg-[var(--sub-text)]"
                   }`}
                 >
                   <span
@@ -170,7 +170,7 @@ const GeneralFilter = ({
 
           {/* ✨ Custom Input Field */}
           {allowCustomInput && (
-            <div className="pt-2 border-t border-gray-300 mt-2">
+            <div className="pt-2 border-t border-[var(--sub-text)] mt-2">
               <input
                 type="text"
                 value={customInput}
@@ -178,19 +178,19 @@ const GeneralFilter = ({
                 onKeyDown={handleKeyPress}
                 placeholder={`Add your own ${title.toLowerCase()}...`}
                 className={`w-full p-1 border rounded text-sm focus:outline-none ${
-                  isDark ? "border-gray-500 text-white bg-teal-900" : "border-gray-300 text-gray-800"
+                  isDark ? "border-[var(--other-text)] text-[var(--main-text)] bg-[var(--primary)]" : "border-[var(--sub-text)] text-[var(--other-text)]"
                 }`}
               />
               <button
                 onClick={handleCustomAdd}
                 className={`mt-1 px-2 py-1 text-xs rounded hover:bg-blue-600 ${
-                  isDark ? "bg-teal-500 text-white" : "bg-blue-500 text-white"
+                  isDark ? "bg-[var(--secondary)] text-[var(--main-text)]" : "bg-blue-500 text-white"
                 }`}
               >
                 + Add
               </button>
               {isMultiSelect && (
-                <p className="text-xs text-gray-500 mt-1">Max {maxSelected} items</p>
+                <p className="text-xs text-[var(--other-text)] mt-1">Max {maxSelected} items</p>
               )}
             </div>
           )}
@@ -199,7 +199,7 @@ const GeneralFilter = ({
           <button
             onClick={onClear}
             className={`mt-4 w-full py-2 text-sm rounded-md ${
-              isDark ? "bg-teal-700 text-white hover:bg-teal-600" : "bg-gray-500 text-white hover:bg-gray-600"
+              isDark ? "bg-[var(--secondary-dark)] text-[var(--main-text)] hover:bg-[var(--secondary)]" : "bg-gray-500 text-white hover:bg-gray-600"
             }`}
           >
             Clear {title}

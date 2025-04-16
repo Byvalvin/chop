@@ -39,7 +39,7 @@ const RangeSlider = ({ label, min, max, value, onChange, unit, ticks = 1, varian
   }`;
 
   return (
-    <div className={`mt-4 flex flex-col space-y-3 p-4 ${isDark ? "bg-[var(--secondary-dark)] text-[var(--main-text)]" : "bg-white text-gray-800"} rounded-md shadow-sm`}>
+    <div className={`mt-4 flex flex-col space-y-3 p-4 ${isDark ? "bg-[var(--primary)] text-[var(--main-text)]" : "bg-white text-gray-800"} rounded-md shadow-sm`}>
       {/* Label */}
       <label className={`block text-lg font-semibold ${isDark ? "text-[var(--main-text)]" : "text-gray-700"} mb-2`}>
         {label} {unit ? `(${unit})` : ""}

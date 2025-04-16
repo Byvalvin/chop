@@ -226,11 +226,11 @@ export default function Results() {
             </div>
 
             {/* Filters */}
-            <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} hasUnsavedChanges={haveUnsavedChanges("categories")} variant = "dark"/>
-            <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} hasUnsavedChanges={haveUnsavedChanges("subcategories")} variant = "dark"/>
-            <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")} variant = "dark"/>
-            <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} hasUnsavedChanges={haveUnsavedChanges("ingredients")} variant = "dark"/>
-            <GeneralFilter title="Nations" options={nationOptions} selectedValues={nations} onChange={setNations} isMultiSelect={false} allowCustomInput={true} onClear={() => setNations([])} hasUnsavedChanges={haveUnsavedChanges("nations")} variant = "dark"/>
+            <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} hasUnsavedChanges={haveUnsavedChanges("categories")} variant="dark"/>
+            <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} hasUnsavedChanges={haveUnsavedChanges("subcategories")} variant="dark"/>
+            <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")} variant="dark"/>
+            <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} hasUnsavedChanges={haveUnsavedChanges("ingredients")} variant="dark"/>
+            <GeneralFilter title="Nations" options={nationOptions} selectedValues={nations} onChange={setNations} isMultiSelect={false} allowCustomInput={true} onClear={() => setNations([])} hasUnsavedChanges={haveUnsavedChanges("nations")} variant="dark"/>
             <RangeSlider label="Time" min={0} max={720} value={time} onChange={setTime} unit="min" hasUnsavedChanges={haveUnsavedChanges("time")} ticks={3} variant = "dark"/>
             <RangeSlider label="Cost" min={0} max={1000} value={cost} onChange={setCost} unit="$" hasUnsavedChanges={haveUnsavedChanges("cost")} ticks={3} variant = "dark"/>
             <RangeSlider label="Difficulty" min={1} max={10} value={difficulty} onChange={setDifficulty} unit="" hasUnsavedChanges={haveUnsavedChanges("difficulty")} ticks={2} variant = "dark"/>

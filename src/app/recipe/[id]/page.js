@@ -22,32 +22,26 @@ import PageContainer from '@/components/PageContainer';
 import RecipeDetailSkeleton from "@/components/skeletons/RecipeDetailSkeleton";
 import Link from 'next/link'; // Import Link component
 
-const recipe404 = () => {
-  return (
+const recipe404 = () => 
     <div className="min-h-screen bg-[url('/images/bg/light1.png')] bg-cover bg-center bg-no-repeat flex items-center justify-center px-4">
-      <div className="bg-white/60 backdrop-blur-lg border border-white/20 shadow-xl rounded-2xl max-w-xl w-full p-10 text-center space-y-6">
-        <h1 className="text-4xl font-bold text-gray-800">🥄 404 - Recipe Not Found</h1>
-        <p className="text-gray-700 text-lg">
+      <div className="bg-[var(--glass-bg)] backdrop-blur-lg border border-[var(--glass-border)] shadow-xl rounded-2xl max-w-xl w-full p-10 text-center space-y-6">
+        <h1 className="text-4xl font-bold text-[var(--other-text)]">🥄 404 - Recipe Not Found</h1>
+        <p className="text-[var(--other-text)] text-lg">
           Sorry! We couldn&apos;t find a recipe with that ID. It might have been removed, renamed, or just doesn&apos;t exist.
         </p>
 
         {/*Redirect user buttons*/}
         <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2">
-          <Link href="/" passHref>
-            <a className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-6 rounded-md shadow transition">
-              ← Back to Home
-            </a>
+          <Link href="/" passHref className="inline-block bg-[var(--secondary-dark)] hover:bg-[var(--primary)] text-[var(--main-text)] font-semibold py-2 px-6 rounded-md shadow transition">
+            ← Back to Home
           </Link>
-          <Link href="/explore" passHref>
-            <a className="inline-block bg-white/80 hover:bg-white text-teal-700 hover:text-teal-800 font-semibold py-2 px-6 rounded-md border border-teal-600 transition shadow">
+          <Link href="/explore" passHref className="inline-block bg-white/80 hover:bg-[var(--main-text)] text-[var(--secondary-dark)] hover:text-[var(--primary)] font-semibold py-2 px-6 rounded-md border border-[var(--secondary-dark)] transition shadow">
               🍳 Browse Recipes
-            </a>
           </Link>
         </div>
       </div>
-    </div>
-  );
-}
+    </div>;
+
 
 export default function RecipeDetailPage() {
   const { id } = useParams();
@@ -128,8 +122,8 @@ export default function RecipeDetailPage() {
     <div className="min-h-screen bg-[url('/images/bg/light1.png')] bg-cover bg-center bg-no-repeat">
     <PageContainer>
       
-    <article className="bg-white/60 backdrop-blur-lg border border-white/20 shadow-lg
- rounded-2xl shadow-md max-w-screen-lg mx-auto p-8 space-y-10 text-[1.05rem] leading-relaxed text-gray-800">
+    <article className="bg-[var(--glass-bg)] backdrop-blur-lg border border-[var(--glass-border)] shadow-lg
+ rounded-2xl shadow-md max-w-screen-lg mx-auto p-8 space-y-10 text-[1.05rem] leading-relaxed text-[var(--other-text)]">
 
         {/* Title Section */}
         <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
@@ -149,7 +143,7 @@ export default function RecipeDetailPage() {
         {/* Info Row */}
         <section className="flex flex-wrap gap-6 text-base md:text-lg">
           <div className="flex items-center gap-2">
-            <FaClock className="text-teal-600" />
+            <FaClock className="text-[var(--secondary-dark)]" />
             <span>{recipe.time} minutes</span>
           </div>
           <div className="flex items-center gap-2">
@@ -157,7 +151,7 @@ export default function RecipeDetailPage() {
             <span>{recipe.cost} USD</span>
           </div>
           {regionName && (
-            <div className="flex items-center gap-2 capitalize text-gray-700">
+            <div className="flex items-center gap-2 capitalize text-[var(--other-text)]">
               <span className="text-xl">{getRegionEmoji(regionName)}</span>
               <span>{regionName}</span>
             </div>
@@ -167,10 +161,8 @@ export default function RecipeDetailPage() {
 
         {/* CTA Button */}
         <div className="sticky top-4 z-10">
-          <Link href="#instructions-heading">
-            <a className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-md shadow transition">
+          <Link href="#instructions-heading" className="inline-block bg-[var(--secondary-dark)] hover:bg-[var(--secondary)] text-[var(--main-text)] font-medium py-2 px-4 rounded-md shadow transition">
               🍽️ Start Cooking
-            </a>
           </Link>
         </div>
 
@@ -189,7 +181,7 @@ export default function RecipeDetailPage() {
             {categories.map((cat) => (
               <span
                 key={cat}
-                className="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm"
+                className="bg-[var(--recipe-detail-category)] text-[var(--recipe-detail-category-text)] px-3 py-1 rounded-full text-sm"
               >
                 {cat}
               </span>
@@ -197,7 +189,7 @@ export default function RecipeDetailPage() {
             {subcategories.map((sub) => (
               <span
                 key={sub}
-                className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm"
+                className="bg-[var(--recipe-detail-subcategory)] text-[var(--recipe-detail-subcategory-text)] px-3 py-1 rounded-full text-sm"
               >
                 {sub}
               </span>
@@ -219,12 +211,12 @@ export default function RecipeDetailPage() {
                 <input
                   type="checkbox"
                   id={`ingredient-${index}`}
-                  className="accent-teal-600 w-4 h-4"
+                  className="accent-[var(--secondary-dark)] w-4 h-4"
                 />
                 <label
                   htmlFor={`ingredient-${index}`}
                   className={`cursor-pointer select-none transition ${
-                    document?.getElementById(`ingredient-${index}`)?.checked ? 'line-through text-gray-400' : ''
+                    document?.getElementById(`ingredient-${index}`)?.checked ? 'line-through text-[var(--sub-text)]' : ''
                   }`}
                 >
                   <strong>
@@ -254,10 +246,10 @@ export default function RecipeDetailPage() {
               return (
                 <li
                   key={index}
-                  className="bg-gray-50 border-l-4 border-teal-500 rounded-md shadow-sm"
+                  className="bg-[var(--recipe-detail-instruction-bg)] border-l-4 border-[var(--secondary)] rounded-md shadow-sm"
                 >
                   <button
-                    className="w-full text-left px-4 py-3 flex justify-between items-center font-semibold text-teal-700 hover:bg-gray-100 transition"
+                    className="w-full text-left px-4 py-3 flex justify-between items-center font-semibold text-[var(--secondary-dark)] hover:bg-[var(--sub-text)] transition"
                     onClick={() => toggleStep(index)}
                     aria-expanded={isOpen}
                     aria-controls={`step-${index}`}
@@ -268,7 +260,7 @@ export default function RecipeDetailPage() {
                   {isOpen && (
                     <div
                       id={`step-${index}`}
-                      className="px-4 pb-4 text-gray-700"
+                      className="px-4 pb-4 text-[var(--other-text)]"
                     >
                       {step}
                     </div>
@@ -283,7 +275,7 @@ export default function RecipeDetailPage() {
         {aliases.length > 1 && (
           <section
             aria-label="Aliases"
-            className="text-sm text-gray-500 pt-4"
+            className="text-sm text-[var(--secondary-dark)] pt-4"
           >
             <p>
               <strong>Also known as:</strong> {aliases.slice(1).join(', ')}
