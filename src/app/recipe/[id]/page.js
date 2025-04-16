@@ -246,7 +246,7 @@ export default function RecipeDetailPage() {
               return (
                 <li
                   key={index}
-                  className="bg-[var(--recipe-detail-instruction-bg)] border-l-4 border-[var(--secondary)] rounded-md shadow-sm"
+                  className="bg-[var(--bg-light)] border-l-4 border-[var(--secondary)] rounded-md shadow-sm"
                 >
                   <button
                     className="w-full text-left px-4 py-3 flex justify-between items-center font-semibold text-[var(--secondary-dark)] hover:bg-[var(--sub-text)] transition"

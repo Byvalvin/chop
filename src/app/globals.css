@@ -16,6 +16,7 @@
   --secondary-dark: #2d756b; /*teal-600*/
   --navlink-rest: rgba(255, 255, 255, 0.8);
   --signup-button-hover: #facc15; /*yellow-400*/
+  --bg-light: #fafafa; /*gray-50*/
 
   --section-title-end-gradient: #64d5d0; /*teal-300*/
   --section-bg-gradient-start: rgba(255, 255, 255, 0.4);
@@ -35,8 +36,10 @@
   --recipe-detail-subcategory: #fef9c3; /*yellow-100*/
   --recipe-detail-category-text: #1f5f57; /*teal-800*/
   --recipe-detail-subcategory-text: #9a5b00; /*yellow-800*/
-  --recipe-detail-instruction-bg: #fafafa; /*gray-50*/
   --recipe-detail-ingredient-skeleton-bullet: #6b7280; /*gray-400*/
+
+  --search-results-bg: #f3f4f6; /*gray 100*/
+  --search-results-subtext: #6b7280;/*gray 500*/
 }
 
 .colours{

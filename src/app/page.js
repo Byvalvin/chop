@@ -120,7 +120,7 @@ export default function Home() {
                   path={paths.nation}
                   sectionType="nation"
                   bgColor="bg-cream"
-                  titleColor="text-teal-800"
+                  titleColor="text-[var(--primary)]"
                   IconType={FaGlobe}
                   selectedValue={selectedNation?.name}
                   backgroundImage="/images/bg/light4.png"
@@ -131,7 +131,7 @@ export default function Home() {
                   path={paths.category}
                   sectionType="category"
                   bgColor="bg-cream"
-                  titleColor="text-coral-800"
+                  titleColor="text-[var(--primary)]"
                   IconType={FaTags}
                   selectedValue={selectedCategory?.name}
                   backgroundImage="/images/bg/light5.png"
@@ -142,7 +142,7 @@ export default function Home() {
                   path={paths.subcategory}
                   sectionType="subcategory"
                   bgColor="bg-cream"
-                  titleColor="text-coral-800"
+                  titleColor="text-[var(--primary)]"
                   IconType={FaFolder}
                   selectedValue={selectedSubcategory?.name}
                   backgroundImage="/images/bg/light7.png"
