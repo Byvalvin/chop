@@ -42,40 +42,6 @@
   --search-results-subtext: #6b7280;/*gray 500*/
 }
 
-.colours{
-  --cream: #F5F3F0; 
-  --coral: #FF6F61; 
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* prevent text from "overflowing" to next line */
-/* .ant-slider-mark-text { 
-  font-size: 14px;
-  white-space: nowrap;
-} */
-
-
-/* globals.css */
-
 .theme-light {
   --background: #ffffff;
   --foreground: #171717;
@@ -117,26 +83,41 @@ body {
   --search-results-subtext: #6b7280;/*gray 500*/
 }
 
-.theme-dark {
-  --color-bg: #0f172a;
-  --color-surface: #1e293b;
-  --color-text: #f8fafc;
-  --color-accent: #14b8a6;
-  --color-title: #5eead4;
-  --color-button: #facc15;
-  --color-muted: #94a3b8;
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
-
-/*extending tailwind for shadow variables*/
-@layer base {
-  * {
-    --box-shadow-md: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)),
-      0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
-    --box-shadow-lg: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)),
-      0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
   }
 }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* .colours{
+  --cream: #F5F3F0; 
+  --coral: #FF6F61; 
+} */
+
+/* prevent text from "overflowing" to next line */
+/* .ant-slider-mark-text { 
+  font-size: 14px;
+  white-space: nowrap;
+} */
+
+
+/* globals.css */
+
+
 
 
 /*

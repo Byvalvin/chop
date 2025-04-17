@@ -27,7 +27,7 @@ export default function Home() {
   useEffect(() => {
     const getSectionData = async () => {
       setLoading(true);
-      localStorage.clear();
+      //localStorage.clear();
       const storedData = localStorage.getItem("sectionData");
 
       if (storedData) {

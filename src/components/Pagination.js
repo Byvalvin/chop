@@ -1,6 +1,6 @@
 // src/components/Pagination.js
 
-const paginationButton = (name, onClick, disabled) =>
+const PaginationButton = ({name, onClick, disabled}) =>
   <button
     onClick={onClick}
     disabled={disabled}
@@ -13,22 +13,22 @@ const Pagination = ({ currentPage, totalPages, onPageChange, hasMore }) => {
   return (
     <div className="flex justify-center gap-4 mt-8">
       { 
-        paginationButton(
-          "Prev",
-          () => onPageChange(currentPage - 1),
-          currentPage === 1
+        PaginationButton(
+          {
+            name:"Prev",
+            onClick:() => onPageChange(currentPage - 1),
+            disabled:currentPage === 1
+          }
         )
       }
       <span className="text-lg text-[var(--primary)]">
         {currentPage} of {totalPages}
       </span>
-      { 
-        paginationButton(
-          "Next",
-          () => onPageChange(currentPage + 1),
-          !hasMore || currentPage===totalPages
-        )
-      }
+      <PaginationButton
+          name="Next"
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={!hasMore || currentPage===totalPages}
+      />
     </div>
   );
 };

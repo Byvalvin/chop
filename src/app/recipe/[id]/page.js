@@ -123,7 +123,7 @@ export default function RecipeDetailPage() {
     <PageContainer>
       
     <article className="bg-[var(--glass-bg)] backdrop-blur-lg border border-[var(--glass-border)] shadow-lg
- rounded-2xl shadow-md max-w-screen-lg mx-auto p-8 space-y-10 text-[1.05rem] leading-relaxed text-[var(--other-text)]">
+      rounded-2xl shadow-md max-w-screen-lg mx-auto p-8 space-y-10 text-[1.05rem] leading-relaxed text-[var(--other-text)]">
 
         {/* Title Section */}
         <header className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
@@ -156,7 +156,6 @@ export default function RecipeDetailPage() {
               <span>{regionName}</span>
             </div>
           )}
-
         </section>
 
         {/* CTA Button */}
@@ -282,7 +281,6 @@ export default function RecipeDetailPage() {
             </p>
           </section>
         )}
-
       </article>
     </PageContainer>
     </div>

@@ -12,8 +12,6 @@ import PageContainer from "../../components/PageContainer";
 
 import RecipeCardSkeleton from "../../components/skeletons/RecipeCardSkeleton";
 
-
-
 // The Results Component wrapped in Suspense
 export default function Results() {
   const searchParams = useSearchParams();
@@ -253,10 +251,9 @@ export default function Results() {
           </div>
 
           {/* Separator */}
-          <div className="w-[1px] bg-[var(--sub-text)] rounded-md"></div>
+          <div className="w-[2px] bg-[var(--sub-text)] rounded-md"></div>
 
           {/* Right side: Results */}
-
           <div className="w-3/4 space-y-8 p-4 bg-[var(--bg-light)] border-l-4 border-[var(--secondary)] rounded-md shadow-sm">
             <main className="flex flex-col items-center gap-12 m-2">
               {/* Search Summary */}
@@ -303,6 +300,7 @@ export default function Results() {
               <Pagination currentPage={page} totalPages={Math.ceil(100 / 10)} onPageChange={setPage} hasMore={hasMore} />
             </main>
           </div>
+
         </div>
       </PageContainer>
     </div>

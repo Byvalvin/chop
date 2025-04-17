@@ -25,7 +25,6 @@ const SectionCard = ({
       {/* Optional semi-transparent overlay */}
       {backgroundImage && (
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--section-bg-gradient-start)] to-[var(--section-bg-gradient-end)] backdrop-blur-md rounded-lg z-0" />
-
       )}
 
       <div className="relative z-10">
@@ -39,9 +38,7 @@ const SectionCard = ({
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {sectionRecipes.map((recipe) => (
-            <RecipeCard  key={recipe.id} recipe={recipe} />
-          ))}
+          {sectionRecipes.map((recipe) => <RecipeCard  key={recipe.id} recipe={recipe} />)}
         </div>
 
         <div className="flex justify-end mt-8">
