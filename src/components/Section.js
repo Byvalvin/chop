@@ -1,6 +1,7 @@
 import Link from "next/link";
 import RecipeCard from "../components/RecipeCard";
 import { FaTags } from 'react-icons/fa';
+import { capitalizeFirstLetter } from "@/utils/string";
 
 const SectionCard = ({
   title,
@@ -15,8 +16,6 @@ const SectionCard = ({
 }) => {
   const getIcon = () => <IconType className="text-[var(--primary-cmpmt)] text-2xl" />;
 
-  const capitalizeFirstLetter = (value) =>
-    value ? value.charAt(0).toUpperCase() + value.slice(1) : value;
 
   return (
     <div
@@ -41,7 +40,7 @@ const SectionCard = ({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {sectionRecipes.map((recipe) => (
-            <RecipeCard  key={recipe.id} recipe={recipe} variant="dark" />
+            <RecipeCard  key={recipe.id} recipe={recipe} />
           ))}
         </div>
 

@@ -30,7 +30,7 @@ const SectionCardSkeleton = ({ backgroundImage = "/images/bg/light4.png" }) => {
         {/* Recipe skeletons */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {[...Array(3)].map((_, idx) => (
-            <RecipeCardSkeleton key={idx} variant="dark" />
+            <RecipeCardSkeleton key={idx} />
           ))}
         </div>
 

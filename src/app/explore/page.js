@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";  // Import Suspense
+import { useState, useEffect } from "react";  // Import Suspense
 import { useSearchParams } from "next/navigation";
 import { fetchRecipes } from "../../utils/api";
 import RecipeCard from "../../components/RecipeCard";
@@ -226,14 +226,14 @@ export default function Results() {
             </div>
 
             {/* Filters */}
-            <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} hasUnsavedChanges={haveUnsavedChanges("categories")} variant="dark"/>
-            <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} hasUnsavedChanges={haveUnsavedChanges("subcategories")} variant="dark"/>
-            <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")} variant="dark"/>
-            <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} hasUnsavedChanges={haveUnsavedChanges("ingredients")} variant="dark"/>
-            <GeneralFilter title="Nations" options={nationOptions} selectedValues={nations} onChange={setNations} isMultiSelect={false} allowCustomInput={true} onClear={() => setNations([])} hasUnsavedChanges={haveUnsavedChanges("nations")} variant="dark"/>
-            <RangeSlider label="Time" min={0} max={720} value={time} onChange={setTime} unit="min" hasUnsavedChanges={haveUnsavedChanges("time")} ticks={3} variant = "dark"/>
-            <RangeSlider label="Cost" min={0} max={1000} value={cost} onChange={setCost} unit="$" hasUnsavedChanges={haveUnsavedChanges("cost")} ticks={3} variant = "dark"/>
-            <RangeSlider label="Difficulty" min={1} max={10} value={difficulty} onChange={setDifficulty} unit="" hasUnsavedChanges={haveUnsavedChanges("difficulty")} ticks={2} variant = "dark"/>
+            <GeneralFilter title="Categories" options={categoryOptions} selectedValues={categories} onChange={setCategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setCategories([])} hasUnsavedChanges={haveUnsavedChanges("categories")} />
+            <GeneralFilter title="Subcategories" options={subcategoryOptions} selectedValues={subcategories} onChange={setSubcategories} isMultiSelect={true} allowCustomInput={true} onClear={() => setSubcategories([])} hasUnsavedChanges={haveUnsavedChanges("subcategories")} />
+            <GeneralFilter title="Ratings" options={ratingOptions} selectedValues={ratings} onChange={setRatings} isMultiSelect={true} onClear={() => setRatings([])} hasUnsavedChanges={haveUnsavedChanges("ratings")} />
+            <GeneralFilter title="Ingredients" options={ingredientOptions} selectedValues={ingredients} onChange={setIngredients} isMultiSelect={true} allowCustomInput={true} onClear={() => setIngredients([])} hasUnsavedChanges={haveUnsavedChanges("ingredients")} />
+            <GeneralFilter title="Nations" options={nationOptions} selectedValues={nations} onChange={setNations} isMultiSelect={false} allowCustomInput={true} onClear={() => setNations([])} hasUnsavedChanges={haveUnsavedChanges("nations")} />
+            <RangeSlider label="Time" min={0} max={720} value={time} onChange={setTime} unit="min" hasUnsavedChanges={haveUnsavedChanges("time")} ticks={3} />
+            <RangeSlider label="Cost" min={0} max={1000} value={cost} onChange={setCost} unit="$" hasUnsavedChanges={haveUnsavedChanges("cost")} ticks={3} />
+            <RangeSlider label="Difficulty" min={1} max={10} value={difficulty} onChange={setDifficulty} unit="" hasUnsavedChanges={haveUnsavedChanges("difficulty")} ticks={2} />
 
             {/* Apply Filters Button - at the bottom */}
             <div className="flex justify-end mt-6">
@@ -281,25 +281,23 @@ export default function Results() {
               </div>
 
               {/* Recipe Grid */}
-              {loading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
-                  {[...Array(8)].map((_, idx) => (
-                    <RecipeCardSkeleton key={idx} variant="dark" />
-                  ))}
-                </div>
-              ) : recipes.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
-                  {recipes.map((recipe) => (
-                    <RecipeCard key={recipe.id} recipe={recipe} variant="dark" />
-                  ))}
-                </div>
-              ) : error ? (
-                <p>{error}</p>
-              ) : (
-                noResults() // Show the No Results message if no recipes after search
-              )}
-
-
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
+                {
+                  loading ? (
+                    [...Array(8)].map((_, idx) => (
+                      <RecipeCardSkeleton key={idx}  />
+                    ))
+                  ) : recipes.length > 0 ? (
+                        recipes.map((recipe) => (
+                          <RecipeCard key={recipe.id} recipe={recipe}  />
+                        ))
+                      ) : error ? (
+                            <p>{error}</p>
+                          ) : null
+                }
+              </div>
+              {/* No Results Message */}
+              {!loading && recipes.length === 0 && !error && <div>{noResults()}</div>}
 
               {/* Pagination */}
               <Pagination currentPage={page} totalPages={Math.ceil(100 / 10)} onPageChange={setPage} hasMore={hasMore} />
@@ -310,3 +308,8 @@ export default function Results() {
     </div>
   );
 }
+
+
+/*
+https://nextjs.org/docs/app/api-reference/functions/use-search-params#updating-searchparams
+*/

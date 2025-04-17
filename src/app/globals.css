@@ -77,13 +77,44 @@ body {
 /* globals.css */
 
 .theme-light {
-  --color-bg: #fefefe;
-  --color-surface: #ffffff;
-  --color-text: #1f2937;
-  --color-accent: #0d9488;
-  --color-title: #0f766e;
-  --color-button: #facc15;
-  --color-muted: #6b7280;
+  --background: #ffffff;
+  --foreground: #171717;
+
+  --Chop-color: #134e4a; /*teal-900*/
+  --main-text: #1f2937; /*gray 800*/;
+  --sub-text: #4b5563;/*gray 600*/
+  --other-text: #6b7280; /*gray-400*/; 
+  --primary: #ffffff; /*white*/
+  --primary-cmpmt: #facc15; /*yellow-400*/
+  --secondary: #319795; /*teal-500*/
+  --secondary-light: #4fd1c5; /*teal-400*/
+  --secondary-dark: #f3f4f6; /*gray-100*/
+  --navlink-rest: rgba(255, 255, 255, 0.8);
+  --signup-button-hover: #facc15; /*yellow-400*/
+  --bg-light: #fafafa; /*gray-50*/
+
+  --section-title-end-gradient: #64d5d0; /*teal-300*/
+  --section-bg-gradient-start: rgba(255, 255, 255, 0.4);
+  --section-bg-gradient-end: rgba(255, 255, 255, 0.7);
+
+  --slider-bg:#e5e5e5;
+  --slider-handle-border: #4caf50;
+  --slider-handle-bg: #4caf50;
+  --slider-track-bg: #4caf50;
+  --slider-rail-bg: #e5e5e5;
+
+  --filter-unsaved-bg: #fef9c3;
+
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --recipe-detail-category: #b2f4f2; /*teal-100*/
+  --recipe-detail-subcategory: #fef9c3; /*yellow-100*/
+  --recipe-detail-category-text: #1f5f57; /*teal-800*/
+  --recipe-detail-subcategory-text: #9a5b00; /*yellow-800*/
+  --recipe-detail-ingredient-skeleton-bullet: #6b7280; /*gray-400*/
+
+  --search-results-bg: #f3f4f6; /*gray 100*/
+  --search-results-subtext: #6b7280;/*gray 500*/
 }
 
 .theme-dark {

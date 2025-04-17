@@ -1,12 +1,6 @@
 // components/skeletons/RecipeCardSkeleton.js
-export const RecipeCardSkeleton = ({ variant = "dark" }) => {
-    const isDark = variant === "dark";
-  
-    const cardClasses = `rounded-lg shadow-md border-b-4 transition-shadow duration-300 ease-in-out cursor-pointer flex flex-col h-[400px] animate-pulse ${
-      isDark
-        ? "bg-[var(--primary)] border-[var(--primary-cmpmt)] text-[var(--main-text)]"
-        : "bg-white border-yellow-400 text-gray-800"
-    }`;
+export const RecipeCardSkeleton = () => {
+    const cardClasses = "rounded-lg shadow-md border-b-4 transition-shadow duration-300 ease-in-out cursor-pointer flex flex-col h-[400px] animate-pulse bg-[var(--primary)] border-[var(--primary-cmpmt)] text-[var(--main-text)]";
   
     return (
       <div className={cardClasses}>
