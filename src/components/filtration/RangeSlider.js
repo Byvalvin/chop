@@ -17,7 +17,7 @@ const RangeSlider = ({ label, min, max, value, onChange, unit, ticks = 1 }) => {
     return (
       <input
         type={type}
-        className={`w-24 px-3 py-1.5 border border-[var(--primary-cmpmt)] rounded-md text-sm shadow-sm 
+        className={`w-full max-w-full px-3 py-1.5 border border-[var(--primary-cmpmt)] rounded-md text-sm shadow-sm 
           focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] focus:border-transparent transition ${className}`}
         value={value}
         min={min}
@@ -26,15 +26,17 @@ const RangeSlider = ({ label, min, max, value, onChange, unit, ticks = 1 }) => {
       />
     );
   };
+  
   const RangeInput = ({ value, min, max, handleInputChange }) => {
     return (
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 w-full">
         <TextInput
           type="number"
           value={value[0]}
           min={min}
           max={value[1]}
           onChange={(e) => handleInputChange(0, e.target.value)}
+          className="flex-1" // Allow the input to flex and grow
         />
         <span className="text-sm text-[var(--sub-text)]">–</span>
         <TextInput
@@ -43,6 +45,7 @@ const RangeSlider = ({ label, min, max, value, onChange, unit, ticks = 1 }) => {
           min={value[0]}
           max={max}
           onChange={(e) => handleInputChange(1, e.target.value)}
+          className="flex-1" // Allow the input to flex and grow
         />
       </div>
     );
@@ -57,16 +60,16 @@ const RangeSlider = ({ label, min, max, value, onChange, unit, ticks = 1 }) => {
   };
 
   return (
-    <div className="mt-4 flex flex-col space-y-3 p-4 bg-[var(--primary)] text-[var(--main-text)] rounded-md">
+    <div className="mt-4 flex flex-col space-y-3 p-4 bg-[var(--primary)] text-[var(--main-text)] rounded-md w-full">
       {/* Label */}
-      <label className="block text-lg font-semibold text-[var(--main-text)] mb-2" >
+      <label className="block text-lg font-semibold text-[var(--main-text)] mb-2">
         {label} {unit ? `(${unit})` : ""}
       </label>
 
       {/* Unified Range Control Block */}
-      <div className="flex flex-col space-y-3 ">
+      <div className="flex flex-col space-y-3 w-full">
         {/* Inputs + Dash */}
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-3 w-full">
           <RangeInput
             value={value}
             min={min}

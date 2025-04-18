@@ -15,12 +15,13 @@ import {
 } from '@/utils/api';
 import { getCountryCode, getRegionEmoji } from '@/utils/countryUtils';
 
-import { FaClock, FaDollarSign } from 'react-icons/fa';
+import { FaClock, FaDollarSign, FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Importing arrow icons} from 'react-icons/fa';
 import { toTitleCase } from '@/utils/string';
 import PageContainer from '@/components/PageContainer';
 
 import RecipeDetailSkeleton from "@/components/skeletons/RecipeDetailSkeleton";
 import Link from 'next/link'; // Import Link component
+
 
 const recipe404 = () => 
     <div className="min-h-screen bg-[url('/images/bg/light1.png')] bg-cover bg-center bg-no-repeat flex items-center justify-center px-4">
@@ -55,6 +56,8 @@ export default function RecipeDetailPage() {
   const [nationName, setNationName] = useState('');
   const [regionName, setRegionName] = useState('');
   const [expandedSteps, setExpandedSteps] = useState({});
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+
 
   const imageUrl = useRecipeImage(id);
 
@@ -64,6 +67,10 @@ export default function RecipeDetailPage() {
       [index]: !prev[index],
     }));
   };
+  const toggleDescription = () => {
+    setIsDescriptionOpen(prevState => !prevState);
+  };
+  
 
   useEffect(() => {
     const loadRecipeDetails = async () => {
@@ -173,6 +180,32 @@ export default function RecipeDetailPage() {
             className="w-full h-full object-cover"
           />
         </figure>
+
+        {/* Recipe Description */}
+        {recipe.description && (
+          <section
+            aria-labelledby="description-heading"
+            className="space-y-4"
+          >
+            <div className="flex justify-end items-center"> {/* Aligns button to the right */}
+              <button
+                className="text-sm text-[var(--secondary-dark)] hover:text-[var(--primary)] flex items-center gap-2"
+                onClick={toggleDescription}
+              >
+                {isDescriptionOpen ? (
+                  <FaChevronUp className="text-[var(--secondary-dark)]" />
+                ) : (
+                  <FaChevronDown className="text-[var(--secondary-dark)]" />
+                )}
+              </button>
+            </div>
+            {isDescriptionOpen && (
+              <p className="text-[var(--other-text)] text-base md:text-lg mt-2">
+                {recipe.description}
+              </p>
+            )}
+          </section>
+        )}
 
         {/* Categories */}
         <section aria-label="Tags">

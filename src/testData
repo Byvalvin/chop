@@ -116,5 +116,319 @@
           { "name": "Bell pepper", "quantity": 1, "unit": "medium" },
           { "name": "Onion", "quantity": 1, "unit": "medium" }
         ]
-      }      
+      },
+      
+      {
+        "name": "Bunny Chow",
+        "description": "A South African street food consisting of curry served in a hollowed-out loaf of bread.",
+        "nation": "South Africa",
+        "region": "Southern Africa",
+        "instructions": [
+            "Prepare the curry with your choice of meat or vegetables.",
+            "Hollow out a loaf of bread.",
+            "Fill the bread with the curry and serve."
+        ],
+        "categories": ["Street Food", "Main Dish"],
+        "subcategories": ["Curry", "Sandwich"],
+        "aliases": ["Indian Bunny Chow"],
+        "images": [
+            {
+                "url": "https://www.curiouscuisiniere.com/wp-content/uploads/2016/07/Bunny-Chow-6749.21.jpg",
+                "type": "thumbnail",
+                "caption": "Bunny Chow"
+            },
+            {
+                "url": "https://henristeenkamp.org/wp-content/uploads/henristeenkamp-org/sites/28/bunny-chow.jpeg",
+                "type": "full-size",
+                "caption": "Bunny Chow served in bread"
+            }
+        ],
+        "time": 60,
+        "cost": 10,
+        "ingredients": [
+            { "name": "Lamb", "quantity": 500, "unit": "grams" },
+            { "name": "Curry powder", "quantity": 2, "unit": "tbsp" },
+            { "name": "Tomatoes", "quantity": 3, "unit": "medium" },
+            { "name": "Onion", "quantity": 1, "unit": "large" },
+            { "name": "Bread loaf", "quantity": 1, "unit": "large" }
+        ]
+    },
+    {
+        "name": "Coconut Rice",
+        "description": "A flavorful side dish of rice cooked with coconut milk.",
+        "nation": "Ghana",
+        "region": "West Africa",
+        "instructions": [
+            "Rinse the rice and place it in a pot.",
+            "Add coconut milk, water, and seasonings.",
+            "Cook the rice until tender and fluffy."
+        ],
+        "categories": ["Side Dish", "Vegetarian"],
+        "subcategories": ["Rice", "Vegan"],
+        "aliases": ["Ghanaian Coconut Rice"],
+        "images": [
+            {
+                "url": "https://www.kitchensanctuary.com/wp-content/uploads/2024/07/Rice-Cooker-Coconut-Rice-Square-FS-500x500.jpg",
+                "type": "thumbnail",
+                "caption": "Coconut Rice"
+            },
+            {
+                "url": "https://proveg.org/ng/wp-content/uploads/sites/4/2024/04/coconut-rice-.jpg",
+                "type": "full-size",
+                "caption": "Coconut Rice served with stew"
+            }
+        ],
+        "time": 40,
+        "cost": 8,
+        "ingredients": [
+            { "name": "Rice", "quantity": 2, "unit": "cups" },
+            { "name": "Coconut milk", "quantity": 1, "unit": "can" },
+            { "name": "Onion", "quantity": 1, "unit": "medium" },
+            { "name": "Bay leaves", "quantity": 2, "unit": "pieces" }
+        ]
+    },
+
+    {
+        "name": "Goat Meat Pepper Soup",
+        "description": "A spicy soup made with fish or meat, flavored with African spices.",
+        "nation": "Nigeria",
+        "region": "West Africa",
+        "instructions": [
+            "Prepare the fish or meat by cleaning and cutting into pieces.",
+            "Boil the meat with spices and onions until tender.",
+            "Add scotch bonnet peppers, garlic, and seasoning, and simmer for 15 minutes."
+        ],
+        "categories": ["Soup", "Main Dish"],
+        "subcategories": ["Spicy", "African"],
+        "aliases": ["Nigerian Pepper Soup"],
+        "images": [
+            {
+                "url": "https://i.ytimg.com/vi/7dj-n9w_Vhg/maxresdefault.jpg",
+                "type": "thumbnail",
+                "caption": "Pepper Soup"
+            },
+            {
+                "url": "https://lowcarbafrica.com/wp-content/uploads/2020/11/Goat-Meat-Pepper-Soup-IG-1.jpg",
+                "type": "full-size",
+                "caption": "Pepper Soup with fish"
+            }
+        ],
+        "time": 45,
+        "cost": 10,
+        "ingredients": [
+            { "name": "Goat Meat", "quantity": 500, "unit": "grams" },
+            { "name": "Scotch bonnet pepper", "quantity": 2, "unit": "pieces" },
+            { "name": "Onion", "quantity": 1, "unit": "large" },
+            { "name": "Garlic", "quantity": 3, "unit": "cloves" }
+        ]
+    },
+
+    {
+        "name": "Beef Samosa",
+        "description": "A deep-fried snack filled with spiced potatoes, peas, and sometimes meat, originating from the Indian subcontinent but popular across Africa.",
+        "nation": "Kenya",
+        "region": "East Africa",
+        "instructions": [
+            "Make the filling by cooking boiled potatoes, peas, onions, and spices.",
+            "Prepare the dough and roll it into small circles.",
+            "Fill the dough with the spiced mixture and fold into triangles.",
+            "Deep-fry the samosas until golden brown."
+        ],
+        "categories": ["Snack", "Street Food"],
+        "subcategories": ["Fried", "Side"],
+        "images": [
+            {
+                "url": "https://i.ytimg.com/vi/RCxIqqNfcVM/maxresdefault.jpg",
+                "type": "thumbnail",
+                "caption": "Samosa"
+            },
+            {
+                "url": "https://www.chefspencil.com/wp-content/uploads/Kenyan-Beef-Samosas.jpg",
+                "type": "full-size",
+                "caption": "Freshly fried samosas"
+            }
+        ],
+        "time": 45,
+        "cost": 8,
+        "ingredients": [
+            { "name": "Potatoes", "quantity": 2, "unit": "large" },
+            { "name": "Peas", "quantity": 1, "unit": "cup" },
+            { "name": "Onion", "quantity": 1, "unit": "medium" },
+            { "name": "Curry powder", "quantity": 1, "unit": "tbsp" },
+            { "name": "Wonton wrappers", "quantity": 1, "unit": "pack" }
+        ]
+    },
+
+    {
+        "name": "Piri Piri Chicken",
+        "description": "A spicy and flavorful chicken dish marinated with a tangy piri piri sauce, originating from Mozambique and Angola.",
+        "nation": "Mozambique",
+        "region": "Southern Africa",
+        "instructions": [
+            "Prepare the piri piri marinade using chili peppers, garlic, lemon, and vinegar.",
+            "Marinate the chicken in the sauce for a few hours.",
+            "Grill or roast the chicken until golden and cooked through."
+        ],
+        "categories": ["Main Dish", "Chicken"],
+        "subcategories": ["Grilled", "Spicy"],
+        "images": [
+            {
+                "url": "https://loveincorporated.blob.core.windows.net/contentimages/main/mozambique+chicken+peri+peri.jpeg",
+                "type": "thumbnail",
+                "caption": "Piri Piri Chicken"
+            },
+            {
+                "url": "https://www.internationalcuisine.com/wp-content/uploads/2017/05/Mozambican-peri-peri-chicken_-e1495640819344.jpg",
+                "type": "full-size",
+                "caption": "Grilled Piri Piri Chicken"
+            }
+        ],
+        "time": 90,
+        "cost": 12,
+        "ingredients": [
+            { "name": "Chicken", "quantity": 1, "unit": "whole" },
+            { "name": "Chili peppers", "quantity": 4, "unit": "pieces" },
+            { "name": "Garlic", "quantity": 3, "unit": "cloves" },
+            { "name": "Lemon", "quantity": 1, "unit": "large" },
+            { "name": "Vinegar", "quantity": 2, "unit": "tbsp" }
+        ]
+    },
+
+    {
+        "name": "Fufu and Light Soup",
+        "description": "A traditional Ghanaian dish made of fufu (pounded yam) served with a light, spicy soup usually made with goat meat or fish.",
+        "nation": "Ghana",
+        "region": "West Africa",
+        "instructions": [
+            "Boil the yam and pound it to form smooth fufu.",
+            "Prepare the light soup by boiling the meat or fish with tomatoes, onions, and spices.",
+            "Serve the fufu with the soup."
+        ],
+        "categories": ["Main Dish"],
+        "subcategories": ["Stew", "Pounded Yam"],
+        "images": [
+            {
+                "url": "https://reewascuisine.renanscentfarmsgroup.com/wp-content/uploads/2024/07/447717361_801131335446097_194275312408931305_n.jpg",
+                "type": "thumbnail",
+                "caption": "Fufu and Light Soup"
+            },
+            {
+                "url": "https://nyonyogh.com/wp-content/uploads/2024/01/d19188f6dcc876c7181db2797e951b70.jpg",
+                "type": "full-size",
+                "caption": "Fufu served with Light Soup"
+            }
+        ],
+        "time": 120,
+        "cost": 18,
+        "ingredients": [
+            { "name": "Yam", "quantity": 2, "unit": "large" },
+            { "name": "Goat meat", "quantity": 500, "unit": "grams" },
+            { "name": "Tomato", "quantity": 2, "unit": "medium" },
+            { "name": "Onion", "quantity": 1, "unit": "large" },
+            { "name": "Pepper", "quantity": 2, "unit": "pieces" }
+        ]
+    },
+
+    {
+        "name": "Curry Goat",
+        "description": "A flavorful Jamaican curry dish made with tender goat meat, seasoned with spices and slow-cooked for hours.",
+        "nation": "Jamaica",
+        "region": "Caribbean",
+        "instructions": [
+            "Season the goat meat with curry powder, garlic, thyme, and ginger.",
+            "Brown the meat in a pot and add water to simmer.",
+            "Cook the curry goat until the meat is tender and the sauce is rich."
+        ],
+        "categories": ["Main Dish", "Meat"],
+        "subcategories": ["Curry", "Slow-cooked"],
+        "images": [
+            {
+                "url": "https://www.yummymedley.com/wp-content/uploads/2018/03/curry-goat-10.jpg",
+                "type": "thumbnail",
+                "caption": "Curry Goat"
+            },
+            {
+                "url": "https://i0.wp.com/travelandmunchies.com/wp-content/uploads/2022/11/IMG_4514.jpg?fit=%2C&ssl=1",
+                "type": "full-size",
+                "caption": "Curry Goat served with rice"
+            }
+        ],
+        "time": 180,
+        "cost": 20,
+        "ingredients": [
+            { "name": "Goat meat", "quantity": 500, "unit": "grams" },
+            { "name": "Curry powder", "quantity": 2, "unit": "tbsp" },
+            { "name": "Garlic", "quantity": 3, "unit": "cloves" },
+            { "name": "Ginger", "quantity": 1, "unit": "inch" },
+            { "name": "Thyme", "quantity": 1, "unit": "tbsp" }
+        ]
+    },
+
+    {
+        "name": "Biltong",
+        "description": "A dried, cured meat snack popular in South Africa, typically made from beef or game meat.",
+        "nation": "South Africa",
+        "region": "Southern Africa",
+        "instructions": [
+            "Marinate the meat with vinegar, salt, and spices.",
+            "Dry the meat in a cool, ventilated place for several days until it is firm and chewy.",
+            "Slice thinly and serve as a snack."
+        ],
+        "categories": ["Snack", "Meat"],
+        "subcategories": ["Dried", "Jerky"],
+        "images": [
+            {
+                "url": "https://southafricanshop.uk/cdn/shop/articles/1_3bc31e46-43b8-40d0-a511-c4c490d0c060_460x@2x.jpg?v=1713880324",
+                "type": "thumbnail",
+                "caption": "Biltong"
+            },
+            {
+                "url": "https://www.sussex-biltong.com/wp-content/uploads/2023/06/Sussex-Biltong-134-2.jpg",
+                "type": "full-size",
+                "caption": "Dried Biltong meat"
+            }
+        ],
+        "time": 720,
+        "cost": 15,
+        "ingredients": [
+            { "name": "Beef", "quantity": 1, "unit": "kg" },
+            { "name": "Vinegar", "quantity": 100, "unit": "ml" },
+            { "name": "Coriander seeds", "quantity": 1, "unit": "tbsp" },
+            { "name": "Black pepper", "quantity": 1, "unit": "tbsp" }
+        ]
+    },
+
+    {
+        "name": "Plantain Chips",
+        "description": "Crispy, thinly sliced fried plantains, a popular snack throughout West and Central Africa.",
+        "nation": "Nigeria",
+        "region": "West Africa",
+        "instructions": [
+            "Peel the plantains and slice them thinly.",
+            "Heat oil in a pan and fry the plantains until crispy.",
+            "Drain on paper towels and season with salt."
+        ],
+        "categories": ["Snack", "Fried"],
+        "subcategories": ["Plantain", "Crispy"],
+        "images": [
+            {
+                "url": "https://www.foodandwine.com/thmb/_MQw4TGJ9dR7nvmMayhjIhdqwwM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Plantain-Chips-FT-RECIPE0623-24212663ea004a3eaccd777221489165.jpg",
+                "type": "thumbnail",
+                "caption": "Plantain Chips"
+            },
+            {
+                "url": "https://staticcookist.akamaized.net/wp-content/uploads/sites/22/2023/09/plantain-chips.jpeg?im=Resize,width=742;",
+                "type": "full-size",
+                "caption": "Fried Plantain Chips"
+            }
+        ],
+        "time": 30,
+        "cost": 5,
+        "ingredients": [
+            { "name": "Plantains", "quantity": 2, "unit": "pieces" },
+            { "name": "Vegetable oil", "quantity": 1, "unit": "cup" },
+            { "name": "Salt", "quantity": 1, "unit": "tsp" }
+        ]
+    }
+    
 ]

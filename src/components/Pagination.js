@@ -1,13 +1,20 @@
 // src/components/Pagination.js
 
-const PaginationButton = ({name, onClick, disabled}) =>
-  <button
-    onClick={onClick}
-    disabled={disabled}
-    className="px-4 py-2 bg-[var(--secondary-dark)] border-2 border-[var(--secondary-dark)] text-[var(--main-text)] rounded-lg hover:bg-[var(--secondary)] transition"
-  >
-    {name}
-  </button>
+export const recipesPerPage = 8;
+
+const PaginationButton = ({ name, onClick, disabled }) =>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`px-4 py-2 border-2 text-[var(--main-text)] rounded-lg transition-all 
+        ${disabled 
+          ? "bg-[var(--sub-text)] text-[var(--other-text)] border-[var(--sub-text)] cursor-not-allowed opacity-50" // Disabled state
+          : "bg-[var(--secondary-dark)] border-[var(--secondary-dark)] hover:bg-[var(--secondary)]"} // Active state
+      `}
+    >
+      {name}
+    </button>
+
 
 const Pagination = ({ currentPage, totalPages, onPageChange, hasMore }) => {
   return (
@@ -15,17 +22,17 @@ const Pagination = ({ currentPage, totalPages, onPageChange, hasMore }) => {
       { 
         PaginationButton(
           {
-            name:"Prev",
+            name:"< Prev",
             onClick:() => onPageChange(currentPage - 1),
             disabled:currentPage === 1
           }
         )
       }
-      <span className="text-lg text-[var(--primary)]">
+      {/* <span className="text-lg text-[var(--primary)]">
         {currentPage} of {totalPages}
-      </span>
+      </span> */}
       <PaginationButton
-          name="Next"
+          name="Next >"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={!hasMore || currentPage===totalPages}
       />

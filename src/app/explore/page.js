@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";  // Import Suspense
 import { useSearchParams } from "next/navigation";
 import { fetchRecipes } from "../../utils/api";
 import RecipeCard from "../../components/RecipeCard";
-import Pagination from "../../components/Pagination";
+import Pagination, {recipesPerPage} from "../../components/Pagination";
 import GeneralFilter from "../../components/filtration/GeneralFilter";
 import RangeSlider from "../../components/filtration/RangeSlider";
 import { FaTrashAlt, FaCheckCircle, FaSearch } from 'react-icons/fa'; // Import icons for the buttons
@@ -134,6 +134,11 @@ export default function Results() {
       </div>
     );
   }
+
+  const onPageChange = (newPage) => {
+    setPage(newPage); // updates the page number
+    setShouldSearch(true); // trigger new search when page changes
+  };
   
   
 
@@ -176,7 +181,7 @@ export default function Results() {
             difficulty
           });
           setRecipes(data.results);
-          setHasMore(data.results.length === 10);
+          setHasMore(data.results.length === recipesPerPage);
         } catch (err) {
           setError(err.message);
         } finally {
@@ -251,7 +256,7 @@ export default function Results() {
           </div>
 
           {/* Separator */}
-          <div className="w-[2px] bg-[var(--sub-text)] rounded-md"></div>
+          <div className="w-[1px] bg-[var(--sub-text)] rounded-md"></div>
 
           {/* Right side: Results */}
           <div className="w-3/4 space-y-8 p-4 bg-[var(--bg-light)] border-l-4 border-[var(--secondary)] rounded-md shadow-sm">
@@ -297,7 +302,7 @@ export default function Results() {
               {!loading && recipes.length === 0 && !error && <div>{noResults()}</div>}
 
               {/* Pagination */}
-              <Pagination currentPage={page} totalPages={Math.ceil(100 / 10)} onPageChange={setPage} hasMore={hasMore} />
+              <Pagination currentPage={page} totalPages={Math.ceil(100 / 10)} onPageChange={onPageChange} hasMore={hasMore} />
             </main>
           </div>
 

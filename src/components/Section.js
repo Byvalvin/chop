@@ -1,7 +1,7 @@
 import Link from "next/link";
 import RecipeCard from "../components/RecipeCard";
 import { FaTags } from 'react-icons/fa';
-import { capitalizeFirstLetter } from "@/utils/string";
+import { toTitleCase } from "@/utils/string";
 
 const SectionCard = ({
   title,
@@ -33,7 +33,7 @@ const SectionCard = ({
         >
           <span className="text-[var(--primary)]">{title}</span>
           <span className="mx-4 flex-grow text-center" >{getIcon()}</span>
-          <span className="text-[var(--secondary)]">{capitalizeFirstLetter(selectedValue)}</span>
+          <span className="text-[var(--secondary)]">{toTitleCase(selectedValue)}</span>
           <span className="absolute left-0 bottom-[-8px] w-full h-[6px] bg-[var(--secondary-dark)] mt-8 rounded-full"></span>
         </h3>
 

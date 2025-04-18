@@ -1,4 +1,5 @@
 // src/utils/api.js
+import { recipesPerPage } from "@/components/Pagination";
 
 const base = 'https://chop-api-nine.vercel.app/chop/api';
 
@@ -15,7 +16,7 @@ export const fetchRecipes = async ({
   ratings = [],
   difficulty = []
 }) => {
-  const limit = 8; // Number of recipes per page
+  const limit = recipesPerPage; // Number of recipes per page
 
   const searchQuery = search ? `&search=${search}` : "";
   const categoryQuery = categories.length ? `&category=${categories.join(',')}` : "";

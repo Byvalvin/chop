@@ -64,11 +64,23 @@ const Navbar = () => {
         </div>
 
         {/* CTA */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 relative group flex items-center">
+          {/* Sign Up Button */}
           <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition">
             Sign Up
           </button>
+
+          {/* Microcopy (only shows on hover) */}
+          <div className="absolute left-0 top-full mt-2 text-center text-[var(--other-text)] text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <p className="font-semibold text-[var(--primary-cmpmt)] italic text-xs">
+              Add, rate and save recipes!
+            </p>
+          </div>
         </div>
+
+
+
+
       </div>
     </header>
 
