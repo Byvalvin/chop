@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { fetchRecipes, fetchNations, fetchCategories, fetchSubcategories } from "../utils/api";
 import SectionCard from "../components/Section";
 import { FaFolder, FaGlobe, FaTags } from "react-icons/fa";
-import PageContainer from "../components/PageContainer"; // Import the PageContainer component
+import PageContainer from "../components/PageContainer";
 import SectionCardSkeleton from "../components/skeletons/SectionSkeleton";
+import { useSwipeable } from 'react-swipeable'; // For swipe functionality
+import TabContainer from "../components/responsive/TabContainer"; // Import TabContainer component
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -23,11 +25,11 @@ export default function Home() {
   });
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("nation"); // Active tab state
 
   useEffect(() => {
     const getSectionData = async () => {
       setLoading(true);
-      //localStorage.clear();
       const storedData = localStorage.getItem("sectionData");
 
       if (storedData) {
@@ -83,22 +85,40 @@ export default function Home() {
     getSectionData();
   }, [page]);
 
-  const handleSearch = async () => {
-    setLoading(true);
-    try {
-      const searchData = await fetchRecipes({ page, search: searchTerm });
-      setRecipes(searchData.results);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const paths = {
     nation: `/explore?nation=${selectedNation?.name}`,
     category: `/explore?category=${selectedCategory?.name}`,
     subcategory: `/explore?subcategory=${selectedSubcategory?.name}`,
+  };
+
+  // Handle swipe gestures
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => setActiveTab(prev => prev === "nation" ? "category" : prev === "category" ? "subcategory" : prev),
+    onSwipedRight: () => setActiveTab(prev => prev === "subcategory" ? "category" : prev === "category" ? "nation" : prev),
+  });
+
+  const tabs = [
+    { id: 'nation', label: 'Nation' },
+    { id: 'category', label: 'Category' },
+    { id: 'subcategory', label: 'Subcategory' },
+  ];
+
+  // Common function to render SectionCard
+  const renderSectionCard = (sectionKey, title, IconType, backgroundImage, selectedValue) => {
+    return (
+      <SectionCard
+        key={sectionKey}
+        title={title}
+        sectionRecipes={sectionRecipes[sectionKey]}
+        path={paths[sectionKey]}
+        sectionType={sectionKey}
+        bgColor="bg-cream"
+        titleColor="text-[var(--primary)]"
+        IconType={IconType}
+        selectedValue={selectedValue}
+        backgroundImage={backgroundImage}
+      />
+    );
   };
 
   return (
@@ -106,57 +126,66 @@ export default function Home() {
       <PageContainer>
         <div className="relative z-10">
           <div className="w-full">
-            {loading ? (
-              <>
-                <SectionCardSkeleton />
-                <SectionCardSkeleton />
-                <SectionCardSkeleton />
-              </>
-            ) : (
-              <>
-                <SectionCard 
-                  title="Nation"
-                  sectionRecipes={sectionRecipes.nation}
-                  path={paths.nation}
-                  sectionType="nation"
-                  bgColor="bg-cream"
-                  titleColor="text-[var(--primary)]"
-                  IconType={FaGlobe}
-                  selectedValue={selectedNation?.name}
-                  backgroundImage="/images/bg/light4.png"
-                />
-                <SectionCard 
-                  title="Category"
-                  sectionRecipes={sectionRecipes.category}
-                  path={paths.category}
-                  sectionType="category"
-                  bgColor="bg-cream"
-                  titleColor="text-[var(--primary)]"
-                  IconType={FaTags}
-                  selectedValue={selectedCategory?.name}
-                  backgroundImage="/images/bg/light5.png"
-                />
-                <SectionCard 
-                  title="Subcategory"
-                  sectionRecipes={sectionRecipes.subcategory}
-                  path={paths.subcategory}
-                  sectionType="subcategory"
-                  bgColor="bg-cream"
-                  titleColor="text-[var(--primary)]"
-                  IconType={FaFolder}
-                  selectedValue={selectedSubcategory?.name}
-                  backgroundImage="/images/bg/light7.png"
-                />
-              </>
-            )}
+
+            {/* Tabs for Mobile */}
+            <div className="block sm:hidden">
+              <TabContainer
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                tabs={tabs}
+                swipeHandlers={swipeHandlers}
+              >
+                {loading ? (
+                  // Display skeletons for mobile
+                  <>
+                    <SectionCardSkeleton backgroundImage="/images/bg/light4.png" />
+                    <SectionCardSkeleton backgroundImage="/images/bg/light5.png" />
+                    <SectionCardSkeleton backgroundImage="/images/bg/light7.png" />
+                  </>
+                ) : (
+                  // Actual content when loading is done
+                  <>
+                    {activeTab === "nation" && renderSectionCard("nation", "Nation", FaGlobe, "/images/bg/light4.png", selectedNation?.name)}
+                    {activeTab === "category" && renderSectionCard("category", "Category", FaTags, "/images/bg/light5.png", selectedCategory?.name)}
+                    {activeTab === "subcategory" && renderSectionCard("subcategory", "Subcategory", FaFolder, "/images/bg/light7.png", selectedSubcategory?.name)}
+                  </>
+                )}
+              </TabContainer>
+            </div>
+
+
+            {/* Default Section Layout for Larger Screens */}
+            <div className="hidden sm:block">
+              {loading ? (
+                // Show skeletons for larger screens
+                <>
+                  <SectionCardSkeleton backgroundImage="/images/bg/light4.png" />
+                  <SectionCardSkeleton backgroundImage="/images/bg/light5.png" />
+                  <SectionCardSkeleton backgroundImage="/images/bg/light7.png" />
+                </>
+              ) : (
+                // Show actual content for larger screens
+                <>
+                  {renderSectionCard("nation", "Nation", FaGlobe, "/images/bg/light4.png", selectedNation?.name)}
+                  {renderSectionCard("category", "Category", FaTags, "/images/bg/light5.png", selectedCategory?.name)}
+                  {renderSectionCard("subcategory", "Subcategory", FaFolder, "/images/bg/light7.png", selectedSubcategory?.name)}
+                </>
+              )}
+            </div>
+
+            {error && <p className="text-red-500 text-lg">{error}</p>}
           </div>
-  
-          {error && <p className="text-red-500 text-lg">{error}</p>}
         </div>
       </PageContainer>
     </div>
   );
 }
+
+
+
+
+
+
 
 
 

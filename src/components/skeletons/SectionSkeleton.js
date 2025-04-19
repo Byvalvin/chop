@@ -12,7 +12,7 @@ const SectionCardSkeleton = ({ backgroundImage = "/images/bg/light4.png" }) => {
 
       <div className="relative z-10">
         {/* Header */}
-        <div className="text-4xl font-extrabold text-center relative flex justify-between items-center mb-10 ">
+        <div className="text-4xl font-extrabold text-center relative flex justify-between items-center mb-10">
             {/* Title and Icon placeholder */}
             <div className="flex gap-x-4">
                 <div className="h-10 w-24 bg-[var(--sub-text)] rounded-md" />
@@ -25,7 +25,6 @@ const SectionCardSkeleton = ({ backgroundImage = "/images/bg/light4.png" }) => {
             {/* Underline bar */}
             <span className="absolute left-0 bottom-[-8px] w-full h-[6px] bg-[var(--secondary-dark)] mt-8 rounded-full"></span>
         </div>
-
 
         {/* Recipe skeletons */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
