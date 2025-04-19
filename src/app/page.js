@@ -103,6 +103,13 @@ export default function Home() {
     { id: 'subcategory', label: 'Subcategory' },
   ];
 
+  // the bg images for each section
+  const sectionBg = [
+    "/images/bg/light4.png",
+    "/images/bg/light5.png",
+    "/images/bg/light7.png"
+
+  ]
   // Common function to render SectionCard
   const renderSectionCard = (sectionKey, title, IconType, backgroundImage, selectedValue) => {
     return (
@@ -126,7 +133,7 @@ export default function Home() {
       <PageContainer>
         <div className="relative z-10">
           <div className="w-full">
-
+            
             {/* Tabs for Mobile */}
             <div className="block sm:hidden">
               <TabContainer
@@ -138,9 +145,7 @@ export default function Home() {
                 {loading ? (
                   // Display skeletons for mobile
                   <>
-                    <SectionCardSkeleton backgroundImage="/images/bg/light4.png" />
-                    <SectionCardSkeleton backgroundImage="/images/bg/light5.png" />
-                    <SectionCardSkeleton backgroundImage="/images/bg/light7.png" />
+                    {[...Array(sectionBg.length)].map((_, idx)=> <SectionCardSkeleton key={idx} backgroundImage={sectionBg[idx]} />)}
                   </>
                 ) : (
                   // Actual content when loading is done
@@ -153,22 +158,19 @@ export default function Home() {
               </TabContainer>
             </div>
 
-
             {/* Default Section Layout for Larger Screens */}
             <div className="hidden sm:block">
               {loading ? (
                 // Show skeletons for larger screens
                 <>
-                  <SectionCardSkeleton backgroundImage="/images/bg/light4.png" />
-                  <SectionCardSkeleton backgroundImage="/images/bg/light5.png" />
-                  <SectionCardSkeleton backgroundImage="/images/bg/light7.png" />
+                  {[...Array(sectionBg.length)].map((_, idx)=> <SectionCardSkeleton key={idx} backgroundImage={sectionBg[idx]} />)}
                 </>
               ) : (
                 // Show actual content for larger screens
                 <>
-                  {renderSectionCard("nation", "Nation", FaGlobe, "/images/bg/light4.png", selectedNation?.name)}
-                  {renderSectionCard("category", "Category", FaTags, "/images/bg/light5.png", selectedCategory?.name)}
-                  {renderSectionCard("subcategory", "Subcategory", FaFolder, "/images/bg/light7.png", selectedSubcategory?.name)}
+                  {renderSectionCard("nation", "Nation", FaGlobe, sectionBg[0], selectedNation?.name)}
+                  {renderSectionCard("category", "Category", FaTags, sectionBg[1], selectedCategory?.name)}
+                  {renderSectionCard("subcategory", "Subcategory", FaFolder, sectionBg[2], selectedSubcategory?.name)}
                 </>
               )}
             </div>
@@ -197,4 +199,5 @@ https://www.vecteezy.com/free-png/leaf-icon
 https://www.google.com/search?q=leaf+icon&client=ubuntu&hs=GA1&sca_esv=c09d48c2a0d898e8&channel=fs&ei=hzHzZ-m5Go3-p84P5_-6gQg&ved=0ahUKEwipmYO06cSMAxUN_8kDHee_LoAQ4dUDCBA&uact=5&oq=leaf+icon&gs_lp=Egxnd3Mtd2l6LXNlcnAiCWxlYWYgaWNvbjILEAAYgAQYkQIYigUyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgARIxQtQjwVYiwpwAXgBkAEAmAG9AaABsAWqAQMwLjW4AQPIAQD4AQGYAgagAusFwgIKEAAYsAMY1gQYR8ICDRAAGIAEGLADGEMYigXCAg4QABiwAxjkAhjWBNgBAcICExAuGIAEGLADGEMYyAMYigXYAQHCAhYQLhiABBiwAxhDGOUEGMgDGIoF2AEBwgIKEAAYgAQYQxiKBcICCBAuGIAEGLEDwgILEAAYgAQYsQMYgwHCAggQABiABBixA8ICBRAuGIAEmAMAiAYBkAYTugYGCAEQARgJkgcFMS40LjGgB4cssgcFMC40LjG4B94F&sclient=gws-wiz-serp#vhid=uVTuOpn59Dg7rM&vssid=_ASv3Z_XyN6Tfp84PhbyLGA_78
 https://nextjs.org/docs/messages/next-router-not-mounted
 https://www.bestbuy.ca/en-ca/search?path=category%253AComputers%2B%2526%2BTablets%253Bcategory%253ALaptops%2B%2526%2BMacBooks&search=laptops
+https://react-icons.github.io/react-icons/search/#q=menu
 */

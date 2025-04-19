@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; // useRouter for navigation
 import { usePathname } from "next/navigation";
-import { FaBars, FaSearch, FaUser } from "react-icons/fa"; // Import react-icons
+import { FaBars,FaTimes, FaSearch, FaUser } from "react-icons/fa"; // Import react-icons
 import SearchBar from "./SearchBar"; // Import the SearchBar component
 
 const Navbar = () => {
@@ -91,8 +91,11 @@ const Navbar = () => {
       <div className="md:hidden flex items-center justify-between px-6 py-4">
         {/* Left - Hamburger Menu */}
         <div className="flex items-center">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-2xl">
-            <FaBars /> {/* Hamburger icon */}
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)} 
+            className={`${isMenuOpen? "text-[var(--secondary)]":"text-[var(--primary-cmpmt)]"} text-2xl`}
+          >
+            {isMenuOpen ? <FaTimes /> : <FaBars />} {/* Toggle between Hamburger and Close icons */}
           </button>
         </div>
 
@@ -107,7 +110,7 @@ const Navbar = () => {
           {/* Search Toggle Button */}
           <button
             onClick={() => setIsSearchVisible(!isSearchVisible)}
-            className="text-2xl p-2 rounded-full bg-[var(--primary)] hover:bg-[var(--primary-cmpmt)] transition"
+            className={`text-2xl p-2 rounded-full bg-[var(--primary)] ${isSearchVisible ? "text-[var(--secondary)]":"text-[var(--primary-cmpmt)]"} hover:text-[var(--secondary)] transition`}
           >
             <FaSearch /> {/* Search icon */}
           </button>
