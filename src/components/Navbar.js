@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // useRouter for navigation
+import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { FaBars,FaTimes, FaSearch, FaUser } from "react-icons/fa"; // Import react-icons
+import { FaBars, FaTimes, FaSearch, FaUser, FaDownload } from "react-icons/fa"; // Import react-icons
 import SearchBar from "./SearchBar"; // Import the SearchBar component
 
 const Navbar = () => {
@@ -13,6 +13,10 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
   const [isSearchVisible, setIsSearchVisible] = useState(false); // State for toggling search bar
   const router = useRouter(); // useRouter hook for navigation
+
+  // State for handling the install prompt
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstallVisible, setInstallVisible] = useState(false);
 
   // Define the navigation links
   const navLinks = [
@@ -29,6 +33,35 @@ const Navbar = () => {
       router.push(`/explore?searchTerm=${searchTerm}`);
     }
   };
+
+  // Handle the install button click
+  const handleInstall = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt(); // Show the install prompt
+      deferredPrompt.userChoice
+        .then((choiceResult) => {
+          console.log(choiceResult.outcome); // "accepted" or "dismissed"
+          setInstallVisible(false); // Hide the install button
+          setDeferredPrompt(null); // Clear the deferred prompt
+        });
+    }
+  };
+
+  // Listen for the "beforeinstallprompt" event to show the install button
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault(); // Prevent the default mini-info bar from showing
+      setDeferredPrompt(e); // Save the event for later use
+      setInstallVisible(true); // Show the install button
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-[var(--primary)] bg-opacity-90 backdrop-blur-md">
@@ -67,35 +100,35 @@ const Navbar = () => {
           />
         </div>
 
+        {/* Install App Button */}
+        {isInstallVisible && (
+          <button
+            onClick={handleInstall}
+            className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-[var(--signup-button-hover)] transition"
+          >
+            <FaDownload />
+            <span>Install App</span>
+          </button>
+        )}
+
         {/* CTA */}
         <div className="flex-shrink-0 relative group flex items-center">
           {/* Sign Up Button */}
           <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition">
-            {/* <FaUser className="text-xl" /> */}
             Sign Up
           </button>
-
-          {/* Microcopy (only shows on hover) */}
-          <div className="absolute left-0 top-full mt-2 text-center text-[var(--other-text)] text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <p className="font-semibold text-[var(--primary-cmpmt)] italic text-xs">
-              Add, rate and save recipes!
-            </p>
-          </div>
         </div>
       </div>
-
-
-
 
       {/* Small screens (sm and below) - Restructured navbar */}
       <div className="md:hidden flex items-center justify-between px-6 py-4">
         {/* Left - Hamburger Menu */}
         <div className="flex items-center">
-          <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)} 
-            className={`${isMenuOpen? "text-[var(--secondary)]":"text-[var(--primary-cmpmt)]"} text-2xl`}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={`${isMenuOpen ? "text-[var(--secondary)]" : "text-[var(--primary-cmpmt)]"} text-2xl`}
           >
-            {isMenuOpen ? <FaTimes /> : <FaBars />} {/* Toggle between Hamburger and Close icons */}
+            {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
 
@@ -110,9 +143,9 @@ const Navbar = () => {
           {/* Search Toggle Button */}
           <button
             onClick={() => setIsSearchVisible(!isSearchVisible)}
-            className={`text-2xl p-2 rounded-full bg-[var(--primary)] ${isSearchVisible ? "text-[var(--secondary)]":"text-[var(--primary-cmpmt)]"} hover:text-[var(--secondary)] transition`}
+            className={`text-2xl p-2 rounded-full bg-[var(--primary)] ${isSearchVisible ? "text-[var(--secondary)]" : "text-[var(--primary-cmpmt)]"} hover:text-[var(--secondary)] transition`}
           >
-            <FaSearch /> {/* Search icon */}
+            <FaSearch />
           </button>
 
           {/* Sign Up Button */}
@@ -120,13 +153,6 @@ const Navbar = () => {
             <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition">
               <FaUser className="text-xl" />
             </button>
-
-            {/* Microcopy (only shows on hover) */}
-            {/* <div className="absolute left-0 top-full mt-2 text-center text-[var(--other-text)] text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <p className="font-semibold text-[var(--primary-cmpmt)] italic text-xs">
-                Add, rate and save recipes!
-              </p>
-            </div> */}
           </div>
         </div>
       </div>
@@ -165,7 +191,6 @@ const Navbar = () => {
           />
         </div>
       )}
-      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[100%] h-1 bg-[var(--primary-cmpmt)] rounded-full mt-3"></span>
     </header>
   );
 };
