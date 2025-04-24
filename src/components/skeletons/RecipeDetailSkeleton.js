@@ -50,12 +50,12 @@ const RecipeDetailSkeleton = () => {
             </div>
   
             {/* Instructions */}
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <div className="h-6 w-40 bg-[var(--sub-text)] rounded" />
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="h-20 bg-[var(--sub-text)] rounded-md" />
               ))}
-            </div>
+            </div> */}
   
             {/* Aliases */}
             <div className="h-4 w-64 bg-[var(--sub-text)] rounded" />
