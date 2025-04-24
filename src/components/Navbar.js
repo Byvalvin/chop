@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; // useRouter for navigation
 import { usePathname } from "next/navigation";
-import { FaBars, FaTimes, FaSearch, FaUser, FaDownload } from "react-icons/fa"; // Import react-icons
+import { FaBars,FaTimes, FaSearch, FaUser } from "react-icons/fa"; // Import react-icons
 import SearchBar from "./SearchBar"; // Import the SearchBar component
 
 const Navbar = () => {
@@ -12,11 +12,13 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState(""); // State for the search term
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
   const [isSearchVisible, setIsSearchVisible] = useState(false); // State for toggling search bar
-  const router = useRouter(); // useRouter hook for navigation
-
-  // State for handling the install prompt
+  
+  // pwa states
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [isInstallVisible, setInstallVisible] = useState(false);
+  const [isInstallable, setIsInstallable] = useState(false);
+
+
+  const router = useRouter(); // useRouter hook for navigation
 
   // Define the navigation links
   const navLinks = [
@@ -34,34 +36,31 @@ const Navbar = () => {
     }
   };
 
-  // Handle the install button click
-  const handleInstall = () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt(); // Show the install prompt
-      deferredPrompt.userChoice
-        .then((choiceResult) => {
-          console.log(choiceResult.outcome); // "accepted" or "dismissed"
-          setInstallVisible(false); // Hide the install button
-          setDeferredPrompt(null); // Clear the deferred prompt
-        });
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+  
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log("Install prompt result:", outcome);
+  
+    if (outcome === "accepted" || outcome === "dismissed") {
+      setDeferredPrompt(null);
+      setIsInstallable(false); // Hide icon after interaction
     }
   };
 
-  // Listen for the "beforeinstallprompt" event to show the install button
   useEffect(() => {
-    const handleBeforeInstallPrompt = (e) => {
-      e.preventDefault(); // Prevent the default mini-info bar from showing
-      setDeferredPrompt(e); // Save the event for later use
-      setInstallVisible(true); // Show the install button
+    const handler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
     };
-
-    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
-    // Cleanup event listener on unmount
-    return () => {
-      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-    };
+  
+    window.addEventListener("beforeinstallprompt", handler);
+  
+    return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
+  
 
   return (
     <header className="sticky top-0 z-50 bg-[var(--primary)] bg-opacity-90 backdrop-blur-md">
@@ -100,35 +99,48 @@ const Navbar = () => {
           />
         </div>
 
-        {/* Install App Button */}
-        {isInstallVisible && (
-          <button
-            onClick={handleInstall}
-            className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-[var(--signup-button-hover)] transition"
-          >
-            <FaDownload />
-            <span>Install App</span>
-          </button>
-        )}
-
         {/* CTA */}
         <div className="flex-shrink-0 relative group flex items-center">
           {/* Sign Up Button */}
           <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition">
+            {/* <FaUser className="text-xl" /> */}
             Sign Up
           </button>
+          
+
+          {/* Microcopy (only shows on hover) */}
+          <div className="absolute left-0 top-full mt-2 text-center text-[var(--other-text)] text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <p className="font-semibold text-[var(--primary-cmpmt)] italic text-xs">
+              Add, rate and save recipes!
+            </p>
+          </div>
+
+            {/* Install Icon Button */}
+  {isInstallable && (
+    <button
+      onClick={handleInstallClick}
+      title="Install Chop"
+      className="text-lg p-2 rounded-full bg-[var(--primary-cmpmt)] text-[var(--primary)] hover:bg-[var(--signup-button-hover)] transition"
+    >
+      📲
+    </button>
+  )}
         </div>
+        
       </div>
+
+
+
 
       {/* Small screens (sm and below) - Restructured navbar */}
       <div className="md:hidden flex items-center justify-between px-6 py-4">
         {/* Left - Hamburger Menu */}
         <div className="flex items-center">
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`${isMenuOpen ? "text-[var(--secondary)]" : "text-[var(--primary-cmpmt)]"} text-2xl`}
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)} 
+            className={`${isMenuOpen? "text-[var(--secondary)]":"text-[var(--primary-cmpmt)]"} text-2xl`}
           >
-            {isMenuOpen ? <FaTimes /> : <FaBars />}
+            {isMenuOpen ? <FaTimes /> : <FaBars />} {/* Toggle between Hamburger and Close icons */}
           </button>
         </div>
 
@@ -143,9 +155,9 @@ const Navbar = () => {
           {/* Search Toggle Button */}
           <button
             onClick={() => setIsSearchVisible(!isSearchVisible)}
-            className={`text-2xl p-2 rounded-full bg-[var(--primary)] ${isSearchVisible ? "text-[var(--secondary)]" : "text-[var(--primary-cmpmt)]"} hover:text-[var(--secondary)] transition`}
+            className={`text-2xl p-2 rounded-full bg-[var(--primary)] ${isSearchVisible ? "text-[var(--secondary)]":"text-[var(--primary-cmpmt)]"} hover:text-[var(--secondary)] transition`}
           >
-            <FaSearch />
+            <FaSearch /> {/* Search icon */}
           </button>
 
           {/* Sign Up Button */}
@@ -153,7 +165,26 @@ const Navbar = () => {
             <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition">
               <FaUser className="text-xl" />
             </button>
+
+            {/* Microcopy (only shows on hover) */}
+            {/* <div className="absolute left-0 top-full mt-2 text-center text-[var(--other-text)] text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <p className="font-semibold text-[var(--primary-cmpmt)] italic text-xs">
+                Add, rate and save recipes!
+              </p>
+            </div> */}
           </div>
+
+ {/* Install Icon (Mobile) */}
+ {isInstallable && (
+    <button
+      onClick={handleInstallClick}
+      title="Install Chop"
+      className="text-xl p-2 rounded-full bg-[var(--primary-cmpmt)] text-[var(--primary)] hover:bg-[var(--signup-button-hover)] transition"
+    >
+      📲
+    </button>
+  )}
+
         </div>
       </div>
 
@@ -191,6 +222,7 @@ const Navbar = () => {
           />
         </div>
       )}
+      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[100%] h-1 bg-[var(--primary-cmpmt)] rounded-full mt-3"></span>
     </header>
   );
 };
