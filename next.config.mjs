@@ -18,7 +18,9 @@ const pwaOptions = {
   dest: 'public',
   register: true,
   skipWaiting: true,
-  disable: process.env.NODE_ENV !== 'production',
+  // disable: process.env.NODE_ENV !== 'production',
+  disable:false,
+  buildExcludes: [/middleware-manifest.json$/], // optional workaround for some multiple SW calls
 };
 
 export default withPWA(pwaOptions)(nextConfig);
