@@ -36,7 +36,7 @@ const Navbar = () => {
       <div className="hidden md:flex items-center justify-between px-6 py-4">
         {/* Logo */}
         <div className="flex items-center space-x-3">
-          <img src="/images/leaf-icon.png" alt="Chop Logo" className="w-10 h-10" />
+          <img src="/images/icons/leaf-icon.png" alt="Chop Logo" className="w-10 h-10" />
           <h1 className="text-2xl font-bold text-[var(--Chop-color)]">Chop</h1>
         </div>
 
@@ -101,7 +101,7 @@ const Navbar = () => {
 
         {/* Center - Logo */}
         <div className="flex items-center space-x-3">
-          <img src="/images/leaf-icon.png" alt="Chop Logo" className="w-10 h-10" />
+          <img src="/images/icons/leaf-icon.png" alt="Chop Logo" className="w-10 h-10" />
           <h1 className="text-2xl font-bold text-[var(--Chop-color)]">Chop</h1>
         </div>
 

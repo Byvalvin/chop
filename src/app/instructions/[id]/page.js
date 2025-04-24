@@ -14,8 +14,7 @@ import Link from 'next/link'; // Import Link component
 export default function InstructionsPage() {
   const { id } = useParams();  // Extract route params using useParams
   const sp = useSearchParams();
-  const queryName = sp.get("name");
-  const queryNation = sp.get("nation");
+  const queryName = sp.get("name"), queryNation = sp.get("nation");
 
   const [instructions, setInstructions] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -43,3 +43,7 @@ next-env.d.ts
 # custom cache
 .npmrc
 /npmCACHE
+
+# Ignore generated service worker
+/public/sw.js
+/public/workbox-*.js
