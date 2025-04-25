@@ -174,16 +174,16 @@ const Navbar = () => {
             </div> */}
           </div>
 
- {/* Install Icon (Mobile) */}
- {isInstallable && (
-    <button
-      onClick={handleInstallClick}
-      title="Install Chop"
-      className="text-xl p-2 rounded-full bg-[var(--primary-cmpmt)] text-[var(--primary)] hover:bg-[var(--signup-button-hover)] transition"
-    >
-      📲
-    </button>
-  )}
+          {/* Install Icon (Mobile) */}
+          {isInstallable && (
+              <button
+                onClick={handleInstallClick}
+                title="Install Chop"
+                className="text-xl p-2 rounded-full bg-[var(--primary-cmpmt)] text-[var(--primary)] hover:bg-[var(--signup-button-hover)] transition"
+              >
+                📲
+              </button>
+            )}
 
         </div>
       </div>

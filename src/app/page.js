@@ -31,6 +31,7 @@ export default function Home() {
     const getSectionData = async () => {
       setLoading(true);
       const storedData = localStorage.getItem("sectionData");
+      // localStorage.clear();
 
       if (storedData) {
         const parsedData = JSON.parse(storedData);
