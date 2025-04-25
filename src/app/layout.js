@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "CHOP",
   description: "A love letter to the food that raised me.",
-  themeColor: "#FF5733",
+  // themeColor: "#FF5733",
   manifest: "/manifest.json",
   icons: {
     icon: "/images/icons/leaf-icon-192.png",
@@ -33,10 +33,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-      <link rel="manifest" href="/manifest.json" />
-<meta name="theme-color" content="#00b894" />
-<link rel="apple-touch-icon" href="images/icons/leaf-icon-192.png" />
-
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#00b894" />
+        <link rel="apple-touch-icon" href="/images/icons/leaf-icon-192.png" />
       </head>
       <body className="min-h-screen">
 

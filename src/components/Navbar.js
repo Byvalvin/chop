@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; // useRouter for navigation
 import { usePathname } from "next/navigation";
-import { FaBars,FaTimes, FaSearch, FaUser } from "react-icons/fa"; // Import react-icons
+import { FaBars,FaTimes, FaSearch, FaUser, FaDownload } from "react-icons/fa"; // Import react-icons
 import SearchBar from "./SearchBar"; // Import the SearchBar component
 
 const Navbar = () => {
@@ -37,29 +37,39 @@ const Navbar = () => {
   };
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      console.log("[PWA] No deferredPrompt available");
+      return;
+    }
+  
+    console.log("[PWA] Triggering install prompt...");
     deferredPrompt.prompt();
   
     const { outcome } = await deferredPrompt.userChoice;
-    console.log("Install prompt result:", outcome);
+    console.log("[PWA] User response to prompt:", outcome);
   
     if (outcome === "accepted" || outcome === "dismissed") {
       setDeferredPrompt(null);
-      setIsInstallable(false); // Hide icon after interaction
+      setIsInstallable(false);
+      console.log("[PWA] Prompt handled, state cleaned up");
     }
   };
-
+  
   useEffect(() => {
     const handler = (e) => {
-      e.preventDefault();
+      console.log("[PWA] beforeinstallprompt fired");
+      e.preventDefault(); // Stop the browser from auto-prompting
       setDeferredPrompt(e);
       setIsInstallable(true);
+      console.log("[PWA] Deferred prompt stored");
     };
   
     window.addEventListener("beforeinstallprompt", handler);
+    console.log("[PWA] Listening for beforeinstallprompt");
   
     return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
+  
   
 
   return (
@@ -116,15 +126,20 @@ const Navbar = () => {
           </div>
 
             {/* Install Icon Button */}
-  {isInstallable && (
-    <button
-      onClick={handleInstallClick}
-      title="Install Chop"
-      className="text-lg p-2 rounded-full bg-[var(--primary-cmpmt)] text-[var(--primary)] hover:bg-[var(--signup-button-hover)] transition"
-    >
-      📲
-    </button>
-  )}
+            {isInstallable && (
+              <button
+                onClick={handleInstallClick}
+                title="Install Chop"
+                className="text-lg p-2 rounded-full hover:bg-[var(--signup-button-hover)] transition"
+                style={{
+                  backgroundColor: 'transparent',
+                  color: 'var(--primary-cmpmt)' // Icon color
+                }}
+              >
+                <FaDownload className="text-lg" />
+              </button>
+            )}
+
         </div>
         
       </div>
@@ -176,14 +191,18 @@ const Navbar = () => {
 
           {/* Install Icon (Mobile) */}
           {isInstallable && (
-              <button
-                onClick={handleInstallClick}
-                title="Install Chop"
-                className="text-xl p-2 rounded-full bg-[var(--primary-cmpmt)] text-[var(--primary)] hover:bg-[var(--signup-button-hover)] transition"
-              >
-                📲
-              </button>
-            )}
+            <button
+              onClick={handleInstallClick}
+              title="Install Chop"
+              className="text-lg p-2 rounded-full hover:bg-[var(--signup-button-hover)] transition"
+              style={{
+                backgroundColor: 'transparent',
+                color: 'var(--primary-cmpmt)' // Icon color
+              }}
+            >
+              <FaDownload className="text-lg" />
+            </button>
+          )}
 
         </div>
       </div>

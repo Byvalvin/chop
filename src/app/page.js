@@ -8,6 +8,7 @@ import PageContainer from "../components/PageContainer";
 import SectionCardSkeleton from "../components/skeletons/SectionSkeleton";
 import { useSwipeable } from 'react-swipeable'; // For swipe functionality
 import TabContainer from "../components/responsive/TabContainer"; // Import TabContainer component
+import InstallPWABanner from '../components/message/InstallPWABanner';
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -28,10 +29,22 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("nation"); // Active tab state
 
   useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => {
+            console.log("[SW] Registered successfully:", reg.scope);
+          })
+          .catch(err => {
+            console.error("[SW] Registration failed:", err);
+          });
+      });
+    }
+    
     const getSectionData = async () => {
       setLoading(true);
       const storedData = localStorage.getItem("sectionData");
-      // localStorage.clear();
+      //localStorage.clear();
 
       if (storedData) {
         const parsedData = JSON.parse(storedData);
@@ -109,7 +122,6 @@ export default function Home() {
     "/images/bg/light4.png",
     "/images/bg/light5.png",
     "/images/bg/light7.png"
-
   ]
   // Common function to render SectionCard
   const renderSectionCard = (sectionKey, title, IconType, backgroundImage, selectedValue) => {
@@ -151,9 +163,9 @@ export default function Home() {
                 ) : (
                   // Actual content when loading is done
                   <>
-                    {activeTab === "nation" && renderSectionCard("nation", "Nation", FaGlobe, "/images/bg/light4.png", selectedNation?.name)}
-                    {activeTab === "category" && renderSectionCard("category", "Category", FaTags, "/images/bg/light5.png", selectedCategory?.name)}
-                    {activeTab === "subcategory" && renderSectionCard("subcategory", "Subcategory", FaFolder, "/images/bg/light7.png", selectedSubcategory?.name)}
+                    {activeTab === "nation" && renderSectionCard("nation", "Nation", FaGlobe, sectionBg[0], selectedNation?.name)}
+                    {activeTab === "category" && renderSectionCard("category", "Category", FaTags, sectionBg[1], selectedCategory?.name)}
+                    {activeTab === "subcategory" && renderSectionCard("subcategory", "Subcategory", FaFolder, sectionBg[2], selectedSubcategory?.name)}
                   </>
                 )}
               </TabContainer>
@@ -180,6 +192,9 @@ export default function Home() {
           </div>
         </div>
       </PageContainer>
+
+      <InstallPWABanner />
+
     </div>
   );
 }
