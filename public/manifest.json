@@ -1,6 +1,11 @@
 {
+    "name": "Chop",
     "short_name": "Chop",
-    "name": "Chop - A Love Letter to Food",
+    "description": "A PWA for discovering and celebrating African and Caribbean food.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#00b894",
     "icons": [
       {
         "src": "/images/icons/leaf-icon-192.png",
@@ -12,11 +17,8 @@
         "sizes": "512x512",
         "type": "image/png"
       }
-    ],
-    "start_url": "/",
-    "background_color": "#ffffff",
-    "display": "standalone",
-    "theme_color": "#FF5733",
-    "description": "A PWA for discovering and celebrating African and Caribbean food."
+    ]
+
+   
   }
   
