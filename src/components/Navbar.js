@@ -136,15 +136,13 @@ const Navbar = () => {
                   color: 'var(--primary-cmpmt)' // Icon color
                 }}
               >
-                <FaDownload className="text-lg" />
+                <FaDownload className="text-sm" />
               </button>
             )}
 
         </div>
         
       </div>
-
-
 
 
       {/* Small screens (sm and below) - Restructured navbar */}
@@ -200,7 +198,7 @@ const Navbar = () => {
                 color: 'var(--primary-cmpmt)' // Icon color
               }}
             >
-              <FaDownload className="text-lg" />
+              <FaDownload className="text-sm" />
             </button>
           )}
 
