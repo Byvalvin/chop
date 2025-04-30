@@ -109,3 +109,57 @@ export const fetchSubcategories = async () => {
 
 
 
+// AUTH AND USERS
+// api/auth.js
+
+// SignUp API Call
+export const signUpUser = async (email, password, username) => {
+  try {
+    const response = await fetch(`${base}/auth`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        username: username || email, // Use email as username if not provided
+      }),
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      throw new Error(result.message || 'Something went wrong during sign up');
+    }
+
+    return result; // On success, return the result (e.g., user info or message)
+  } catch (error) {
+    throw new Error(error.message || 'Network error during sign up');
+  }
+};
+
+// Login API Call
+export const loginUser = async (email, password) => {
+  try {
+    const response = await fetch(`${base}auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || 'Invalid credentials');
+    }
+
+    return result; // On success, return the result (e.g., JWT token)
+  } catch (error) {
+    throw new Error(error.message || 'Network error during login');
+  }
+};

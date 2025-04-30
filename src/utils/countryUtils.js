@@ -8,7 +8,7 @@ const countryNameToCode = {
   ghana: 'gh',
   kenya: 'ke',
   egypt: 'eg',
-  ethiopia: 'et',
+  ethiopia: 'et',  // Removed duplicate
   morocco: 'ma',
   tanzania: 'tz',
   mali: 'ml',
@@ -16,14 +16,12 @@ const countryNameToCode = {
   senegal: 'sn',
   zimbabwe: 'zw',
   sudan: 'sd',
-  ethiopia: 'et',
   rwanda: 'rw',
   cameroon: 'cm',
   'ivory coast': 'ci',
   libya: 'ly',
   congo: 'cg',
   mozambique: 'mz',
-  kenya: 'ke',
   gambia: 'gm',
   burundi: 'bi',
   'burkina faso': 'bf',
@@ -31,10 +29,8 @@ const countryNameToCode = {
   angola: 'ao',
   botswana: 'bw',
   benin: 'bj',
-  ethiopia: 'et',
   lesotho: 'ls',
   'sierra leone': 'sl',
-  tanzania: 'tz',
   // Add more African countries here
 
   // Caribbean Countries
@@ -55,27 +51,26 @@ const countryNameToCode = {
   // Add more Caribbean countries here
 };
 
-  
-  export const getCountryCode = (name) => {
-    if (!name) return null;
-    return countryNameToCode[name.toLowerCase()] || null;
-  };
-  
-  export const getRegionEmoji = (region) => {
-    if (!region) return '🌐';
-  
-    const lower = region.toLowerCase();
-  
-    // Caribbean-specific handling
-    if (lower.includes('caribbean') || lower.includes('jamaica') || lower.includes('haiti') || lower.includes('trinidad')) {
-      return '🌎'; // Tied to Americas
-    }
-  
-    if (lower.includes('africa')) return '🌍';
-    if (lower.includes('europe')) return '🌍';
-    if (lower.includes('asia') || lower.includes('oceania') || lower.includes('australia')) return '🌏';
-    if (lower.includes('america')) return '🌎';
-  
-    return '🗺️'; // fallback
-  };
-  
+export const getCountryCode = (name) => {
+  if (!name) return null;
+  // Return the country code based on name (or null if not found)
+  return countryNameToCode[name.toLowerCase()] || null;
+};
+
+export const getRegionEmoji = (region) => {
+  if (!region) return '🌐';
+
+  const lower = region.toLowerCase();
+
+  // Caribbean-specific handling
+  if (lower.includes('caribbean') || lower.includes('jamaica') || lower.includes('haiti') || lower.includes('trinidad')) {
+    return '🌎'; // Tied to Americas
+  }
+
+  if (lower.includes('africa')) return '🌍';
+  if (lower.includes('europe')) return '🌍';
+  if (lower.includes('asia') || lower.includes('oceania') || lower.includes('australia')) return '🌏';
+  if (lower.includes('america')) return '🌎';
+
+  return '🗺️'; // fallback
+};

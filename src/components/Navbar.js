@@ -54,6 +54,8 @@ const Navbar = () => {
       console.log("[PWA] Prompt handled, state cleaned up");
     }
   };
+
+  const handleToSignUp = ()=>router.push("/signup");
   
   useEffect(() => {
     const handler = (e) => {
@@ -112,7 +114,9 @@ const Navbar = () => {
         {/* CTA */}
         <div className="flex-shrink-0 relative group flex items-center">
           {/* Sign Up Button */}
-          <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition">
+          <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition"
+            onClick={handleToSignUp}
+          >
             {/* <FaUser className="text-xl" /> */}
             Sign Up
           </button>
