@@ -63,11 +63,12 @@ const LoginPage = () => {
           </form>
 
           <p className="text-center mt-4 text-[var(--sub-text)]">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <a href="/signup" className="text-[var(--primary-cmpmt)] hover:underline">
               Sign up here
             </a>
           </p>
+
         </div>
       </div>
     </div>
