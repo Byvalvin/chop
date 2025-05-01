@@ -35,17 +35,17 @@ const countryNameToCode = {
 
   // Caribbean Countries
   jamaica: 'jm',
-  trinidad_and_tobago: 'tt',
+  'trinidad and tobago': 'tt',
   cuba: 'cu',
   haiti: 'ht',
   barbados: 'bb',
   dominica: 'dm',
-  saint_lucia: 'lc',
+  'saint lucia': 'lc',
   grenada: 'gd',
-  saint_kitts_and_nevis: 'kn',
+  'saint kitts and nevis': 'kn',
   bahamas: 'bs',
-  dominican_republic: 'do',
-  saint_vincent_and_the_grenadines: 'vc',
+  'dominican republic': 'do',
+  'saint vincent and the grenadines': 'vc',
   aruba: 'aw',
   suriname: 'sr',
   // Add more Caribbean countries here

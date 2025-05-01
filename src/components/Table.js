@@ -7,12 +7,35 @@ const Table = ({
   headers,
   rows,
   handleChange,
-  handleKeyPress,
   removeRow,
   addItem,
   inputName,
   buttonIcon = <FaPlus />,  // Default button icon is a "+" sign
 }) => {
+  // Define an array to match headers to state properties
+  const headerToStateKey = {
+    Ingredient: 'name',
+    Quantity: 'quantity',
+    Unit: 'unit'
+  };
+
+  // Handle the Enter key press inside the Table component
+  const handleKeyPress = (index, e) => {
+    if (e.key === 'Enter') {
+      const row = rows[index];
+      const isRowComplete = Object.values(row).every((value) => value !== ''); // Check if all fields are filled
+
+      if (isRowComplete) {
+        if (index === rows.length - 1) {
+          addItem(); // If it's the last row, add a new row
+        } else {
+          const nextInput = document.querySelectorAll('input')[index + 3]; // Focus the next input
+          nextInput?.focus();
+        }
+      }
+    }
+  };
+
   return (
     <section aria-labelledby="table-heading" className="space-y-4">
       <h2 id="table-heading" className="text-2xl font-semibold">{title}</h2>
@@ -38,7 +61,7 @@ const Table = ({
                   <td key={colIndex} className="px-4 py-2">
                     <input
                       type={typeof data === 'number' ? 'number' : 'text'}
-                      name={inputName}
+                      name={headerToStateKey[headers[colIndex]]} // Match header to state key
                       value={data}
                       onChange={(e) => handleChange(index, e)}
                       onKeyDown={(e) => handleKeyPress(index, e)}
