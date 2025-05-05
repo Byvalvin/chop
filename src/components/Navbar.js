@@ -179,7 +179,9 @@ const Navbar = () => {
 
           {/* Sign Up Button */}
           <div className="relative group">
-            <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition">
+            <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition"
+                    onClick={handleToSignUp}
+            >
               <FaUser className="text-xl" />
             </button>
 
