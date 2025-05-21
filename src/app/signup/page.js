@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from 'react';
-import { signUpUser } from '../../utils/api'; // Import the signUpUser API function
+import { useRouter } from 'next/navigation';
+
+import { signUpUser } from '../../utils/api';
 
 const SignUpPage = () => {
   const [email, setEmail] = useState('');
@@ -9,6 +11,7 @@ const SignUpPage = () => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,13 +19,14 @@ const SignUpPage = () => {
     setError('');
 
     try {
-      // Call the signUpUser API function
-      console.log(email, password, username);
-      // Uncomment the line below to make the API call
-      // const result = await signUpUser(email, password, username);
+      const result = await signUpUser(email, password, username);
 
-      // Handle success (e.g., redirect to login or show a success message)
-      window.location.href = '/login'; // Redirect to login page after successful signup
+      // Save token and email in localStorage
+      localStorage.setItem('token', result.token);
+      localStorage.setItem('userEmail', email);
+
+      // Redirect to user page
+      router.push('/user');
     } catch (error) {
       setError(error.message); // Show error message if signup fails
     } finally {
@@ -45,6 +49,7 @@ const SignUpPage = () => {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
               className="w-full p-4 mb-4 border-2 border-[var(--secondary-dark)] rounded-xl text-[var(--other-text)] bg-[var(--glass-bg)] focus:ring-2 focus:ring-[var(--primary-cmpmt)]"
             />
             <input
@@ -52,6 +57,7 @@ const SignUpPage = () => {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
               className="w-full p-4 mb-4 border-2 border-[var(--secondary-dark)] rounded-xl text-[var(--other-text)] bg-[var(--glass-bg)] focus:ring-2 focus:ring-[var(--primary-cmpmt)]"
             />
             <input

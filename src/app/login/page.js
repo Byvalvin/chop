@@ -1,13 +1,16 @@
 "use client";
 
 import { useState } from 'react';
-import { loginUser } from '../../utils/api'; // Import the loginUser API function
+import { useRouter } from 'next/navigation';
+
+import { loginUser } from '../../utils/api';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,15 +18,16 @@ const LoginPage = () => {
     setError('');
 
     try {
-      // Call the loginUser API function
-      console.log(email, password);
-      // Uncomment the line below to make the API call
-      // const result = await loginUser(email, password);
+      const result = await loginUser(email, password);
+      
+      // Store token and email in localStorage
+      localStorage.setItem('token', result.token);
+      localStorage.setItem('userEmail', email);
 
-      // Handle success (e.g., redirect to dashboard or home)
-      window.location.href = '/dashboard'; // Redirect to the dashboard page after successful login
+      // Redirect to user page
+      router.push('/user');
     } catch (error) {
-      setError(error.message); // Show error message if login fails
+      setError(error.message || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -44,6 +48,7 @@ const LoginPage = () => {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
               className="w-full p-4 mb-4 border-2 border-[var(--secondary-dark)] rounded-xl text-[var(--other-text)] bg-[var(--glass-bg)] focus:ring-2 focus:ring-[var(--primary-cmpmt)]"
             />
             <input
@@ -51,6 +56,7 @@ const LoginPage = () => {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
               className="w-full p-4 mb-6 border-2 border-[var(--secondary-dark)] rounded-xl text-[var(--other-text)] bg-[var(--glass-bg)] focus:ring-2 focus:ring-[var(--primary-cmpmt)]"
             />
             <button
@@ -68,7 +74,6 @@ const LoginPage = () => {
               Sign up here
             </a>
           </p>
-
         </div>
       </div>
     </div>

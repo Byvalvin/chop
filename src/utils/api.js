@@ -141,7 +141,7 @@ export const signUpUser = async (email, password, username) => {
 // Login API Call
 export const loginUser = async (email, password) => {
   try {
-    const response = await fetch(`${base}auth/login`, {
+    const response = await fetch(`${base}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -161,5 +161,30 @@ export const loginUser = async (email, password) => {
     return result; // On success, return the result (e.g., JWT token)
   } catch (error) {
     throw new Error(error.message || 'Network error during login');
+  }
+};
+
+
+
+// Add Recipe API Call
+export const addRecipe = async (recipeData) => {
+  try {
+    const response = await fetch(`${base}/recipes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(recipeData),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || 'Failed to add recipe');
+    }
+
+    return result; // e.g., { message: "...", id: newRecipe.id }
+  } catch (error) {
+    throw new Error(error.message || 'Network error during recipe submission');
   }
 };

@@ -10,7 +10,11 @@ import { getCountryCode, getRegionEmoji } from '../../../utils/countryUtils';
 import Table from '@/components/Table'; // Import the Table component
 import Pill from '@/components/Pill';
 
+import { addRecipe } from '../../utils/api'; // Make sure the import path is correct
+import { useRouter } from 'next/navigation'; // Client-side routing
+
 export default function AddRecipePage() {
+  const router = useRouter(); // use this instead of window.location
   const [recipe, setRecipe] = useState({
     name: '',
     time: '',
@@ -127,9 +131,45 @@ export default function AddRecipePage() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log('Submitting new recipe:', recipe);
+  // };
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitting new recipe:', recipe);
+    try {
+      // Format the payload to match what backend expects
+      const payload = {
+        name: recipe.name,
+        description: recipe.description,
+        nation: recipe.nationName,
+        region: recipe.regionName,
+        time: recipe.time,
+        cost: recipe.cost,
+        ingredients: recipe.ingredients,
+        instructions: ["Step 1"], // placeholder for now
+        aliases: [],
+        categories: recipe.categories,
+        subcategories: recipe.subcategories,
+        images: recipe.imageUrl ? [recipe.imageUrl] : [],
+      };
+
+      const result = await addRecipe(payload);
+
+      console.log('Recipe successfully added:', result);
+
+      // Save in local storage just for temporary "user data" simulation
+      const userRecipes = JSON.parse(localStorage.getItem('userRecipes') || '[]');
+      userRecipes.push({ id: result.id, name: recipe.name });
+      localStorage.setItem('userRecipes', JSON.stringify(userRecipes));
+
+      router.push('/user'); // Redirect to the user page
+    } catch (error) {
+      console.error('Failed to add recipe:', error.message);
+      alert(error.message);
+    }
   };
 
   const ingredientHeaders = ['Ingredient', 'Quantity', 'Unit'];
