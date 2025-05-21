@@ -10,7 +10,7 @@ import { getCountryCode, getRegionEmoji } from '../../../utils/countryUtils';
 import Table from '@/components/Table'; // Import the Table component
 import Pill from '@/components/Pill';
 
-import { addRecipe } from '../../utils/api'; // Make sure the import path is correct
+import { addRecipe } from '../../../utils/api'; // Make sure the import path is correct
 import { useRouter } from 'next/navigation'; // Client-side routing
 
 export default function AddRecipePage() {
@@ -221,42 +221,42 @@ export default function AddRecipePage() {
           onSubmit={handleSubmit}
           className="bg-[var(--glass-bg)] backdrop-blur-lg border border-[var(--glass-border)] shadow-lg rounded-2xl max-w-screen-lg mx-auto p-8 space-y-10 text-[1.05rem] leading-relaxed text-[var(--other-text)]"
         >
-{/* Title Section */}
-<header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-  <div className="flex flex-wrap items-center gap-4">
-    {/* Nation flag and name */}
-    <div className="flex items-center gap-2">
-      {recipe.nationName && countryCode ? (
-        <img
-          src={`https://flagcdn.com/w80/${countryCode}.png`}
-          alt={`${recipe.nationName} flag`}
-          className="w-10 h-6 sm:w-12 sm:h-8 rounded-sm shadow-sm"
-          title={recipe.nationName}
-        />
-      ) : (
-        <FaFlag className="w-10 h-6 sm:w-12 sm:h-8 text-gray-500" />
-      )}
-      <input
-        type="text"
-        name="nationName"
-        value={recipe.nationName}
-        onChange={(e) => setRecipe({ ...recipe, nationName: e.target.value })}
-        placeholder="Nation of Origin"
-        className="bg-transparent border-b border-[var(--other-text)] outline-none w-32 text-lg"
-      />
-    </div>
+        {/* Title Section */}
+        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-4">
+            {/* Nation flag and name */}
+            <div className="flex items-center gap-2">
+              {recipe.nationName && countryCode ? (
+                <img
+                  src={`https://flagcdn.com/w80/${countryCode}.png`}
+                  alt={`${recipe.nationName} flag`}
+                  className="w-10 h-6 sm:w-12 sm:h-8 rounded-sm shadow-sm"
+                  title={recipe.nationName}
+                />
+              ) : (
+                <FaFlag className="w-10 h-6 sm:w-12 sm:h-8 text-gray-500" />
+              )}
+              <input
+                type="text"
+                name="nationName"
+                value={recipe.nationName}
+                onChange={(e) => setRecipe({ ...recipe, nationName: e.target.value })}
+                placeholder="Nation of Origin"
+                className="bg-transparent border-b border-[var(--other-text)] outline-none w-32 text-lg"
+              />
+            </div>
 
-    {/* Recipe name */}
-    <input
-      type="text"
-      name="name"
-      value={recipe.name}
-      onChange={(e) => setRecipe({ ...recipe, name: e.target.value })}
-      placeholder="Recipe Name"
-      className="text-3xl sm:text-4xl font-bold bg-transparent border-none outline-none focus:ring-0"
-    />
-  </div>
-</header>
+            {/* Recipe name */}
+            <input
+              type="text"
+              name="name"
+              value={recipe.name}
+              onChange={(e) => setRecipe({ ...recipe, name: e.target.value })}
+              placeholder="Recipe Name"
+              className="text-3xl sm:text-4xl font-bold bg-transparent border-none outline-none focus:ring-0"
+            />
+          </div>
+        </header>
 
   
           {/* Info Row */}
