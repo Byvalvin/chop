@@ -370,83 +370,82 @@ export default function AddRecipePage() {
             )}
           </section>
   
-{/* Categories and Subcategories */}
-<section>
-  <h2 className="text-xl font-semibold mb-4">Categories & Subcategories</h2>
+          {/* Categories and Subcategories */}
+          <section>
+            <h2 className="text-xl font-semibold mb-4">Categories & Subcategories</h2>
 
-  <div className="grid sm:grid-cols-2 gap-6">
-    {/* Categories Block */}
-    <div>
-      {/* <h3 className="text-lg font-medium mb-2 text-[var(--other-text)]">Categories</h3> */}
-      <div className="flex items-center gap-2">
-        <input
-          type="text"
-          name="newCategory"
-          value={recipe.newCategory}
-          onChange={(e) => setRecipe({ ...recipe, newCategory: e.target.value })}
-          onKeyDown={handleCategoryInput}
-          placeholder="Add Categories (comma separated)"
-          className="bg-transparent border-b border-[var(--other-text)] outline-none w-full text-lg"
-        />
-        <button
-          type="button"
-          onClick={handleCategoryInput}
-          className="text-[var(--secondary-dark)] hover:text-[var(--primary)]"
-        >
-          <FaPlusCircle />
-        </button>
-      </div>
+            <div className="grid sm:grid-cols-2 gap-6">
+              {/* Categories Block */}
+              <div>
+                {/* <h3 className="text-lg font-medium mb-2 text-[var(--other-text)]">Categories</h3> */}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    name="newCategory"
+                    value={recipe.newCategory}
+                    onChange={(e) => setRecipe({ ...recipe, newCategory: e.target.value })}
+                    onKeyDown={handleCategoryInput}
+                    placeholder="Add Categories (comma separated)"
+                    className="bg-transparent border-b border-[var(--other-text)] outline-none w-full text-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleCategoryInput}
+                    className="text-[var(--secondary-dark)] hover:text-[var(--primary)]"
+                  >
+                    <FaPlusCircle />
+                  </button>
+                </div>
 
-      <div className="flex flex-wrap gap-2 mt-3">
-        {recipe.categories.map((category, index) => (
-          <Pill
-            key={index}
-            text={category}
-            onDelete={() => handleDeleteCategory(category)}
-            bgColor="[var(--recipe-detail-category)]"
-            textColor="[var(--recipe-detail-category-text)]"
-          />
-        ))}
-      </div>
-    </div>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {recipe.categories.map((category, index) => (
+                    <Pill
+                      key={index}
+                      text={category}
+                      onDelete={() => handleDeleteCategory(category)}
+                      bgColor="[var(--recipe-detail-category)]"
+                      textColor="[var(--recipe-detail-category-text)]"
+                    />
+                  ))}
+                </div>
+              </div>
 
-    {/* Subcategories Block */}
-    <div>
-      {/* <h3 className="text-lg font-medium mb-2 text-[var(--other-text)]">Subcategories</h3> */}
-      <div className="flex items-center gap-2">
-        <input
-          type="text"
-          name="newSubcategory"
-          value={recipe.newSubcategory}
-          onChange={(e) => setRecipe({ ...recipe, newSubcategory: e.target.value })}
-          onKeyDown={handleSubcategoryInput}
-          placeholder="Add Subcategories (comma separated)"
-          className="bg-transparent border-b border-[var(--other-text)] outline-none w-full text-lg"
-        />
-        <button
-          type="button"
-          onClick={handleSubcategoryInput}
-          className="text-[var(--secondary-dark)] hover:text-[var(--primary)]"
-        >
-          <FaPlusCircle />
-        </button>
-      </div>
+              {/* Subcategories Block */}
+              <div>
+                {/* <h3 className="text-lg font-medium mb-2 text-[var(--other-text)]">Subcategories</h3> */}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    name="newSubcategory"
+                    value={recipe.newSubcategory}
+                    onChange={(e) => setRecipe({ ...recipe, newSubcategory: e.target.value })}
+                    onKeyDown={handleSubcategoryInput}
+                    placeholder="Add Subcategories (comma separated)"
+                    className="bg-transparent border-b border-[var(--other-text)] outline-none w-full text-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleSubcategoryInput}
+                    className="text-[var(--secondary-dark)] hover:text-[var(--primary)]"
+                  >
+                    <FaPlusCircle />
+                  </button>
+                </div>
 
-      <div className="flex flex-wrap gap-2 mt-3">
-        {recipe.subcategories.map((subcategory, index) => (
-          <Pill
-            key={index}
-            text={subcategory}
-            onDelete={() => handleDeleteSubcategory(subcategory)}
-            bgColor="[var(--recipe-detail-subcategory)]"
-            textColor="[var(--recipe-detail-subcategory-text)]"
-          />
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
-
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {recipe.subcategories.map((subcategory, index) => (
+                    <Pill
+                      key={index}
+                      text={subcategory}
+                      onDelete={() => handleDeleteSubcategory(subcategory)}
+                      bgColor="[var(--recipe-detail-subcategory)]"
+                      textColor="[var(--recipe-detail-subcategory-text)]"
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
   
           {/* Ingredients Table */}
           <section className="mt-8">
