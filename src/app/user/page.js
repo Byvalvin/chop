@@ -20,6 +20,10 @@ const UserPage = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
+
+    // 🔔 Notify other tabs/components
+    window.dispatchEvent(new Event("loginStatusChanged"));
+
     router.push('/login');
   };
 
@@ -28,7 +32,7 @@ const UserPage = () => {
       <h1 className="text-3xl font-bold mb-6">Welcome!</h1>
       <p className="text-xl mb-4">Logged in as: <span className="font-mono">{email}</span></p>
       <button
-        onClick={() => router.push('/new-recipe')}
+        onClick={() => router.push('/recipe/new')}
         className="bg-[var(--secondary)] px-6 py-3 rounded-lg hover:bg-[var(--signup-button-hover)] text-white font-semibold mb-4"
       >
         Create New Recipe

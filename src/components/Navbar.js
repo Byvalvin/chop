@@ -12,7 +12,8 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState(""); // State for the search term
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
   const [isSearchVisible, setIsSearchVisible] = useState(false); // State for toggling search bar
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   // pwa states
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
@@ -71,8 +72,36 @@ const Navbar = () => {
   
     return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
-  
-  
+
+  // detect if logged in
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const token = localStorage.getItem("token");
+      setIsLoggedIn(!!token);
+    };
+
+    checkLoginStatus(); // Initial check
+
+    const handleStorageChange = (e) => {
+      if (e.key === "token") {
+        checkLoginStatus();
+      }
+    };
+
+    const handleCustomLogin = () => {
+      checkLoginStatus();
+    };
+
+    window.addEventListener("storage", handleStorageChange); // for other tabs
+    window.addEventListener("loginStatusChanged", handleCustomLogin); // custom event for same tab
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("loginStatusChanged", handleCustomLogin);
+    };
+  }, []);
+
+    
 
   return (
     <header className="sticky top-0 z-50 bg-[var(--primary)] bg-opacity-90 backdrop-blur-md">
@@ -114,12 +143,23 @@ const Navbar = () => {
         {/* CTA */}
         <div className="flex-shrink-0 relative group flex items-center">
           {/* Sign Up Button */}
-          <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition"
-            onClick={handleToSignUp}
-          >
-            {/* <FaUser className="text-xl" /> */}
-            Sign Up
-          </button>
+          {isLoggedIn ? (
+            <button
+              onClick={() => router.push("/user")}
+              className="flex items-center space-x-2 px-4 py-2 bg-[var(--primary-cmpmt)] text-[var(--primary)] rounded-full hover:bg-[var(--signup-button-hover)] transition"
+            >
+              <FaUser className="text-xl" />
+              <span>Profile</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleToSignUp}
+              className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition"
+            >
+              Sign Up
+            </button>
+          )}
+
           
 
           {/* Microcopy (only shows on hover) */}
@@ -177,21 +217,25 @@ const Navbar = () => {
             <FaSearch /> {/* Search icon */}
           </button>
 
-          {/* Sign Up Button */}
+          {/* Sign Up Button (mobile)*/}
           <div className="relative group">
-            <button className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition"
-                    onClick={handleToSignUp}
-            >
-              <FaUser className="text-xl" />
-            </button>
-
-            {/* Microcopy (only shows on hover) */}
-            {/* <div className="absolute left-0 top-full mt-2 text-center text-[var(--other-text)] text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <p className="font-semibold text-[var(--primary-cmpmt)] italic text-xs">
-                Add, rate and save recipes!
-              </p>
-            </div> */}
+            {isLoggedIn ? (
+              <button
+                onClick={() => router.push("/user")}
+                className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition"
+              >
+                <FaUser className="text-xl" />
+              </button>
+            ) : (
+              <button
+                onClick={handleToSignUp}
+                className="bg-[var(--primary-cmpmt)] text-[var(--primary)] px-4 py-2 rounded-full hover:bg-[var(--signup-button-hover)] transition"
+              >
+                <FaUser className="text-xl" />
+              </button>
+            )}
           </div>
+
 
           {/* Install Icon (Mobile) */}
           {isInstallable && (

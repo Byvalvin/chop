@@ -25,6 +25,9 @@ const SignUpPage = () => {
       localStorage.setItem('token', result.token);
       localStorage.setItem('userEmail', email);
 
+      // 🔔 Dispatch login status change
+      window.dispatchEvent(new Event("loginStatusChanged"));
+
       // Redirect to user page
       router.push('/user');
     } catch (error) {
