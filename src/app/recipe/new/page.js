@@ -8,6 +8,7 @@ import {
 import PageContainer from '@/components/PageContainer';
 import { getCountryCode, getRegionEmoji } from '../../../utils/countryUtils';
 import Table from '@/components/Table'; // Import the Table component
+import InstructionEditor from '@/components/InstructionEditor';
 import Pill from '@/components/Pill';
 
 import { addRecipe } from '../../../utils/api'; // Make sure the import path is correct
@@ -17,12 +18,13 @@ export default function AddRecipePage() {
   const router = useRouter(); // use this instead of window.location
   const [recipe, setRecipe] = useState({
     name: '',
-    time: '',
-    cost: '',
+    time: 0,
+    cost: 0.0,
     description: '',
     categories: [],
     subcategories: [],
     ingredients: [],
+    instructions: [],
     nationName: '',
     regionName: '',
     newCategory: '',
@@ -38,7 +40,6 @@ export default function AddRecipePage() {
   const handleImageDrop = (e) => {
     e.preventDefault();
     const items = e.dataTransfer.items;
-  
     console.log("Dropped items:", items);
   
     for (let i = 0; i < items.length; i++) {
@@ -82,7 +83,6 @@ export default function AddRecipePage() {
       }
     }
   };
-  
 
   // Handle the image URL paste event
   const handleImagePaste = (e) => {
@@ -97,29 +97,29 @@ export default function AddRecipePage() {
     }
   };
 
-
   // Validate if the URL is an image (you can customize the regex for more checks)
   const isValidImageUrl = (url) => {
     const regex = /\.(jpg|jpeg|png|gif|bmp)$/i;
     return regex.test(url);
   };
 
-
   const handleChange = (index, e) => {
     const { name, value } = e.target;
     const updatedIngredients = [...recipe.ingredients];
-    updatedIngredients[index] = { ...updatedIngredients[index], [name]: value };
+    updatedIngredients[index] = {
+      ...updatedIngredients[index],
+      [name]: name === 'quantity' ? parseFloat(value) || 0 : value,
+    };
     setRecipe(prevRecipe => ({
       ...prevRecipe,
       ingredients: updatedIngredients,
     }));
   };
 
-
   const addIngredient = () => {
     setRecipe(prevRecipe => ({
       ...prevRecipe,
-      ingredients: [...prevRecipe.ingredients, { name: '', quantity: '', unit: '' }],
+      ingredients: [...prevRecipe.ingredients, { name: '', quantity: 0, unit: '' }],
     }));
   };
   const removeIngredient = (index) => {
@@ -131,12 +131,6 @@ export default function AddRecipePage() {
     }));
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log('Submitting new recipe:', recipe);
-  // };
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -146,10 +140,10 @@ export default function AddRecipePage() {
         description: recipe.description,
         nation: recipe.nationName,
         region: recipe.regionName,
-        time: recipe.time,
-        cost: recipe.cost,
+        time: parseInt(recipe.time),
+        cost: parseFloat(recipe.cost),
         ingredients: recipe.ingredients,
-        instructions: ["Step 1"], // placeholder for now
+        instructions: recipe.instructions.filter(step => step.trim() !== ''),
         aliases: [],
         categories: recipe.categories,
         subcategories: recipe.subcategories,
@@ -177,6 +171,7 @@ export default function AddRecipePage() {
   // Handle adding categories or subcategories from comma-separated input
   const handleCategoryInput = (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault(); // prevent form submit
       const categoriesToAdd = recipe.newCategory.split(',').map(item => item.trim()).filter(item => item);
       if (categoriesToAdd.length) {
         setRecipe(prevRecipe => ({
@@ -189,6 +184,7 @@ export default function AddRecipePage() {
   };
   const handleSubcategoryInput = (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault(); // prevent form submit
       const subcategoriesToAdd = recipe.newSubcategory.split(',').map(item => item.trim()).filter(item => item);
       if (subcategoriesToAdd.length) {
         setRecipe(prevRecipe => ({
@@ -468,7 +464,15 @@ export default function AddRecipePage() {
               }
             />
           </section>
-  
+
+          {/* Instructions Section */}
+          <InstructionEditor
+            instructions={recipe.instructions}
+            setInstructions={(newInstructions) =>
+              setRecipe((prev) => ({ ...prev, instructions: newInstructions }))
+            }
+          />
+
           {/* Submit Button */}
           <div className="flex justify-end">
             <button
@@ -482,5 +486,10 @@ export default function AddRecipePage() {
       </PageContainer>
     </div>
   );
-  
 }
+
+
+/*
+https://react-icons.github.io/react-icons/search/#q=image
+https://reactnative.dev/docs/running-on-device?os=windows
+*/

@@ -22,6 +22,7 @@ const Table = ({
   // Handle the Enter key press inside the Table component
   const handleKeyPress = (index, e) => {
     if (e.key === 'Enter') {
+      e.preventDefault(); // prevent form submit
       const row = rows[index];
       const isRowComplete = Object.values(row).every((value) => value !== ''); // Check if all fields are filled
 
