@@ -54,7 +54,7 @@ export default function AddRecipePage() {
 
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(true);
   const toggleDescription = () => setIsDescriptionOpen(prevState => !prevState);
-
+  const [isSuccess, setIsSuccess] = useState(false); // New state for success notification
 
   // Handle image URL drag and drop
   const handleImageDrop = (e) => {
@@ -169,7 +169,7 @@ export default function AddRecipePage() {
         subcategories: recipe.subcategories,
         images: recipe.imageUrl
           ? [{ url: recipe.imageUrl, caption: recipe.name, type: 'full-size' }]
-          : [], // Default to full-size if image URL exists
+          : [],
       };
 
       const result = await addRecipe(payload);
@@ -179,12 +179,36 @@ export default function AddRecipePage() {
       userRecipes.push({ id: result.id, name: recipe.name });
       localStorage.setItem('userRecipes', JSON.stringify(userRecipes));
 
-      router.push('/user'); // Redirect to the user page
+      // Success state to show success notification
+      setIsSuccess(true);
+
+      // Clear the recipe state for the next submission
+      setRecipe({
+        name: '',
+        time: 0,
+        cost: 0.0,
+        description: '',
+        categories: [],
+        subcategories: [],
+        ingredients: [],
+        instructions: [],
+        nationName: '',
+        regionName: '',
+        newCategory: '',
+        newSubcategory: '',
+        imageUrl: '',
+      });
+
+      // Redirect after 2 seconds to allow user to see the success message
+      setTimeout(() => {
+        router.push('/user'); // Redirect to the user page
+      }, 2000);
     } catch (error) {
       console.error('Failed to add recipe:', error.message);
       alert(error.message);
     }
   };
+
 
 
   const ingredientHeaders = ['Ingredient', 'Quantity', 'Unit'];
@@ -274,6 +298,15 @@ export default function AddRecipePage() {
             />
           </div>
         </header>
+
+
+          {/* Success Notification */}
+          {isSuccess && (
+            <div className="bg-green-500 text-white p-4 rounded-md flex items-center gap-2">
+              <FaCheckCircle />
+              <span>Recipe successfully submitted!</span>
+            </div>
+          )}
 
   
           {/* Info Row */}

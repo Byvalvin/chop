@@ -17,6 +17,12 @@ const UserPage = () => {
     }
   }, [router]);
 
+  const handleCreateNewRecipe = () => {
+    // Reset recipe data if necessary (optional, if not handled on the AddRecipePage)
+    localStorage.removeItem('draftRecipe');
+    router.push('/recipe/new');
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
@@ -32,7 +38,7 @@ const UserPage = () => {
       <h1 className="text-3xl font-bold mb-6">Welcome!</h1>
       <p className="text-xl mb-4">Logged in as: <span className="font-mono">{email}</span></p>
       <button
-        onClick={() => router.push('/recipe/new')}
+        onClick={handleCreateNewRecipe}
         className="bg-[var(--secondary)] px-6 py-3 rounded-lg hover:bg-[var(--signup-button-hover)] text-white font-semibold mb-4"
       >
         Create New Recipe
