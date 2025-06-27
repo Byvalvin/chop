@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { FaPlusCircle, FaGripVertical } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
@@ -20,7 +18,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-function SortableItem({ id, index, instruction, update, remove, showPreview }) {
+function SortableItem({ id, index, instruction, update, remove, showPreview, onTabPress }) {
   const {
     attributes,
     listeners,
@@ -61,8 +59,10 @@ function SortableItem({ id, index, instruction, update, remove, showPreview }) {
           <textarea
             value={instruction}
             onChange={(e) => update(index, e.target.value)}
+            onKeyDown={(e) => onTabPress(e, index)} // Handle Tab key press
             placeholder={`Step ${index + 1}`}
             className="w-full bg-transparent border-b border-[var(--other-text)] outline-none text-base"
+            data-index={index} // Added data-index for querySelector targeting
           />
         )}
       </div>
@@ -110,6 +110,34 @@ export default function InstructionEditor({ instructions, setInstructions }) {
     setInstructions([...instructions, '']);
   };
 
+  const focusNextTextarea = (index) => {
+    // Wait for the new textarea to be added and focus it
+    setTimeout(() => {
+      const nextTextArea = document.querySelector(`textarea[data-index='${index + 1}']`);
+      if (nextTextArea) {
+        nextTextArea.focus();
+      }
+    }, 0); // Timeout to ensure the DOM has updated before focusing
+  };
+
+  const handleTabPress = (e, index) => {
+    if (e.key === 'Tab') {
+      e.preventDefault(); // Prevent the default tab behavior
+
+      // If it's the last instruction and we're not in preview mode, create a new instruction
+      if (index === instructions.length - 1 && !showPreview) {
+        addInstruction();
+        focusNextTextarea(index); // Focus on the new textarea immediately
+      } else {
+        // Move to the next instruction
+        const nextTextArea = document.querySelector(`textarea[data-index='${index + 1}']`);
+        if (nextTextArea) {
+          nextTextArea.focus();
+        }
+      }
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
@@ -142,6 +170,7 @@ export default function InstructionEditor({ instructions, setInstructions }) {
                 update={updateInstruction}
                 remove={removeInstruction}
                 showPreview={showPreview}
+                onTabPress={handleTabPress} // Pass onTabPress to handle Tab functionality
               />
             ))}
           </div>

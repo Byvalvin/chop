@@ -1,6 +1,6 @@
 // components/Table.js
 
-import { FaPlus, FaTimes } from 'react-icons/fa'; // We can add more icons if needed
+import { FaPlus, FaTimes } from 'react-icons/fa';
 
 const Table = ({
   title,
@@ -22,18 +22,28 @@ const Table = ({
   // Handle the Enter key press inside the Table component
   const handleKeyPress = (index, e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // prevent form submit
+      e.preventDefault(); // Prevent form submission
+
       const row = rows[index];
       const isRowComplete = Object.values(row).every((value) => value !== ''); // Check if all fields are filled
 
       if (isRowComplete) {
         if (index === rows.length - 1) {
           addItem(); // If it's the last row, add a new row
+          setTimeout(() => focusFirstInput(rows.length), 0); // Focus on the first input of the new row
         } else {
-          const nextInput = document.querySelectorAll('input')[index + 3]; // Focus the next input
+          const nextInput = document.querySelectorAll('input')[index + 3]; // Focus the next input field
           nextInput?.focus();
         }
       }
+    }
+  };
+
+  // Function to focus the first input field of the new row
+  const focusFirstInput = (newRowIndex) => {
+    const firstInput = document.querySelector(`input[data-index='${newRowIndex}-0']`);
+    if (firstInput) {
+      firstInput.focus();
     }
   };
 
@@ -65,9 +75,10 @@ const Table = ({
                       name={headerToStateKey[headers[colIndex]]} // Match header to state key
                       value={data}
                       onChange={(e) => handleChange(index, e)}
-                      onKeyDown={(e) => handleKeyPress(index, e)}
+                      onKeyDown={(e) => handleKeyPress(index, e)} // Handle Enter key press
                       placeholder={headers[colIndex]}
                       className="w-full bg-transparent border-b border-[var(--other-text)] outline-none"
+                      data-index={`${index}-${colIndex}`} // Add data-index for targeting
                     />
                   </td>
                 ))}

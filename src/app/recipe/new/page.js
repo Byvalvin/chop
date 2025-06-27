@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   FaClock, FaDollarSign, FaChevronDown, FaChevronUp, FaCarrot, FaPlusCircle,
   FaGlobe, FaFlag, FaImage,
@@ -14,9 +14,29 @@ import Pill from '@/components/Pill';
 import { addRecipe } from '../../../utils/api'; // Make sure the import path is correct
 import { useRouter } from 'next/navigation'; // Client-side routing
 
+
+function useLocalStorage(key, defaultValue) {
+  const [state, setState] = useState(defaultValue);
+
+  // Load from localStorage
+  useEffect(() => {
+    const stored = window.localStorage.getItem(key);
+    if (stored) setState(JSON.parse(stored));
+  }, [key]);
+
+  // Save to localStorage
+  useEffect(() => {
+    if (state) {
+      window.localStorage.setItem(key, JSON.stringify(state));
+    }
+  }, [key, state]);
+
+  return [state, setState];
+}
+
 export default function AddRecipePage() {
   const router = useRouter(); // use this instead of window.location
-  const [recipe, setRecipe] = useState({
+  const [recipe, setRecipe] = useLocalStorage('draftRecipe', {
     name: '',
     time: 0,
     cost: 0.0,
@@ -147,12 +167,12 @@ export default function AddRecipePage() {
         aliases: [],
         categories: recipe.categories,
         subcategories: recipe.subcategories,
-        images: recipe.imageUrl ? [recipe.imageUrl] : [],
+        images: recipe.imageUrl
+          ? [{ url: recipe.imageUrl, caption: recipe.name, type: 'full-size' }]
+          : [], // Default to full-size if image URL exists
       };
 
       const result = await addRecipe(payload);
-
-      console.log('Recipe successfully added:', result);
 
       // Save in local storage just for temporary "user data" simulation
       const userRecipes = JSON.parse(localStorage.getItem('userRecipes') || '[]');
@@ -165,6 +185,7 @@ export default function AddRecipePage() {
       alert(error.message);
     }
   };
+
 
   const ingredientHeaders = ['Ingredient', 'Quantity', 'Unit'];
 
