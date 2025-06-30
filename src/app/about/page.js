@@ -23,7 +23,7 @@ export default function AboutPage() {
             {/* Image with wrapped text on the right */}
             <figure className="float-right md:ml-6 mb-8 rounded-xl overflow-hidden shadow w-full md:w-1/3">
               <img
-                src="/images/misc/kitchen-memory.jpg"
+                src="/images/misc/kitchen-memory.png"
                 alt="A kitchen memory"
                 className="w-full h-48 sm:h-60 object-cover rounded-md"
               />
