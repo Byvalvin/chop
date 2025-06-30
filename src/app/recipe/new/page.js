@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { 
   FaClock, FaDollarSign, FaChevronDown, FaChevronUp, FaCarrot, FaPlusCircle,
-  FaGlobe, FaFlag, FaImage,
+  FaGlobe, FaFlag, FaImage, FaCheckCircle,
 } from 'react-icons/fa';
 import PageContainer from '@/components/PageContainer';
 import { getCountryCode, getRegionEmoji } from '../../../utils/countryUtils';
