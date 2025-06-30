@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react'; // already partially imported
+
 import { FaPlusCircle, FaGripVertical } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import ReactMarkdown from 'react-markdown';
@@ -84,6 +85,20 @@ export default function InstructionEditor({ instructions, setInstructions }) {
   const sensors = useSensors(
     useSensor(PointerSensor)
   );
+    const nextInstructionToFocus = useRef(null);
+
+
+
+    useEffect(() => {
+        if (nextInstructionToFocus.current !== null) {
+            const selector = `textarea[data-index='${nextInstructionToFocus.current}']`;
+            const nextTextarea = document.querySelector(selector);
+            if (nextTextarea) {
+            nextTextarea.focus();
+            nextInstructionToFocus.current = null; // reset
+            }
+        }
+    }, [instructions]);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -110,24 +125,14 @@ export default function InstructionEditor({ instructions, setInstructions }) {
     setInstructions([...instructions, '']);
   };
 
-  const focusNextTextarea = (index) => {
-    // Wait for the new textarea to be added and focus it
-    setTimeout(() => {
-      const nextTextArea = document.querySelector(`textarea[data-index='${index + 1}']`);
-      if (nextTextArea) {
-        nextTextArea.focus();
-      }
-    }, 0); // Timeout to ensure the DOM has updated before focusing
-  };
-
   const handleTabPress = (e, index) => {
     if (e.key === 'Tab') {
       e.preventDefault(); // Prevent the default tab behavior
 
       // If it's the last instruction and we're not in preview mode, create a new instruction
       if (index === instructions.length - 1 && !showPreview) {
+        nextInstructionToFocus.current = index + 1;
         addInstruction();
-        focusNextTextarea(index); // Focus on the new textarea immediately
       } else {
         // Move to the next instruction
         const nextTextArea = document.querySelector(`textarea[data-index='${index + 1}']`);
@@ -137,6 +142,8 @@ export default function InstructionEditor({ instructions, setInstructions }) {
       }
     }
   };
+
+
 
   return (
     <div>
