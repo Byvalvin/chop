@@ -1,6 +1,8 @@
 // components/Table.js
 
 import { FaPlus, FaTimes } from 'react-icons/fa';
+import { useRef, useEffect } from 'react';
+
 
 const Table = ({
   title,
@@ -12,12 +14,27 @@ const Table = ({
   inputName,
   buttonIcon = <FaPlus />,  // Default button icon is a "+" sign
 }) => {
+
+  useEffect(() => {
+  if (nextRowToFocus.current !== null) {
+    const indexToFocus = nextRowToFocus.current;
+    const firstInput = document.querySelector(`input[data-index='${indexToFocus}-0']`);
+    if (firstInput) {
+      firstInput.focus();
+      nextRowToFocus.current = null; // Reset after focusing
+    }
+  }
+}, [rows]);
+
+
   // Define an array to match headers to state properties
   const headerToStateKey = {
     Ingredient: 'name',
     Quantity: 'quantity',
     Unit: 'unit'
   };
+  const nextRowToFocus = useRef(null);
+
 
   // Handle the Enter key press inside the Table component
   const handleKeyPress = (index, e) => {
@@ -29,8 +46,8 @@ const Table = ({
 
       if (isRowComplete) {
         if (index === rows.length - 1) {
-          addItem(); // If it's the last row, add a new row
-          setTimeout(() => focusFirstInput(rows.length), 0); // Focus on the first input of the new row
+          nextRowToFocus.current = rows.length;
+          addItem();
         } else {
           const nextInput = document.querySelectorAll('input')[index + 3]; // Focus the next input field
           nextInput?.focus();
@@ -39,13 +56,6 @@ const Table = ({
     }
   };
 
-  // Function to focus the first input field of the new row
-  const focusFirstInput = (newRowIndex) => {
-    const firstInput = document.querySelector(`input[data-index='${newRowIndex}-0']`);
-    if (firstInput) {
-      firstInput.focus();
-    }
-  };
 
   return (
     <section aria-labelledby="table-heading" className="space-y-4">
