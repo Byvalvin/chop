@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Chop 🍲
 
-## Getting Started
+**Chop** is a web app dedicated to celebrating and preserving African and Afro-Caribbean culinary culture. It allows users to browse, explore, and search for traditional recipes by category, nation, or ingredient.
 
-First, run the development server:
+This project is a personal love letter to the food that raised me — blending personal memory with modern frontend design.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌍 Live Site
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[Visit Chop](https://chop-xi.vercel.app/)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🔧 Built With
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js** – React framework for fast page rendering and routing
+- **Tailwind CSS** – Utility-first CSS framework for styling
+- **JavaScript** – Core logic and interactivity
+- **Vercel** – Deployment platform for modern frontend apps
+- **Node & npm** – Used for tooling and package management
 
-## Learn More
+## ✨ Features
 
-To learn more about Next.js, take a look at the following resources:
+- Browse a collection of African and Afro-Caribbean recipes
+- Filter by categories and nations
+- Search functionality for ingredients or dish names
+- Responsive layout
+- Planned: PDF download support and sitemap for improved SEO
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧠 Inspiration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Food is memory. **Chop** is a small effort to preserve the flavors, traditions, and stories of the African diaspora — dishes that aren’t always seen in mainstream apps but deserve to be known, shared, and celebrated.
 
-## Deploy on Vercel
+## 📸 Screenshots
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> _(Include a few screenshots or GIFs of the app in action if you can)_
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Development Notes
+
+- Frontend-only project — backend API provided externally
+- Future goals: Add recipe ratings, comments, and support for user-submitted dishes
+
+## 📜 License
+
+MIT
