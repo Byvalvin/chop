@@ -29,8 +29,8 @@ This project is a personal love letter to the food that raised me — blending p
 Food is memory. **Chop** is a small effort to preserve the flavors, traditions, and stories of the African diaspora — dishes that aren’t always seen in mainstream apps but deserve to be known, shared, and celebrated.
 
 ## 📸 Screenshots
+![kitchen-memory](https://github.com/user-attachments/assets/d08ff205-d33b-468b-8f27-8e3348239146)
 
-> _(Include a few screenshots or GIFs of the app in action if you can)_
 
 ## 🛠️ Development Notes
 
