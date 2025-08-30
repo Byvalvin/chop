@@ -60,7 +60,7 @@ export default function Results() {
   const subcategoryOptions = ["Stew"];
   const ratingOptions = ["1", "2", "3", "4", "5", "unrated"];
   const ingredientOptions = ["Tomato", "Cheese", "Chicken", "Lettuce", "Rice"];
-  const nationOptions = ["Italy", "India", "Mexico", "Nigeria", "United States of America"];
+  const nationOptions = ["Botswana", "Ghana", "Jamaica", "Nigeria", "Uganda"];
 
   // Clear all filters
   const handleClearAll = () => {
